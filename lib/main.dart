@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/theme/theme_constants.dart';
 import 'package:proyecto/screens/screens.dart';
-import 'package:proyecto/theme/theme_managment.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 
 void main() async {
@@ -25,14 +23,14 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: const Duration(seconds: 1),
-      child: isMaterial
-          ? LoginApp(
+        duration: const Duration(seconds: 1),
+        child:  isMaterial
+            ?  LoginApp(
+            savedThemeMode: widget.savedThemeMode,
+            onChanged: () => setState(() => isMaterial = false))
+            : HomeApp(
           savedThemeMode: widget.savedThemeMode,
-          onChanged: () => setState(() => isMaterial = false))
-          : HomeApp(
-          savedThemeMode: widget.savedThemeMode,
-          onChanged: () => setState(() => isMaterial = true)),
+        ),
     );
   }
 }

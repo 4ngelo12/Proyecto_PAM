@@ -1,76 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:proyecto/theme/theme_managment.dart';
-
-ThemeManager _themeManager = ThemeManager();
+import 'package:proyecto/screens/screens.dart';
+import 'package:proyecto/theme/theme_constants.dart';
 
 class HomeApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
-  final VoidCallback onChanged;
 
   const HomeApp({
     super.key,
     this.savedThemeMode,
-    required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return AdaptiveTheme(
-      light: ThemeData.light(),
-      dark: ThemeData.dark(),
+      light: AppTheme.lightTheme,
+      dark: AppTheme.darkTheme,
       initial: savedThemeMode ?? AdaptiveThemeMode.light,
       builder: (theme, darkTheme) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Adaptive Theme Demo',
+        title: 'Inicio',
         theme: theme,
         darkTheme: darkTheme,
-        home: HomeScreen(onChanged: onChanged),
+        home: HomeScreen(),
       ),
     );
   }
 }
 
 class HomeScreen extends StatefulWidget {
-  final VoidCallback onChanged;
 
-  HomeScreen({super.key, required this.onChanged});
+  HomeScreen({super.key});
 
   @override
   _HomeScreen createState() => _HomeScreen();
 }
 
 class _HomeScreen extends State<HomeScreen> {
-  Icon iconTheme = Icon(Icons.dark_mode);
+  late Icon iconTheme;
 
-  cambiarModo(newValue) {
-    setState(() {
+  Icon ThemeIcon(newValue) {
       if (newValue) {
         iconTheme = Icon(Icons.dark_mode);
       } else {
         iconTheme = Icon(Icons.light_mode);
       }
-    });
-  }
-
-  @override
-  void dispose() {
-    _themeManager.removeListener(themeListener);
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    _themeManager.addListener(themeListener);
-    super.initState();
-  }
-
-  themeListener() {
-    if(mounted) {
-      setState(() {
-
-      });
-    }
+    return iconTheme;
   }
 
   @override
@@ -81,17 +56,21 @@ class _HomeScreen extends State<HomeScreen> {
           children: [
             IconButton(
                 onPressed: () {
+                  AdaptiveTheme.of(context).setTheme(
+                      light: AppTheme.lightTheme,
+                      dark: AppTheme.darkTheme
+                  );
                   setState(() {
                     if (AdaptiveTheme.of(context).mode.isLight) {
-                      iconTheme = Icon(Icons.dark_mode);
                       AdaptiveTheme.of(context).setDark();
-                    } else {
                       iconTheme = Icon(Icons.light_mode);
+                    } else {
                       AdaptiveTheme.of(context).setLight();
+                      iconTheme = Icon(Icons.dark_mode);
                     }
                   });
                 },
-                icon: iconTheme),
+                icon: ThemeIcon(AdaptiveTheme.of(context).mode.isLight)),
             Padding(padding: EdgeInsets.all(10)),
             Image.asset(
                 "Assets/Images/logo.png",
@@ -99,6 +78,12 @@ class _HomeScreen extends State<HomeScreen> {
             ),
           ],
         ),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+
+        ],
       ),
     );
   }
