@@ -10,5 +10,6 @@ class AppTheme {
       brightness: Brightness.dark,
       appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF2E86C1)),
       scaffoldBackgroundColor: const Color(0xFF1B2631),
+
   );
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/theme/theme_constants.dart';
-import 'package:proyecto/theme/theme_colors_login.dart';
+import 'package:proyecto/theme/theme_colors.dart';
 import 'package:proyecto/screens/screens.dart';
 
 class RegisterApp extends StatelessWidget {
@@ -19,7 +19,7 @@ class RegisterApp extends StatelessWidget {
     return AdaptiveTheme(
       light: AppTheme.lightTheme,
       dark: AppTheme.darkTheme,
-      initial: savedThemeMode ?? AdaptiveThemeMode.light,
+      initial: savedThemeMode ?? AdaptiveThemeMode.system,
       builder: (theme, darkTheme) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Inicio',
@@ -55,14 +55,14 @@ class _RegisterScreen extends State<RegisterScreen> {
                     width: 350,
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      color: AdaptiveTheme.of(context).mode.isDark ? Colores.logoLoginContainerDark : Colores.logoLoginContainer,
+                      color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                     ),
                   ),
                   const Padding(padding: EdgeInsets.all(30)),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      color: AdaptiveTheme.of(context).mode.isDark ? Colores.loginContainerDark : Colores.loginContainer,
+                      color: AdaptiveTheme.of(context).mode.isDark ? Login.containerDark : Login.container,
                     ),
                     width: 350,
                     child: Column(
@@ -77,18 +77,18 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     autocorrect: false,
                                     keyboardType: TextInputType.emailAddress,
                                     style: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Colores.textInputDark : Colores.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                     ),
 
                                     decoration: InputDecoration(
                                         hintText: "Nombre",
                                         labelText: "Ingrese Su Nombre",
                                         prefixIcon: Icon(Icons.account_circle),
-                                        fillColor: AdaptiveTheme.of(context).mode.isDark ? Colores.inputDark : Colores.input,
+                                        fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                                         filled: true,
                                         border: InputBorder.none,
                                         labelStyle: TextStyle(
-                                            color: AdaptiveTheme.of(context).mode.isDark ? Colores.textInputDark : Colores.textInput,
+                                            color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                             fontWeight: FontWeight.bold
                                         )
                                     ),
@@ -110,17 +110,17 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   child: TextFormField(
                                     autocorrect: false,
                                     style: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Colores.textInputDark : Colores.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: 'Apellido',
                                       labelText: 'Ingrese Su Apellido',
                                       prefixIcon: Icon(Icons.account_circle),
-                                      fillColor: AdaptiveTheme.of(context).mode.isDark ? Colores.inputDark : Colores.input,
+                                      fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                                       filled: true,
                                       border: InputBorder.none,
                                       labelStyle: TextStyle(
-                                          color: AdaptiveTheme.of(context).mode.isDark ? Colores.textInputDark : Colores.textInput,
+                                          color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
@@ -142,17 +142,17 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   child: TextFormField(
                                     autocorrect: false,
                                     style: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Colores.textInputDark : Colores.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: '998746321',
                                       labelText: 'Número de Teléfono',
                                       prefixIcon: Icon(Icons.phone),
-                                      fillColor: AdaptiveTheme.of(context).mode.isDark ? Colores.inputDark : Colores.input,
+                                      fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                                       filled: true,
                                       border: InputBorder.none,
                                       labelStyle: TextStyle(
-                                          color: AdaptiveTheme.of(context).mode.isDark ? Colores.textInputDark : Colores.textInput,
+                                          color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
@@ -174,17 +174,17 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   child: TextFormField(
                                     autocorrect: false,
                                     style: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Colores.textInputDark : Colores.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                     ),
                                     decoration: InputDecoration(
                                         hintText: "username@correo.com",
                                         labelText: "Correo",
                                         prefixIcon: Icon(Icons.mail),
-                                        fillColor: AdaptiveTheme.of(context).mode.isDark ? Colores.inputDark : Colores.input,
+                                        fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                                         filled: true,
                                         border: InputBorder.none,
                                         labelStyle: TextStyle(
-                                            color: AdaptiveTheme.of(context).mode.isDark ? Colores.textInputDark : Colores.textInput,
+                                            color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                             fontWeight: FontWeight.bold
                                         )
                                     ),
@@ -207,17 +207,17 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     autocorrect: false,
                                     obscureText: true,
                                     style: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Colores.textInputDark : Colores.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: '***********',
                                       labelText: 'Contraseña',
                                       prefixIcon: Icon(Icons.lock_outline),
-                                      fillColor: AdaptiveTheme.of(context).mode.isDark ? Colores.inputDark : Colores.input,
+                                      fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                                       filled: true,
                                       border: InputBorder.none,
                                       labelStyle: TextStyle(
-                                          color: AdaptiveTheme.of(context).mode.isDark ? Colores.textInputDark : Colores.textInput,
+                                          color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
@@ -237,17 +237,17 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     autocorrect: false,
                                     obscureText: true,
                                     style: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Colores.textInputDark : Colores.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: '***********',
                                       labelText: 'Repetir Contraseña',
                                       prefixIcon: Icon(Icons.lock_outline),
-                                      fillColor: AdaptiveTheme.of(context).mode.isDark ? Colores.inputDark : Colores.input,
+                                      fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                                       filled: true,
                                       border: InputBorder.none,
                                       labelStyle: TextStyle(
-                                          color: AdaptiveTheme.of(context).mode.isDark ? Colores.textInputDark : Colores.textInput,
+                                          color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
@@ -267,9 +267,10 @@ class _RegisterScreen extends State<RegisterScreen> {
                                             fontSize: 25
                                         ),
                                       ),
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Colores.loginButtonDark : Colores.loginButton,
+                                      color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
+                                      disabledColor: AdaptiveTheme.of(context).mode.isDark ? Login.disableButtonDark : Login.disableButton,
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 10,
+                                          horizontal: 90,
                                           vertical: 18
                                       ),
                                       shape: const RoundedRectangleBorder(
@@ -298,7 +299,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                         },
                                         child: Text("Inicie Sesión"),
                                         style: TextButton.styleFrom(
-                                          foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Colores.textButtonDark : Colores.textButton,
+                                          foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,
                                         ),
                                       ),
                                     ),
