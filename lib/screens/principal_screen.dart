@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/screens/screens.dart';
@@ -45,19 +46,12 @@ class _HomeScreen extends State<HomeScreen> {
   String texto_a_visualizar = "0: home";
   final datos = calzados;
 
-  final List<String> imgList = [
-    'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-    'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-  ];
 
-  Icon ThemeIcon(newValue) {
+  Icon _themeIcon(newValue) {
       if (newValue) {
-        iconTheme = Icon(Icons.dark_mode);
+        iconTheme = const Icon(Icons.dark_mode);
       } else {
-        iconTheme = Icon(Icons.light_mode);
+        iconTheme = const Icon(Icons.light_mode);
       }
     return iconTheme;
   }
@@ -84,23 +78,23 @@ class _HomeScreen extends State<HomeScreen> {
       borderRadius: const BorderRadius.all(Radius.circular(10)),
       color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
     ),
-    margin: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+    margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
     child: Row(
       children: [
         Container(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
               horizontal: 10,
-              vertical: 5
+              vertical: 25
           ),
-          child: Image.network(urlImage, fit: BoxFit.cover),
-          margin: EdgeInsets.all(5),
+          child: Image.asset(urlImage, fit: BoxFit.cover),
+          margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(5)),
             color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: 10, top: 15), 
+          padding: EdgeInsets.only(left: 15, top: 20),
           child: Column(
             children: [
               Text(
@@ -109,7 +103,10 @@ class _HomeScreen extends State<HomeScreen> {
                     fontSize: 16
                 ),
               ), 
-              Padding(padding: EdgeInsets.only(bottom: 10)), 
+              Padding(padding: EdgeInsets.only(
+                  bottom: 15,
+                  left: 150)
+              ),
               Row(
                 children: [
                   Text(datos[index].precio.toString()),
@@ -119,8 +116,8 @@ class _HomeScreen extends State<HomeScreen> {
                     ), 
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 5
+                          horizontal: 8,
+                          vertical: 1
                       ), 
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.all(Radius.circular(5)), 
@@ -131,7 +128,8 @@ class _HomeScreen extends State<HomeScreen> {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => BuyApp()));
                         },
-                        icon: Icon(Icons.shopping_cart),
+                        icon: Icon(Icons.shopping_cart,
+                        size: 15),
                       ),
                     ),
                   )
@@ -169,8 +167,8 @@ class _HomeScreen extends State<HomeScreen> {
                         }
                       });
                     },
-                    icon: ThemeIcon(AdaptiveTheme.of(context).mode.isLight)),
-                Padding(padding: EdgeInsets.all(10)),
+                    icon: _themeIcon(AdaptiveTheme.of(context).mode.isLight)),
+                Padding(padding:EdgeInsets.all(10)),
                 Image.asset(
                     "Assets/Images/logo.png",
                     width: 130
@@ -185,29 +183,115 @@ class _HomeScreen extends State<HomeScreen> {
         ),
 
       ),
-      body: Column(
-            children: [
-              CarouselSlider.builder(
-                  options: CarouselOptions(
-                      height: 150,
-                      autoPlay: true,
-                      autoPlayInterval: Duration(seconds: 4)),
-                  itemCount: imgList.length,
-                  itemBuilder: (context, index, realIndex) {
-                    final urlImage = imgList[index];
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CarouselSlider.builder(
+              options: CarouselOptions(
+                  height: 150,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 4)),
+              itemCount: 4,
+              itemBuilder: (context, index, realIndex) {
+                final urlImage = "Assets/Images/$index.png";
 
-                    return buildImage(urlImage, index);
-                  },
-              ),
+                return buildImage(urlImage, index);
+                },
+            ),
+            Padding(padding: const EdgeInsets.symmetric(vertical: 15)),
+            GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: 0.68,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              children: [
+                for(int i = 0; i < 4; i++)
+                  Container(
+                    padding: const EdgeInsets.only(
+                        left: 25,
+                        right: 25,
+                        top: 10
+                    ),
+                    margin: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
+                        borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => BuyApp()));
+                            },
+                          child: Padding(
+                            padding: EdgeInsets.all(10) ,
+                            child: Image.asset("Assets/Images/$i.png"),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 8),
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              datos[i].nombre,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "New Nike Shoes for men",
+                            style: TextStyle(
+                                fontSize: 15,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "\$55",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                child:
+                                IconButton(
+                                    onPressed: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) => BuyApp()));
+                                    },
+                                    icon: Icon(
+                                      CupertinoIcons.cart_fill_badge_plus,
+                                      size: 25,
+                                    )
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
 
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container()
-                  ],
-                ),
-              )
-            ]
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: AdaptiveTheme.of(context).mode.isDark ? BottomBottomNavigationBarColor.labelDark : BottomBottomNavigationBarColor.label,
