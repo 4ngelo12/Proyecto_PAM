@@ -94,16 +94,16 @@ class _HomeScreen extends State<HomeScreen> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: 15, top: 20),
+          padding: const EdgeInsets.only(left: 15, top: 20),
           child: Column(
             children: [
               Text(
                 datos[index].nombre,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ), 
-              Padding(padding: EdgeInsets.only(
+              const Padding(padding: EdgeInsets.only(
                   bottom: 15,
                   left: 150)
               ),
@@ -111,11 +111,11 @@ class _HomeScreen extends State<HomeScreen> {
                 children: [
                   Text(datos[index].precio.toString()),
                   Padding(
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 10,
                     ), 
                     child: Container(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                           horizontal: 8,
                           vertical: 1
                       ), 
@@ -128,8 +128,10 @@ class _HomeScreen extends State<HomeScreen> {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => BuyApp()));
                         },
-                        icon: Icon(Icons.shopping_cart,
-                        size: 15),
+                        icon: const Icon(
+                            Icons.shopping_cart,
+                            size: 15
+                        ),
                       ),
                     ),
                   )
@@ -168,7 +170,7 @@ class _HomeScreen extends State<HomeScreen> {
                       });
                     },
                     icon: _themeIcon(AdaptiveTheme.of(context).mode.isLight)),
-                Padding(padding:EdgeInsets.all(10)),
+                const Padding(padding:EdgeInsets.all(10)),
                 Image.asset(
                     "Assets/Images/logo.png",
                     width: 130
@@ -198,11 +200,11 @@ class _HomeScreen extends State<HomeScreen> {
                 return buildImage(urlImage, index);
                 },
             ),
-            Padding(padding: const EdgeInsets.symmetric(vertical: 15)),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 15)),
             GridView.count(
               crossAxisCount: 2,
               childAspectRatio: 0.68,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               children: [
                 for(int i = 0; i < 4; i++)
@@ -219,18 +221,25 @@ class _HomeScreen extends State<HomeScreen> {
                     ),
                     child: Column(
                       children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => BuyApp()));
+                        Container(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => BuyApp()));
                             },
-                          child: Padding(
-                            padding: EdgeInsets.all(10) ,
-                            child: Image.asset("Assets/Images/$i.png"),
+                            child:  Padding(
+                              padding: EdgeInsets.all(10) ,
+                              child: Image.asset("Assets/Images/$i.png"),
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                           ),
                         ),
+                        const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                         Padding(
-                          padding: EdgeInsets.only(bottom: 8),
+                          padding: const EdgeInsets.only(bottom: 8),
                           child: Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
