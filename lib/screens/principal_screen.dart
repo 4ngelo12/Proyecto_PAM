@@ -3,16 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/screens/screens.dart';
+import 'package:proyecto/services/firebase_service.dart';
 import 'package:proyecto/theme/theme_colors.dart';
 import 'package:proyecto/theme/theme_constants.dart';
 import 'package:proyecto/clases/zapatillas.dart';
 
 class HomeApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
+  final VoidCallback onChanged;
 
   const HomeApp({
     super.key,
     this.savedThemeMode,
+    required this.onChanged,
   });
 
   @override
@@ -26,15 +29,16 @@ class HomeApp extends StatelessWidget {
         title: 'Inicio',
         theme: theme,
         darkTheme: darkTheme,
-        home: const HomeScreen(),
+        home: HomeScreen(onChanged: onChanged),
       ),
     );
   }
 }
 
 class HomeScreen extends StatefulWidget {
+  final VoidCallback onChanged;
 
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.onChanged});
 
   @override
   _HomeScreen createState() => _HomeScreen();
@@ -86,12 +90,12 @@ class _HomeScreen extends State<HomeScreen> {
               horizontal: 10,
               vertical: 25
           ),
-          child: Image.asset(urlImage, fit: BoxFit.cover),
           margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(5)),
             color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
           ),
+          child: Image.asset(urlImage, fit: BoxFit.cover),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 15, top: 20),
@@ -102,7 +106,7 @@ class _HomeScreen extends State<HomeScreen> {
                 style: const TextStyle(
                     fontSize: 16
                 ),
-              ), 
+              ),
               const Padding(padding: EdgeInsets.only(
                   bottom: 15,
                   left: 150)
@@ -113,20 +117,20 @@ class _HomeScreen extends State<HomeScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
-                    ), 
+                    ),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8,
                           vertical: 1
-                      ), 
+                      ),
                       decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(5)), 
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
                         color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
-                      ), 
+                      ),
                       child: IconButton(
                         onPressed: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => BuyApp()));
+                              MaterialPageRoute(builder: (context) => BuyApp(onChanged: widget.onChanged)));
                         },
                         icon: const Icon(
                             Icons.shopping_cart,
@@ -162,10 +166,10 @@ class _HomeScreen extends State<HomeScreen> {
                       setState(() {
                         if (AdaptiveTheme.of(context).mode.isLight) {
                           AdaptiveTheme.of(context).setDark();
-                          iconTheme = Icon(Icons.light_mode);
+                          iconTheme = const Icon(Icons.light_mode);
                         } else {
                           AdaptiveTheme.of(context).setLight();
-                          iconTheme = Icon(Icons.dark_mode);
+                          iconTheme = const Icon(Icons.dark_mode);
                         }
                       });
                     },
@@ -179,7 +183,7 @@ class _HomeScreen extends State<HomeScreen> {
             ),
             IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.search)
+                icon: const Icon(Icons.search)
             )
           ],
         ),
@@ -188,149 +192,175 @@ class _HomeScreen extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CarouselSlider.builder(
-              options: CarouselOptions(
-                  height: 150,
-                  autoPlay: true,
-                  autoPlayInterval: Duration(seconds: 4)),
-              itemCount: 4,
-              itemBuilder: (context, index, realIndex) {
-                final urlImage = "Assets/Images/$index.png";
+            FutureBuilder(
+                future: getProductos(),
+                builder: ((context, snapshot) {
+                  if (snapshot.hasData) {
+                    return CarouselSlider.builder(
+                      options: CarouselOptions(
+                          height: 150,
+                          autoPlay: true,
+                          autoPlayInterval: const Duration(seconds: 4)
+                      ),
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (context, index, realIndex) {
+                        final urlImage = "${snapshot.data?[index]['imagen']}";
 
-                return buildImage(urlImage, index);
-                },
+                        return buildImage(urlImage, index);
+                      },
+                    );
+                  } else {
+                    return const Center();
+                  }
+                })
             ),
             const Padding(padding: EdgeInsets.symmetric(vertical: 15)),
-            GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio: 0.68,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              children: [
-                for(int i = 0; i < 4; i++)
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 25,
-                        right: 25,
-                        top: 10
-                    ),
-                    margin: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
-                        borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => BuyApp()));
-                            },
-                            child:  Padding(
-                              padding: EdgeInsets.all(10) ,
-                              child: Image.asset("Assets/Images/$i.png"),
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
-                          ),
+            FutureBuilder(
+                future: getProductos(),
+                builder: ((context, snapshot) {
+                  if (snapshot.hasData) {
+                    return GridView.builder(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisExtent: 350,
+                            crossAxisSpacing: 2
                         ),
-                        const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              datos[i].nombre,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                        itemCount: snapshot.data?.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: const EdgeInsets.only(
+                                left: 25,
+                                right: 25,
+                                top: 10
                             ),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "New Nike Shoes for men",
-                            style: TextStyle(
-                                fontSize: 15,
+                            margin: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "\$55",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
-                                  borderRadius: BorderRadius.circular(10)
-                                ),
-                                child:
-                                IconButton(
-                                    onPressed: () {
+                            child: Column(
+                              children: [
+                                Container(
+                                  child: InkWell(
+                                    onTap: () {
                                       Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) => BuyApp()));
+                                          MaterialPageRoute(builder: (context) => BuyApp(onChanged: widget.onChanged)));
                                     },
-                                    icon: Icon(
-                                      CupertinoIcons.cart_fill_badge_plus,
-                                      size: 25,
-                                    )
+                                    child:  Padding(
+                                      padding: const EdgeInsets.all(10) ,
+                                      child: Image.asset("${snapshot.data?[index]['imagen']}"),
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
+                                  ),
                                 ),
-                              )
-                            ],
-                          ),
-                        ),
-
-                      ],
-                    ),
-                  ),
-              ],
+                                const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      snapshot.data?[index]['nombre'],
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: const Text(
+                                    "New Nike Shoes for men",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'S/.${snapshot.data?[index]['precio']}',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
+                                            borderRadius: BorderRadius.circular(10)
+                                        ),
+                                        child:
+                                        IconButton(
+                                            onPressed: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(builder: (context) => BuyApp(onChanged: widget.onChanged)));
+                                            },
+                                            icon: Icon(
+                                              CupertinoIcons.cart_fill_badge_plus,
+                                              size: 25,
+                                            )
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        });
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                })
             ),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: AdaptiveTheme.of(context).mode.isDark ? BottomBottomNavigationBarColor.labelDark : BottomBottomNavigationBarColor.label,
-          backgroundColor: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.house,
-                color: Colors.white,
-              ),
-              label: "Home",
+        selectedItemColor: AdaptiveTheme.of(context).mode.isDark ? BottomBottomNavigationBarColor.labelDark : BottomBottomNavigationBarColor.label,
+        backgroundColor: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.house,
+              color: Colors.white,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.shopping_cart,
-                color: Colors.white,
-              ),
-              label: "Mis Compras",
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.shopping_cart,
+              color: Colors.white,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.supervised_user_circle,
-                color: Colors.white,
-              ),
-              label: "Perfil",
+            label: "Mis Compras",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.supervised_user_circle,
+              color: Colors.white,
             ),
-          ],
-          currentIndex: _elementoSeleccionado,
-          onTap: _itemUsado,
-        ),
+            label: "Perfil",
+          ),
+        ],
+        currentIndex: _elementoSeleccionado,
+        onTap: _itemUsado,
+      ),
     );
   }
 }
+
+
+
+

@@ -8,10 +8,12 @@ import 'package:proyecto/clases/zapatillas.dart';
 
 class BuyApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
+  final VoidCallback onChanged;
 
   const BuyApp({
     super.key,
     this.savedThemeMode,
+    required this.onChanged,
   });
 
   @override
@@ -25,15 +27,16 @@ class BuyApp extends StatelessWidget {
         title: 'Comprar',
         theme: theme,
         darkTheme: darkTheme,
-        home: BuyScreen(),
+        home: BuyScreen(onChanged: onChanged),
       ),
     );
   }
 }
 
 class BuyScreen extends StatefulWidget {
+  final VoidCallback onChanged;
 
-  BuyScreen({super.key});
+  BuyScreen({super.key, required this.onChanged,});
 
   @override
   _BuyScreen createState() => _BuyScreen();
@@ -58,13 +61,22 @@ class _BuyScreen extends State<BuyScreen> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) =>
-                                HomeApp()));
+                                HomeApp(onChanged: widget.onChanged)));
                       },
                       child: Container(
                         child: Icon(
-                          Icons.arrow_back,
+                          Icons.arrow_back_ios_new,
                           size: 30,
-
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                      },
+                      child: Container(
+                        child: Icon(
+                          CupertinoIcons.heart,
+                          size: 30,
                         ),
                       ),
                     ),
@@ -77,7 +89,7 @@ class _BuyScreen extends State<BuyScreen> {
                   alignment: Alignment.center,
                   children: [
                     Image.asset(
-                      "Assets/Images/3.png",
+                      "Assets/Images/4.png",
                       height: 350,
                       width: 350,
                       fit: BoxFit.contain,

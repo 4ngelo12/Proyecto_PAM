@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto/screens/screens.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp(savedThemeMode: savedThemeMode));
 }
 
@@ -29,7 +35,8 @@ class _MyAppState extends State<MyApp> {
             savedThemeMode: widget.savedThemeMode,
             onChanged: () => setState(() => isMaterial = false))
             : HomeApp(
-          savedThemeMode: widget.savedThemeMode,
+            savedThemeMode: widget.savedThemeMode,
+            onChanged: () => setState(() => isMaterial = false)
         ),
     );
   }

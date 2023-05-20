@@ -177,7 +177,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                               padding: EdgeInsets.all(30),
                               child: MaterialButton(
                                   onPressed: () {Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) => HomeApp()));}
+                                      MaterialPageRoute(builder: (context) => HomeApp(onChanged: widget.onChanged)));}
                                   /*loginForm.isLoading ? null : () async {
 
                                     FocusScope.of(context).unfocus();
