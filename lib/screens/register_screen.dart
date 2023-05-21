@@ -41,8 +41,17 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreen extends State<RegisterScreen> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController pass2Controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
+
     return Scaffold(
         body: SingleChildScrollView(
           padding: const EdgeInsets.only(top: 40),
@@ -68,18 +77,19 @@ class _RegisterScreen extends State<RegisterScreen> {
                     child: Column(
                       children: [
                         Form(
+                            key: keyForm,
                             autovalidateMode: AutovalidateMode.onUserInteraction,
                             child: Column(
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(25, 35, 25, 10),
                                   child: TextFormField(
+                                    controller: nameController,
                                     autocorrect: false,
                                     keyboardType: TextInputType.emailAddress,
                                     style: TextStyle(
                                       color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                     ),
-
                                     decoration: InputDecoration(
                                         hintText: "Nombre",
                                         labelText: "Ingrese Su Nombre",
@@ -92,13 +102,9 @@ class _RegisterScreen extends State<RegisterScreen> {
                                             fontWeight: FontWeight.bold
                                         )
                                     ),
-                                    validator: ( value ) {
-                                      String pattern = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?<!\s)$';
-                                      RegExp regExp  = new RegExp(pattern);
-
-                                      return regExp.hasMatch(value ?? '')
-                                          ? null
-                                          : 'No se admiten esos caracteres en el nombre';
+                                    validator: ( String? value ) {
+                                      String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?<!\s)$';
+                                      return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el nombre';
                                     },
                                   ),
                                 ),
@@ -108,6 +114,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                       vertical: 10
                                   ),
                                   child: TextFormField(
+                                    controller: lastNameController,
                                     autocorrect: false,
                                     style: TextStyle(
                                       color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
@@ -124,13 +131,9 @@ class _RegisterScreen extends State<RegisterScreen> {
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
-                                    validator: ( value ) {
-                                      String pattern = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?<!\s)$';
-                                      RegExp regExp  = new RegExp(pattern);
-
-                                      return regExp.hasMatch(value ?? '')
-                                          ? null
-                                          : 'No se admiten esos caracteres en el apellido';
+                                    validator: ( String? value ) {
+                                      String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?<!\s)$';
+                                      return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el apellido';
                                     },
                                   ),
                                 ),
@@ -140,6 +143,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                       vertical: 10
                                   ),
                                   child: TextFormField(
+                                    controller: phoneController,
                                     autocorrect: false,
                                     style: TextStyle(
                                       color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
@@ -156,13 +160,9 @@ class _RegisterScreen extends State<RegisterScreen> {
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
-                                    validator: ( value ) {
-                                      String pattern = '[0-9]{9}';
-                                      RegExp regExp  = new RegExp(pattern);
-
-                                      return regExp.hasMatch(value ?? '')
-                                          ? null
-                                          : 'No se admiten esos caracteres en el apellido';
+                                    validator: ( String? value ) {
+                                      String exp = r'^[0-9]{9}$';
+                                      return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el teléfono';
                                     },
                                   ),
                                 ),
@@ -172,6 +172,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                       vertical: 10
                                   ),
                                   child: TextFormField(
+                                    controller: emailController,
                                     autocorrect: false,
                                     style: TextStyle(
                                       color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
@@ -188,22 +189,19 @@ class _RegisterScreen extends State<RegisterScreen> {
                                             fontWeight: FontWeight.bold
                                         )
                                     ),
-                                    validator: ( value ) {
-                                      String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                                      RegExp regExp  = new RegExp(pattern);
-
-                                      return regExp.hasMatch(value ?? '')
-                                          ? null
-                                          : 'El valor ingresado no luce como un correo';
+                                    validator: ( String? value ) {
+                                      String exp = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                      return RegExp(exp).hasMatch(value  ?? '')? null : 'El texto no parece un correo';
                                     },
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 25,
                                       vertical: 10
                                   ),
                                   child: TextFormField(
+                                    controller: passController,
                                     autocorrect: false,
                                     obscureText: true,
                                     style: TextStyle(
@@ -221,7 +219,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
-                                    validator: ( value ) {
+                                    validator: ( String? value ) {
                                       return ( value != null && value.length >= 10 )
                                           ? null
                                           : 'La contraseña debe de ser de 10 caracteres';
@@ -234,6 +232,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                       vertical: 10
                                   ),
                                   child: TextFormField(
+                                    controller: pass2Controller,
                                     autocorrect: false,
                                     obscureText: true,
                                     style: TextStyle(
@@ -251,17 +250,28 @@ class _RegisterScreen extends State<RegisterScreen> {
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
-                                    validator: ( value ) {
-                                      return ( value != null && value.length >= 10 )
-                                          ? null
-                                          : 'La contraseña debe de ser de 10 caracteres';
+                                    validator: ( String? value ) {
+                                      if ( value != null && value.length >= 10) {
+                                        if (passController.value == pass2Controller.value) {
+                                          return null;
+                                        } else {
+                                          return 'Las Contraseñas no coinciden';
+                                        }
+                                      } else {
+                                        return 'La contraseña debe de ser de 10 caracteres';
+                                      }
                                     },
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.all(30),
                                   child: MaterialButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        if (keyForm.currentState!.validate()) {
+                                          if (passController.value == pass2Controller.value) {
+                                          }
+                                        }
+                                      },
                                       child: Text('Registrar',
                                         style: TextStyle(
                                             fontSize: 25

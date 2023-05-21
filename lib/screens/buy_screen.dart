@@ -36,7 +36,7 @@ class BuyApp extends StatelessWidget {
 class BuyScreen extends StatefulWidget {
   final VoidCallback onChanged;
 
-  BuyScreen({super.key, required this.onChanged,});
+  const BuyScreen({super.key, required this.onChanged,});
 
   @override
   _BuyScreen createState() => _BuyScreen();
@@ -53,7 +53,7 @@ class _BuyScreen extends State<BuyScreen> {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -63,28 +63,28 @@ class _BuyScreen extends State<BuyScreen> {
                             MaterialPageRoute(builder: (context) =>
                                 HomeApp(onChanged: widget.onChanged)));
                       },
-                      child: Container(
-                        child: Icon(
-                          Icons.arrow_back_ios_new,
-                          size: 30,
-                        ),
+                      child: const Icon(
+                        Icons.arrow_back_ios_new,
+                        size: 30,
                       ),
                     ),
                     InkWell(
                       onTap: () {
                       },
-                      child: Container(
-                        child: Icon(
+                        child: const Icon(
                           CupertinoIcons.heart,
                           size: 30,
                         ),
-                      ),
                     ),
                   ],
                 ),
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.43,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
+                ),
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -96,16 +96,12 @@ class _BuyScreen extends State<BuyScreen> {
                     )
                   ],
                 ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
-                ),
               ),
-              Padding(padding: EdgeInsets.only(bottom: 25)),
+              const Padding(padding: EdgeInsets.only(bottom: 25)),
               Container(
                 height: MediaQuery.of(context).size.height *  0.45,
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                     vertical: 30,
                     horizontal: 20
                 ),
@@ -119,24 +115,24 @@ class _BuyScreen extends State<BuyScreen> {
                       children: [
                         Text(
                           datos[0].nombre,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
                           datos[0].precio.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                     Text(
                       datos[0].descripcion,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                       ),
                       textAlign: TextAlign.justify,
@@ -149,19 +145,19 @@ class _BuyScreen extends State<BuyScreen> {
         ),
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
               ),
               child: Row(
-                children: [
+                children: const [
                   Text(
                     "Agregar al Carrito",
                     style: TextStyle(

@@ -48,7 +48,7 @@ class _InicioScreen extends State<Inicio> {
                         Text(
                           snapshot.data?[index]['nombre'],
                           style: const TextStyle(
-                              fontSize: 16
+                              fontSize: 20
                           ),
                         ),
                         const Padding(padding: EdgeInsets.only(
@@ -57,15 +57,19 @@ class _InicioScreen extends State<Inicio> {
                         ),
                         Row(
                           children: [
-                            Text('S/.${snapshot.data?[index]['precio']}'),
+                            Text(
+                              'S/.${snapshot.data?[index]['precio']}',
+                              style: TextStyle(
+                                fontSize: 16
+                              ),
+                            ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 10,
                               ),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 1
+                                    horizontal: 6,
                                 ),
                                 decoration: BoxDecoration(
                                   borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -78,7 +82,7 @@ class _InicioScreen extends State<Inicio> {
                                   },
                                   icon: const Icon(
                                       Icons.shopping_cart,
-                                      size: 15
+                                      size: 20
                                   ),
                                 ),
                               ),
@@ -99,7 +103,6 @@ class _InicioScreen extends State<Inicio> {
         })
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +131,7 @@ class _InicioScreen extends State<Inicio> {
                 }
               })
           ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
           FutureBuilder(
               future: getProductos(),
               builder: ((context, snapshot) {
