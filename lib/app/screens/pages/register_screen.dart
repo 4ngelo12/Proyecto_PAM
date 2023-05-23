@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:proyecto/theme/theme_constants.dart';
-import 'package:proyecto/theme/theme_colors.dart';
-import 'package:proyecto/screens/screens.dart';
+import 'package:proyecto/app/services/cliente_service.dart';
+import 'package:proyecto/app/theme/theme_constants.dart';
+import 'package:proyecto/app/theme/theme_colors.dart';
+import 'package:proyecto/app/screens/screens.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class RegisterApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
@@ -34,7 +36,7 @@ class RegisterApp extends StatelessWidget {
 class RegisterScreen extends StatefulWidget {
   final VoidCallback onChanged;
 
-  RegisterScreen({super.key, required this.onChanged});
+  const RegisterScreen({super.key, required this.onChanged});
 
   @override
   _RegisterScreen createState() => _RegisterScreen();
@@ -60,12 +62,12 @@ class _RegisterScreen extends State<RegisterScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container (
-                    child: Image.asset("Assets/Images/logo.png"),
                     width: 350,
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                       color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                     ),
+                    child: Image.asset("Assets/Images/logo.png"),
                   ),
                   const Padding(padding: EdgeInsets.all(30)),
                   Container(
@@ -93,7 +95,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     decoration: InputDecoration(
                                         hintText: "Nombre",
                                         labelText: "Ingrese Su Nombre",
-                                        prefixIcon: Icon(Icons.account_circle),
+                                        prefixIcon: const Icon(Icons.account_circle),
                                         fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                                         filled: true,
                                         border: InputBorder.none,
@@ -109,7 +111,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 25,
                                       vertical: 10
                                   ),
@@ -122,7 +124,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     decoration: InputDecoration(
                                       hintText: 'Apellido',
                                       labelText: 'Ingrese Su Apellido',
-                                      prefixIcon: Icon(Icons.account_circle),
+                                      prefixIcon: const Icon(Icons.account_circle),
                                       fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                                       filled: true,
                                       border: InputBorder.none,
@@ -138,7 +140,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 25,
                                       vertical: 10
                                   ),
@@ -151,7 +153,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     decoration: InputDecoration(
                                       hintText: '998746321',
                                       labelText: 'Número de Teléfono',
-                                      prefixIcon: Icon(Icons.phone),
+                                      prefixIcon: const Icon(Icons.phone),
                                       fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                                       filled: true,
                                       border: InputBorder.none,
@@ -167,7 +169,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 25,
                                       vertical: 10
                                   ),
@@ -180,7 +182,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     decoration: InputDecoration(
                                         hintText: "username@correo.com",
                                         labelText: "Correo",
-                                        prefixIcon: Icon(Icons.mail),
+                                        prefixIcon: const Icon(Icons.mail),
                                         fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                                         filled: true,
                                         border: InputBorder.none,
@@ -210,7 +212,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     decoration: InputDecoration(
                                       hintText: '***********',
                                       labelText: 'Contraseña',
-                                      prefixIcon: Icon(Icons.lock_outline),
+                                      prefixIcon: const Icon(Icons.lock_outline),
                                       fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                                       filled: true,
                                       border: InputBorder.none,
@@ -227,7 +229,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 25,
                                       vertical: 10
                                   ),
@@ -241,7 +243,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     decoration: InputDecoration(
                                       hintText: '***********',
                                       labelText: 'Repetir Contraseña',
-                                      prefixIcon: Icon(Icons.lock_outline),
+                                      prefixIcon: const Icon(Icons.lock_outline),
                                       fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                                       filled: true,
                                       border: InputBorder.none,
@@ -264,19 +266,26 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(30),
+                                  padding: const EdgeInsets.all(30),
                                   child: MaterialButton(
                                       onPressed: () {
                                         if (keyForm.currentState!.validate()) {
                                           if (passController.value == pass2Controller.value) {
+                                            auth.FirebaseAuth.instance.createUserWithEmailAndPassword(
+                                                email: emailController.text,
+                                                password: passController.text
+                                            );
+                                            add(nameController.text, lastNameController.text, phoneController.text,
+                                                emailController.text, passController.text);
+
+                                            nameController.text = "";
+                                            lastNameController.text = "";
+                                            phoneController.text = "";
+                                            emailController.text = "";
+                                            passController.text = "";
                                           }
                                         }
                                       },
-                                      child: Text('Registrar',
-                                        style: TextStyle(
-                                            fontSize: 25
-                                        ),
-                                      ),
                                       color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                                       disabledColor: AdaptiveTheme.of(context).mode.isDark ? Login.disableButtonDark : Login.disableButton,
                                       padding: const EdgeInsets.symmetric(
@@ -287,19 +296,24 @@ class _RegisterScreen extends State<RegisterScreen> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)
                                           )
-                                      )
+                                      ),
+                                    child: const Text('Registrar',
+                                      style: TextStyle(
+                                          fontSize: 25
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Padding(
+                                    const Padding(
                                       padding: EdgeInsets.symmetric(vertical: 10,
                                           horizontal: 0),
                                       child: Text("¿Ya estas registrado?"),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 10,
+                                      padding: const EdgeInsets.symmetric(vertical: 10,
                                           horizontal: 0),
                                       child: TextButton(
                                         onPressed: () {
@@ -307,10 +321,10 @@ class _RegisterScreen extends State<RegisterScreen> {
                                               MaterialPageRoute(builder: (context) =>
                                                   LoginApp(onChanged: widget.onChanged)));
                                         },
-                                        child: Text("Inicie Sesión"),
                                         style: TextButton.styleFrom(
                                           foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,
                                         ),
+                                        child: const Text("Inicie Sesión"),
                                       ),
                                     ),
                                   ],

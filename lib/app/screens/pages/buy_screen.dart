@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:proyecto/theme/theme_constants.dart';
-import 'package:proyecto/theme/theme_colors.dart';
-import 'package:proyecto/screens/screens.dart';
-import 'package:proyecto/clases/zapatillas.dart';
+import 'package:proyecto/app/theme/theme_constants.dart';
+import 'package:proyecto/app/theme/theme_colors.dart';
+import 'package:proyecto/app/screens/screens.dart';
+import 'package:proyecto/app/clases/zapatillas.dart';
 
 class BuyApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;

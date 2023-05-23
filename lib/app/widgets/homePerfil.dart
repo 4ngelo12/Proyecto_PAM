@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:proyecto/screens/screens.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:proyecto/services/firebase_service.dart';
-import 'package:proyecto/theme/theme_colors.dart';
+import 'package:proyecto/app/theme/theme_colors.dart';
 
 class Perfil extends StatefulWidget {
   final VoidCallback onChanged;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:proyecto/screens/screens.dart';
+import 'package:proyecto/app/screens/screens.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:proyecto/services/firebase_service.dart';
-import 'package:proyecto/theme/theme_colors.dart';
+import 'package:proyecto/app/services/firebase_service.dart';
+import 'package:proyecto/app/theme/theme_colors.dart';
 
 class Inicio extends StatefulWidget {
   final VoidCallback onChanged;

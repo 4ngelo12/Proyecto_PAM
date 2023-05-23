@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/screens/screens.dart';
+import 'package:proyecto/app/screens/screens.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -41,21 +41,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-/*
-@override
-Widget build(BuildContext context) {
-  return MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'Calzados Kevin',
-    initialRoute: 'login',
-    routes: {
-      'login':( _ )=>LoginScreen(),
-      'home':( _ )=>HomeScreen(),
-    },
-    theme: lighTheme,
-    darkTheme: darkTheme,
-    themeMode: ThemeManager().getThemeMode,
-  );
-}
-*/

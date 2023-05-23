@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:proyecto/theme/theme_constants.dart';
+import 'package:proyecto/app/theme/theme_constants.dart';
 
 class PruebaApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
@@ -21,7 +21,7 @@ class PruebaApp extends StatelessWidget {
         title: 'Inicio',
         theme: theme,
         darkTheme: darkTheme,
-        home: PruebaScreen(),
+        home: const PruebaScreen(),
       ),
     );
   }
