@@ -13,3 +13,16 @@ Future<List> getProductos() async {
 
   return lstProducts;
 }
+/*
+Future<List> getProductos1() async {
+  List lstProducts = [];
+  CollectionReference collectionReferenceProductos = db.collection('productos').doc(idUser);
+  QuerySnapshot queryProductos = await collectionReferenceProductos.get();
+
+  queryProductos.docs.forEach((documento) {
+    lstProducts.add(documento.data());
+  });
+
+  return lstProducts;
+}
+*/

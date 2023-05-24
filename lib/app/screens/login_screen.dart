@@ -60,6 +60,9 @@ class _LoginSreenPri extends StatefulWidget {
 }
 
 class _LoginScreen extends State<_LoginSreenPri> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+
   //final controller = LoginController();
   @override
   Widget build(BuildContext context) {
@@ -102,6 +105,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                   vertical: 40
                               ),
                               child: TextFormField(
+                                controller: emailController,
                                 autocorrect: false,
                                 keyboardType: TextInputType.emailAddress,
                                 style: TextStyle(
@@ -134,6 +138,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 25),
                               child: TextFormField(
+                                controller: passController,
                                 autocorrect: false,
                                 obscureText: true,
                                 style: TextStyle(
@@ -178,31 +183,35 @@ class _LoginScreen extends State<_LoginSreenPri> {
                             Padding(
                               padding: const EdgeInsets.all(30),
                               child: MaterialButton(
-                                  onPressed: () =>
-                                  loginForm.isLoading ? null : () async {
-                                    FocusScope.of(context).unfocus();
+                                  onPressed:loginForm.isLoading ? null : () async {
+                                      FocusScope.of(context).unfocus();
 
-                                    if( !loginForm.isValidForm() ) return;
-                                    loginForm.isLoading = true;
-                                    await Future.delayed(const Duration(seconds: 5 ));
-                                    loginForm.isLoading = false;
+                                      if (!loginForm.isValidForm()) return;
+                                      loginForm.isLoading = true;
+                                      await Future.delayed(
+                                          const Duration(seconds: 5));
+                                      loginForm.isLoading = false;
 
-                                    try {
-                                      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-                                          email: emailAddress,
-                                          password: password
-                                      );
-                                    } on FirebaseAuthException catch (e) {
-                                      if (e.code == 'user-not-found') {
-                                        print('No user found for that email.');
-                                      } else if (e.code == 'wrong-password') {
-                                        print('Wrong password provided for that user.');
+                                      try {
+                                        final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                                            email: emailController.text,
+                                            password: passController.text
+                                        );
+                                        if (credential != null) {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeApp(onChanged: widget
+                                                          .onChanged)));
+                                        }
+                                      } on FirebaseAuthException catch (e) {
+                                        if (e.code == 'user-not-found') {
+                                          print('No user found for that email.');
+                                        } else if (e.code == 'wrong-password') {
+                                          print('Wrong password provided for that user.');
+                                        }
                                       }
-                                    }
-
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => HomeApp(onChanged: widget.onChanged)));
-                                    },
+                                  },
                                   color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                                   disabledColor: AdaptiveTheme.of(context).mode.isDark ? Login.disableButtonDark : Login.disableButton,
                                   padding: const EdgeInsets.symmetric(

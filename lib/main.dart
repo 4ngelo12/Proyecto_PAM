@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proyecto/app/screens/screens.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
@@ -25,19 +26,34 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool isMaterial = true;
+  final fbinstance = FirebaseAuth.instance;
+
+  Widget _estadoSesion() {
+    fbinstance
+        .authStateChanges()
+        .listen((User? user) {
+      if (user == null) {
+        isMaterial = true;
+      } else {
+        isMaterial = false;
+      }
+    });
+
+    return isMaterial
+        ?  LoginApp(
+        savedThemeMode: widget.savedThemeMode,
+        onChanged: () => setState(() => isMaterial = false))
+        : HomeApp(
+        savedThemeMode: widget.savedThemeMode,
+        onChanged: () => setState(() => isMaterial = false)
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
         duration: const Duration(seconds: 1),
-        child:  isMaterial
-            ?  LoginApp(
-            savedThemeMode: widget.savedThemeMode,
-            onChanged: () => setState(() => isMaterial = false))
-            : HomeApp(
-            savedThemeMode: widget.savedThemeMode,
-            onChanged: () => setState(() => isMaterial = false)
-        ),
+        child: _estadoSesion(),
     );
   }
 }

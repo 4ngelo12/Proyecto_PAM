@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:proyecto/app/screens/login_screen.dart';
+import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:proyecto/app/theme/theme_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Perfil extends StatefulWidget {
   final VoidCallback onChanged;
@@ -14,9 +17,13 @@ class Perfil extends StatefulWidget {
 }
 
 class _PerfilScreen extends State<Perfil> {
+  final fbinstance = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+
+    final String? idUser = auth.currentUser?.uid;
+    return Column (
         children: [
           Container(color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
             child: Center(
@@ -76,7 +83,27 @@ class _PerfilScreen extends State<Perfil> {
                       )
                     ],
                   ),
-                  onTap: () {},
+                  onTap: () {
+
+                    fbinstance
+                        .authStateChanges()
+                        .listen((User? user) {
+                      if (user == null) {
+                        print('User is currently signed out!');
+                      } else {
+                        print('User is signed in!');
+                      }
+                    });
+                    fbinstance
+                        .authStateChanges()
+                        .listen((User? user) {
+                      if (user != null) {
+                        print(user.uid);
+                        getClientesId(idUser!);
+                      }
+                    });
+
+                  },
                 ),
                 const Padding(padding: EdgeInsets.only(bottom: 15)),
                 InkWell(
@@ -139,7 +166,24 @@ class _PerfilScreen extends State<Perfil> {
                   onTap: () {},
                 ),
                 const Padding(padding: EdgeInsets.only(bottom: 15)),
-                InkWell(
+                InkWell (
+                  onTap: () async{
+                    await FirebaseAuth.instance.signOut();
+                    fbinstance
+                        .authStateChanges()
+                        .listen((User? user) {
+                      if (user == null) {
+                        print('User is currently signed out!');
+                      } else {
+                        print('User is signed in!');
+                      }
+                    });
+                    Navigator.push(context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                LoginApp(onChanged: widget
+                                    .onChanged)));
+                  },
                   child: Row(
                     children: const [
                       Padding(padding: EdgeInsets.only(left: 65)),
@@ -156,7 +200,6 @@ class _PerfilScreen extends State<Perfil> {
                       )
                     ],
                   ),
-                  onTap: () {},
                 ),
               ],
             ),

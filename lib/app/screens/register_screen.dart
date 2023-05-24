@@ -4,7 +4,6 @@ import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:proyecto/app/theme/theme_constants.dart';
 import 'package:proyecto/app/theme/theme_colors.dart';
 import 'package:proyecto/app/screens/screens.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class RegisterApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
@@ -268,13 +267,9 @@ class _RegisterScreen extends State<RegisterScreen> {
                                 Padding(
                                   padding: const EdgeInsets.all(30),
                                   child: MaterialButton(
-                                      onPressed: () {
+                                      onPressed: () async{
                                         if (keyForm.currentState!.validate()) {
                                           if (passController.value == pass2Controller.value) {
-                                            auth.FirebaseAuth.instance.createUserWithEmailAndPassword(
-                                                email: emailController.text,
-                                                password: passController.text
-                                            );
                                             add(nameController.text, lastNameController.text, phoneController.text,
                                                 emailController.text, passController.text);
 
@@ -283,6 +278,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                             phoneController.text = "";
                                             emailController.text = "";
                                             passController.text = "";
+                                            pass2Controller.text = "";
                                           }
                                         }
                                       },
