@@ -12,8 +12,6 @@ Future<void> add(String nombre, String apellido, String telefono, String correo,
 
   String? idCli = auth.currentUser?.uid;
 
-  print("general "+ idCli!);
-
   Map<String, dynamic> dataUser = {
     'nombre': nombre,
     'apellido': apellido,
@@ -38,4 +36,9 @@ Future<List> getClientesId(String id) async {
   print(lstClientes);
 
   return lstClientes;
+}
+
+void recoveryPassword(String mail) async {
+  await auth
+      .sendPasswordResetEmail(email: mail);
 }

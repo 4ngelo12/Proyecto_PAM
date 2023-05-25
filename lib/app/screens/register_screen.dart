@@ -49,6 +49,20 @@ class _RegisterScreen extends State<RegisterScreen> {
   TextEditingController passController = TextEditingController();
   TextEditingController pass2Controller = TextEditingController();
 
+  bool _estado = true;
+
+  void _validacion() {
+    setState(() {
+      if (_estado) {
+        _estado = false;
+      } else {
+        _estado = true;
+      }
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
@@ -79,7 +93,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                       children: [
                         Form(
                             key: keyForm,
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            autovalidateMode: _estado ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
                             child: Column(
                               children: [
                                 Padding(
@@ -163,7 +177,16 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     ),
                                     validator: ( String? value ) {
                                       String exp = r'^[0-9]{9}$';
-                                      return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el teléfono';
+                                      if (value!.length == 9)
+                                      {
+                                        if (RegExp(exp).hasMatch(value  ?? '')) {
+                                          return null;
+                                        } else {
+                                          return 'No se admiten esos caracteres en el teléfono';
+                                        }
+                                      } else {
+                                        return "Se requieren 9 digitos para el teléfono";
+                                      }
                                     },
                                   ),
                                 ),
@@ -268,11 +291,12 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   padding: const EdgeInsets.all(30),
                                   child: MaterialButton(
                                       onPressed: () async{
+                                        _validacion();
                                         if (keyForm.currentState!.validate()) {
                                           if (passController.value == pass2Controller.value) {
-                                            add(nameController.text, lastNameController.text, phoneController.text,
+                                            /*add(nameController.text, lastNameController.text, phoneController.text,
                                                 emailController.text, passController.text);
-
+*/
                                             nameController.text = "";
                                             lastNameController.text = "";
                                             phoneController.text = "";

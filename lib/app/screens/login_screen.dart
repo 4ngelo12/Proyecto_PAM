@@ -170,7 +170,11 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                 alignment: AlignmentDirectional.centerEnd,
                                 width: MediaQuery.of(context).size.width / 1.5,
                                 child: TextButton(
-                                  onPressed: () {} ,
+                                  onPressed: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) =>
+                                            RecoveryApp(onChanged: widget.onChanged)));
+                                  } ,
                                   style: TextButton.styleFrom(
                                     foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,
                                   ),
