@@ -206,7 +206,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       HomeApp(onChanged: widget
-                                                          .onChanged)));
+                                                          .onChanged, pocision: 0,)));
                                         }
                                       } on FirebaseAuthException catch (e) {
                                         if (e.code == 'user-not-found') {

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:proyecto/app/screens/login_screen.dart';
+import 'package:proyecto/app/screens/screens.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:proyecto/app/theme/theme_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -84,6 +84,9 @@ class _PerfilScreen extends State<Perfil> {
                     ],
                   ),
                   onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) =>
+                            EditUserApp(onChanged: widget.onChanged)));
 
                     fbinstance
                         .authStateChanges()

@@ -45,7 +45,9 @@ class _MyAppState extends State<MyApp> {
         onChanged: () => setState(() => isMaterial = false))
         : HomeApp(
         savedThemeMode: widget.savedThemeMode,
-        onChanged: () => setState(() => isMaterial = false)
+        pocision: 0,
+        onChanged: () => setState(() => isMaterial = false,
+        )
     );
   }
 

@@ -7,10 +7,12 @@ import 'package:proyecto/app/widgets/widgets.dart';
 class HomeApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
   final VoidCallback onChanged;
+  final int pocision;
 
   const HomeApp({
     super.key,
     this.savedThemeMode,
+    required this.pocision,
     required this.onChanged,
   });
 
@@ -25,7 +27,7 @@ class HomeApp extends StatelessWidget {
         title: 'Inicio',
         theme: theme,
         darkTheme: darkTheme,
-        home: HomeScreen(onChanged: onChanged),
+        home: HomeScreen(pocision: pocision, onChanged: onChanged),
       ),
     );
   }
@@ -33,8 +35,9 @@ class HomeApp extends StatelessWidget {
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback onChanged;
+  final int pocision;
 
-  const HomeScreen({super.key, required this.onChanged});
+  const HomeScreen({super.key, required this.pocision, required this.onChanged});
 
   @override
   _HomeScreen createState() => _HomeScreen();
@@ -43,7 +46,17 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreen extends State<HomeScreen> {
   late Icon iconTheme;
   int _elementoSeleccionado = 0;
-  late Widget contenido = Inicio(onChanged: widget.onChanged);
+
+
+  Widget e () {
+    if (_elementoSeleccionado == 0) {
+      return Inicio(onChanged: widget.onChanged);
+    } else {
+      return Perfil(onChanged: widget.onChanged);
+    }
+  }
+
+  late Widget contenido = e();
 
   Icon _themeIcon(newValue) {
       if (newValue) {
@@ -73,8 +86,6 @@ class _HomeScreen extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
-    
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -141,7 +152,7 @@ class _HomeScreen extends State<HomeScreen> {
             label: "Perfil",
           ),
         ],
-        currentIndex: _elementoSeleccionado,
+        currentIndex: _elementoSeleccionado = widget.pocision,
         onTap: _itemUsado,
       ),
     );
