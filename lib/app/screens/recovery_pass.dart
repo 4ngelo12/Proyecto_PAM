@@ -48,6 +48,19 @@ class _RecoveryScreen extends State<RecoveryScreen> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
+    bool _estado = true;
+    bool _error = false;
+    String _mensaje = '';
+
+    void _validacion() {
+      setState(() {
+        if (_estado) {
+          _estado = false;
+        } else {
+          _estado = true;
+        }
+      });
+    }
 
     return Scaffold(
       body: Center(
@@ -95,7 +108,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                   ),
                   Form(
                       key: keyForm,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      autovalidateMode: _estado ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
                       child: Column(
                         children: [
                           Padding(
@@ -107,7 +120,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                               controller: emailController,
                               autocorrect: false,
                               style: TextStyle(
-                                color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
+                                color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
                               ),
                               decoration: InputDecoration(
                                   hintText: "username@correo.com",
@@ -117,7 +130,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                                   filled: true,
                                   border: InputBorder.none,
                                   labelStyle: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
+                                      color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
                                       fontWeight: FontWeight.bold
                                   )
                               ),
@@ -131,15 +144,15 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                             padding: const EdgeInsets.all(10),
                             child: TextButton(
                               onPressed: () {
-                                  if (keyForm.currentState!.validate()) {
-                                    recoveryPassword(emailController.text);
-                                  }
-
+                                _validacion();
+                                if (keyForm.currentState!.validate()) {
+                                  recoveryPassword(emailController.text);
+                                }
                               },
                               style: TextButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 15),
                                 backgroundColor: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
-                                foregroundColor: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
+                                foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)
                                   )

@@ -13,7 +13,7 @@ class EditUserApp extends StatelessWidget {
   const EditUserApp({
     super.key,
     this.savedThemeMode,
-    required this.onChanged,
+    required this.onChanged
   });
 
   @override

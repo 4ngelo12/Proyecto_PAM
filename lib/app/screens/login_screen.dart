@@ -85,7 +85,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
 
     return Scaffold(
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 60),
+        padding: const EdgeInsets.only(top: 40, bottom: 20),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -237,6 +237,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                       loginForm.isLoading = false;
 
                                       try {
+
                                         final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
                                             email: emailController.text,
                                             password: passController.text

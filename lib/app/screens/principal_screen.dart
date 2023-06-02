@@ -100,7 +100,7 @@ class _HomeScreen extends State<HomeScreen> {
                         }
                       });
                     },
-                    icon: _themeIcon(AdaptiveTheme.of(context).mode.isLight)),
+                    icon: _themeIcon(AdaptiveTheme.of(context).mode.isSystem)),
                 const Padding(padding:EdgeInsets.all(10)),
                 Image.asset(
                     "Assets/Images/logo.png",

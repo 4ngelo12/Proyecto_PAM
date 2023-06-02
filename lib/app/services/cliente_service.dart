@@ -49,7 +49,6 @@ Future<List> getClientesId(String id) async {
   return lstClientes;
 }
 
-
 Future<void> editData(String uId, String nombre, String apellido, String telefono, String correo) async{
 
   Map<String, dynamic> dataUser = {
@@ -60,7 +59,7 @@ Future<void> editData(String uId, String nombre, String apellido, String telefon
   };
 
   final cliente = db.collection('clientes').doc(uId);
-  await cliente.set(dataUser);
+  await cliente.update(dataUser);
   await user?.updateEmail(correo);
 }
 

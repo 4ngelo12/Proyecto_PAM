@@ -78,7 +78,7 @@ class _InicioScreen extends State<Inicio> {
                                 child: IconButton(
                                   onPressed: () {
                                     Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => BuyApp(onChanged: widget.onChanged)));
+                                        MaterialPageRoute(builder: (context) => BuyApp(onChanged: widget.onChanged, idProd: snapshot.data?[index]['idProd'])));
                                   },
                                   icon: const Icon(
                                       Icons.shopping_cart,
@@ -167,7 +167,7 @@ class _InicioScreen extends State<Inicio> {
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => BuyApp(onChanged: widget.onChanged)));
+                                        MaterialPageRoute(builder: (context) => BuyApp(onChanged: widget.onChanged, idProd: snapshot.data?[index]['idProd'])));
                                   },
                                   child:  Padding(
                                     padding: const EdgeInsets.all(10) ,
@@ -220,7 +220,7 @@ class _InicioScreen extends State<Inicio> {
                                       IconButton(
                                           onPressed: () {
                                             Navigator.push(context,
-                                                MaterialPageRoute(builder: (context) => BuyApp(onChanged: widget.onChanged)));
+                                                MaterialPageRoute(builder: (context) => BuyApp(onChanged: widget.onChanged, idProd: snapshot.data?[index]['idProd'])));
                                           },
                                           icon: const Icon(
                                             CupertinoIcons.cart_fill_badge_plus,

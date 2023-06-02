@@ -13,16 +13,12 @@ Future<List> getProductos() async {
 
   return lstProducts;
 }
-/*
-Future<List> getProductos1() async {
-  List lstProducts = [];
-  CollectionReference collectionReferenceProductos = db.collection('productos').doc(idUser);
-  QuerySnapshot queryProductos = await collectionReferenceProductos.get();
 
-  queryProductos.docs.forEach((documento) {
-    lstProducts.add(documento.data());
-  });
+Future<List> getProductoId(String pId) async {
+  List lstProducts = [];
+  final producto = await db.collection('productos').doc(pId).get();
+
+  lstProducts.add(producto.data());
 
   return lstProducts;
 }
-*/
