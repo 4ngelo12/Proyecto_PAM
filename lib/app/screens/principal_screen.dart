@@ -46,17 +46,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreen extends State<HomeScreen> {
   late Icon iconTheme;
   int _elementoSeleccionado = 0;
-
-
-  Widget e () {
-    if (_elementoSeleccionado == 0) {
-      return Inicio(onChanged: widget.onChanged);
-    } else {
-      return Perfil(onChanged: widget.onChanged);
-    }
-  }
-
-  late Widget contenido = e();
+  late Widget contenido = Inicio(onChanged: widget.onChanged);
 
   Icon _themeIcon(newValue) {
       if (newValue) {
@@ -86,6 +76,7 @@ class _HomeScreen extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -123,7 +114,6 @@ class _HomeScreen extends State<HomeScreen> {
             )
           ],
         ),
-
       ),
       body: contenido,
       bottomNavigationBar: BottomNavigationBar(
@@ -152,7 +142,7 @@ class _HomeScreen extends State<HomeScreen> {
             label: "Perfil",
           ),
         ],
-        currentIndex: _elementoSeleccionado = widget.pocision,
+        currentIndex: _elementoSeleccionado,
         onTap: _itemUsado,
       ),
     );

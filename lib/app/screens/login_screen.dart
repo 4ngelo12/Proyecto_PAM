@@ -63,6 +63,20 @@ class _LoginScreen extends State<_LoginSreenPri> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
+  bool _estado = true;
+  bool _error = false;
+  String _mensaje = '';
+
+  void _validacion() {
+    setState(() {
+      if (_estado) {
+        _estado = false;
+      } else {
+        _estado = true;
+      }
+    });
+  }
+
   //final controller = LoginController();
   @override
   Widget build(BuildContext context) {
@@ -96,7 +110,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                   children: [
                     Form(
                         key: loginForm.formKey,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autovalidateMode: _estado ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
                         child: Column(
                           children: [
                             Padding(
@@ -164,6 +178,31 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                 },
                               ),
                             ),
+
+                            _error ? Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 15,
+                                  horizontal: 25
+                              ),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10,
+                                    horizontal: 15
+                                ),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.red
+                                ),
+                                child: Text(
+                                  _mensaje,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.clip,
+                                ),
+                              ),
+                            ): const Text(""),
                             Padding(
                               padding: const EdgeInsets.all(5),
                               child: Container(
@@ -188,12 +227,13 @@ class _LoginScreen extends State<_LoginSreenPri> {
                               padding: const EdgeInsets.all(30),
                               child: MaterialButton(
                                   onPressed:loginForm.isLoading ? null : () async {
+                                      _validacion();
                                       FocusScope.of(context).unfocus();
 
                                       if (!loginForm.isValidForm()) return;
                                       loginForm.isLoading = true;
                                       await Future.delayed(
-                                          const Duration(seconds: 5));
+                                          const Duration(seconds: 2));
                                       loginForm.isLoading = false;
 
                                       try {
@@ -206,14 +246,22 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       HomeApp(onChanged: widget
-                                                          .onChanged, pocision: 0,)));
+                                                          .onChanged, pocision: 0)));
                                         }
                                       } on FirebaseAuthException catch (e) {
-                                        if (e.code == 'user-not-found') {
-                                          print('No user found for that email.');
-                                        } else if (e.code == 'wrong-password') {
-                                          print('Wrong password provided for that user.');
-                                        }
+                                        setState(() {
+                                          if (e.code == 'user-not-found') {
+                                            _mensaje = 'El correo ingresado no esta registrado';
+                                            _error = true;
+                                          } else if (e.code == 'wrong-password') {
+                                            _mensaje = 'La contraseña es incorrecta';
+                                            _error = true;
+                                          } else {
+                                            _mensaje = '';
+                                            _error = false;
+                                          }
+
+                                        });
                                       }
                                   },
                                   color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,

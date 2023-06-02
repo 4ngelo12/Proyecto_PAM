@@ -59,7 +59,7 @@ class _InicioScreen extends State<Inicio> {
                           children: [
                             Text(
                               'S/.${snapshot.data?[index]['precio']}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16
                               ),
                             ),
@@ -96,7 +96,7 @@ class _InicioScreen extends State<Inicio> {
               ),
             );
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -152,7 +152,7 @@ class _InicioScreen extends State<Inicio> {
                               right: 25,
                               top: 10
                           ),
-                          margin: EdgeInsets.all(8),
+                          margin: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                             borderRadius: BorderRadius.circular(10),
@@ -160,6 +160,10 @@ class _InicioScreen extends State<Inicio> {
                           child: Column(
                             children: [
                               Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
+                                ),
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.push(context,
@@ -169,10 +173,6 @@ class _InicioScreen extends State<Inicio> {
                                     padding: const EdgeInsets.all(10) ,
                                     child: Image.asset("${snapshot.data?[index]['imagen']}"),
                                   ),
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                                 ),
                               ),
                               const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
@@ -205,13 +205,13 @@ class _InicioScreen extends State<Inicio> {
                                   children: [
                                     Text(
                                       'S/.${snapshot.data?[index]['precio']}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(5),
                                       decoration: BoxDecoration(
                                           color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                                           borderRadius: BorderRadius.circular(10)
@@ -222,7 +222,7 @@ class _InicioScreen extends State<Inicio> {
                                             Navigator.push(context,
                                                 MaterialPageRoute(builder: (context) => BuyApp(onChanged: widget.onChanged)));
                                           },
-                                          icon: Icon(
+                                          icon: const Icon(
                                             CupertinoIcons.cart_fill_badge_plus,
                                             size: 25,
                                           )
@@ -236,7 +236,7 @@ class _InicioScreen extends State<Inicio> {
                         );
                       });
                 } else {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }

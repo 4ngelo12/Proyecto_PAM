@@ -62,7 +62,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                           MaterialPageRoute(builder: (context) =>
                               LoginApp(onChanged: widget.onChanged)));
                     },
-                    icon: Icon(Icons.arrow_back_ios_new)
+                    icon: const Icon(Icons.arrow_back_ios_new)
                 )
               ],
             ),
@@ -71,7 +71,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                   color: AdaptiveTheme.of(context).mode.isDark ? Login.containerDark : Login.container,
                   borderRadius: BorderRadius.circular(5)
               ),
-              margin: EdgeInsets.all(40),
+              margin: const EdgeInsets.all(40),
               child: Column(
                 children: [
 
@@ -128,7 +128,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             child: TextButton(
                               onPressed: () {
                                   if (keyForm.currentState!.validate()) {
@@ -136,19 +136,19 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                                   }
 
                               },
-                              child: const Text(
-                                "Enviar E-mail",
-                                style: TextStyle(
-                                  fontSize: 20
-                                ),
-                              ),
                               style: TextButton.styleFrom(
-                                padding: EdgeInsets.symmetric(horizontal: 45, vertical: 15),
+                                padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 15),
                                 backgroundColor: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                                 foregroundColor: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)
                                   )
+                              ),
+                              child: const Text(
+                                "Enviar E-mail",
+                                style: TextStyle(
+                                  fontSize: 20
+                                ),
                               ),
                             ),
                           )

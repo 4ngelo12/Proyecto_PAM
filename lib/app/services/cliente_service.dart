@@ -3,8 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 final auth = FirebaseAuth.instance;
+final user = auth.currentUser;
 
-Future<void> add(String nombre, String apellido, String telefono, String correo, String password) async {
+Future<void> addCli(String nombre, String apellido, String telefono, String correo, String password) async {
   await auth.createUserWithEmailAndPassword(
       email: correo,
       password: password
@@ -13,19 +14,30 @@ Future<void> add(String nombre, String apellido, String telefono, String correo,
   String? idCli = auth.currentUser?.uid;
 
   Map<String, dynamic> dataUser = {
-    'nombre': nombre,
     'apellido': apellido,
-    'telefono': telefono,
     'email': correo,
-    'password': password,
+    'nombre': nombre,
+    'telefono': telefono,
   };
 
-  db.collection('clientes').doc(idCli).set(dataUser);
-  db.collection('clientes').doc(idCli).collection('favoritos').add({
+  await db.collection('clientes').doc(idCli).set(dataUser);
+  await db.collection('clientes').doc(idCli).collection('favoritos').add({
     'idProd': '',
   });
 
   auth.signOut();
+}
+
+Future<List> getClientes() async{
+  List lstClientes = [];
+  CollectionReference collectionReferenceCli = db.collection('clientes');
+  QuerySnapshot queryCli = await collectionReferenceCli.get();
+
+  for (var element in queryCli.docs) {
+    lstClientes.add(element.data());
+  }
+
+  return lstClientes;
 }
 
 Future<List> getClientesId(String id) async {
@@ -33,9 +45,23 @@ Future<List> getClientesId(String id) async {
   final docUser = await db.collection('clientes').doc(id).get();
 
   lstClientes.add(docUser.data());
-  print(lstClientes);
 
   return lstClientes;
+}
+
+
+Future<void> editData(String uId, String nombre, String apellido, String telefono, String correo) async{
+
+  Map<String, dynamic> dataUser = {
+    'nombre': nombre,
+    'apellido': apellido,
+    'telefono': telefono,
+    'email': correo,
+  };
+
+  final cliente = db.collection('clientes').doc(uId);
+  await cliente.set(dataUser);
+  await user?.updateEmail(correo);
 }
 
 void recoveryPassword(String mail) async {

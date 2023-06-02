@@ -50,6 +50,7 @@ class _RegisterScreen extends State<RegisterScreen> {
   TextEditingController pass2Controller = TextEditingController();
 
   bool _estado = true;
+  bool _exito = false;
 
   void _validacion() {
     setState(() {
@@ -60,8 +61,6 @@ class _RegisterScreen extends State<RegisterScreen> {
       }
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -287,6 +286,19 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     },
                                   ),
                                 ),
+                                _exito ? Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+                                  decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  child: const Text(
+                                    "Registrado Correctamente",
+                                    style: TextStyle(
+                                        fontSize: 20
+                                    ),
+                                  ),
+                                ) : const Text(""),
                                 Padding(
                                   padding: const EdgeInsets.all(30),
                                   child: MaterialButton(
@@ -294,9 +306,17 @@ class _RegisterScreen extends State<RegisterScreen> {
                                         _validacion();
                                         if (keyForm.currentState!.validate()) {
                                           if (passController.value == pass2Controller.value) {
-                                            /*add(nameController.text, lastNameController.text, phoneController.text,
+                                            addCli(nameController.text, lastNameController.text, phoneController.text,
                                                 emailController.text, passController.text);
-*/
+
+                                            setState(() {
+                                              if (_exito) {
+                                                _exito = false;
+                                              } else {
+                                                _exito = true;
+                                              }
+                                            });
+
                                             nameController.text = "";
                                             lastNameController.text = "";
                                             phoneController.text = "";
@@ -351,7 +371,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                 )
                               ],
                             )
-                        )
+                        ),
                       ],
                     ),
                   ),

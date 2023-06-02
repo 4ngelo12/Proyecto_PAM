@@ -61,7 +61,7 @@ class _BuyScreen extends State<BuyScreen> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) =>
-                                HomeApp(onChanged: widget.onChanged, pocision: 1)));
+                                HomeApp(onChanged: widget.onChanged, pocision: 0)));
                       },
                       child: const Icon(
                         Icons.arrow_back_ios_new,
