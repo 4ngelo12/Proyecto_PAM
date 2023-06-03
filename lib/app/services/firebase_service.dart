@@ -7,9 +7,9 @@ Future<List> getProductos() async {
   CollectionReference collectionReferenceProductos = db.collection('productos');
   QuerySnapshot queryProductos = await collectionReferenceProductos.get();
 
-  queryProductos.docs.forEach((documento) {
+  for (var documento in queryProductos.docs) {
     lstProducts.add(documento.data());
-  });
+  }
 
   return lstProducts;
 }
@@ -21,4 +21,16 @@ Future<List> getProductoId(String pId) async {
   lstProducts.add(producto.data());
 
   return lstProducts;
+}
+
+Future<List> getTallas(String pId) async{
+  List lstTallas = [];
+
+  final tallas = await db.collection('productos').doc(pId).collection('talla').get();
+
+  for (var documento in tallas.docs) {
+    lstTallas.add(documento.data());
+  }
+
+  return lstTallas;
 }

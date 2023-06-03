@@ -4,6 +4,9 @@ class General {
   static const Color generalBlue = Color(0xff1E90FF);
   static const Color generalBlueDark = Color(0xff2E86C1);
 
+  static const Color generalSelected = Color(0xff1cdef8);
+  static const Color generalSelectedDark = Color(0xff2eb5c1);
+
   static const Color container = Color(0xffF5F5F5);
   static const Color containerDark = Color(0xff434E5A);
 }
