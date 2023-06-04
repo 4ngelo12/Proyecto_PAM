@@ -84,8 +84,6 @@ Future<void> addFavoriteProduct(String pId, String uId) async{
           'idProd': pId,
         });
         break;
-      } else {
-        break;
       }
     }
   } else {
@@ -111,14 +109,12 @@ Future<void> deleteFavoriteProduct(String pId, String uId) async {
     lstCli.add(favoritos);
   }
 
-  for (var element in lstCli) {
-    if (element['idProd'] == pId) {
-      await db.collection('clientes').doc(uId).
-      collection('favoritos').doc(element['fid']).delete();
-    } else {
-      break;
+    for (var element in lstCli) {
+      if (element['idProd'] == pId) {
+        await db.collection('clientes').doc(uId).
+        collection('favoritos').doc(element['fid']).delete();
+      }
     }
-  }
 }
 
 Future<bool> isFavorite(String pId, String uId) async {

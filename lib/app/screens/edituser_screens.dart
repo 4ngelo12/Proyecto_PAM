@@ -89,7 +89,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                         MaterialPageRoute(builder: (context) =>
                                             HomeApp(onChanged: widget.onChanged, pocision: 2)));
                                   },
-                                  icon: Icon(Icons.arrow_back_ios_new)
+                                  icon: const Icon(Icons.arrow_back_ios_new)
                               )
                             ],
                           ),

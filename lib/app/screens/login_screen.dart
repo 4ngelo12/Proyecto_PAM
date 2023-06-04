@@ -195,7 +195,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                 ),
                                 child: Text(
                                   _mensaje,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18,
                                   ),
                                   textAlign: TextAlign.center,

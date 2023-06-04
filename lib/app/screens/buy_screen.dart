@@ -5,8 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto/app/providers/favorito_provider.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
-import 'package:proyecto/app/theme/theme_constants.dart';
-import 'package:proyecto/app/theme/theme_colors.dart';
+import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/screens/screens.dart';
 import 'package:proyecto/app/services/firebase_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -72,7 +71,7 @@ class BuyScreen extends StatefulWidget {
 class _BuyScreen extends State<BuyScreen> {
   bool? _result;
   bool _liked = false;
-  Icon _favorito = const Icon(Icons.favorite_border, color: Colors.white, size: 30);
+  late Widget _favorito;
 
   int? _numCantidad = 0; //Cantidad de elementos en la base de datos
   int _cantidad = 1; //Productos
@@ -102,13 +101,12 @@ class _BuyScreen extends State<BuyScreen> {
   void _cambiarEstado() {
     setState(() {
       if (_liked) {
-        _favorito = const Icon(Icons.favorite, color: Colors.red, size: 30);
         _liked = false;
       }
       else {
-        _favorito = const Icon(Icons.favorite_border, color: Colors.white, size: 30);
         _liked = true;
       }
+      _favorito = _liked ?  const Icon(Icons.favorite, color: Colors.red, size: 30) : const Icon(Icons.favorite_border, color: Colors.white, size: 30);
       _liked ? addFavoriteProduct(widget.idProd, user!.uid) : deleteFavoriteProduct(widget.idProd, user!.uid);
     });
   }
@@ -133,6 +131,10 @@ class _BuyScreen extends State<BuyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _favorito = _result != null
+        ? _liked! ?  const Icon(Icons.favorite, color: Colors.red, size: 30) : const Icon(Icons.favorite_border, color: Colors.white, size: 30)
+        : const CircularProgressIndicator();
+
     return Scaffold(
       body: SafeArea(
               child: SingleChildScrollView(
@@ -156,9 +158,7 @@ class _BuyScreen extends State<BuyScreen> {
                           ),
                           IconButton(
                               onPressed: _cambiarEstado,
-                              icon: _result != null
-                                  ? _result! ?  const Icon(Icons.favorite, color: Colors.red, size: 30) : const Icon(Icons.favorite_border, color: Colors.white, size: 30)
-                                  : CircularProgressIndicator()
+                              icon: _favorito
                           ),
                         ],
                       ),
@@ -328,7 +328,7 @@ class _BuyScreen extends State<BuyScreen> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(top: 25),
+                                    padding: const EdgeInsets.only(top: 25),
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
@@ -344,7 +344,7 @@ class _BuyScreen extends State<BuyScreen> {
                                                   }
                                                 });
                                               },
-                                              icon: Icon(FontAwesomeIcons.squareMinus)
+                                              icon: const Icon(FontAwesomeIcons.squareMinus)
                                           ),
                                           Text("$_cantidad"),
                                           IconButton(
@@ -359,7 +359,7 @@ class _BuyScreen extends State<BuyScreen> {
                                                   }
                                                 });
                                               },
-                                              icon: Icon(FontAwesomeIcons.squarePlus)
+                                              icon: const Icon(FontAwesomeIcons.squarePlus)
                                           )
                                         ],
                                       ),
@@ -371,7 +371,7 @@ class _BuyScreen extends State<BuyScreen> {
                               Row(
                                 children: [
                                   Padding(
-                                      padding: EdgeInsets.only(top: 15),
+                                      padding: const EdgeInsets.only(top: 15),
                                       child: Text(
                                         "Unidades disponibles: ${_total}",
                                         style: TextStyle(
