@@ -93,14 +93,14 @@ class _HomeScreen extends State<HomeScreen> {
                       setState(() {
                         if (AdaptiveTheme.of(context).mode.isLight) {
                           AdaptiveTheme.of(context).setDark();
-                          iconTheme = const Icon(Icons.light_mode);
+                          iconTheme = const Icon(Icons.dark_mode);
                         } else {
                           AdaptiveTheme.of(context).setLight();
-                          iconTheme = const Icon(Icons.dark_mode);
+                          iconTheme = const Icon(Icons.light_mode);
                         }
                       });
                     },
-                    icon: _themeIcon(AdaptiveTheme.of(context).mode.isSystem)),
+                    icon: _themeIcon(AdaptiveTheme.of(context).mode.isDark)),
                 const Padding(padding:EdgeInsets.all(10)),
                 Image.asset(
                     "Assets/Images/logo.png",

@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:proyecto/app/providers/favorito_provider.dart';
+import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:proyecto/app/theme/theme_constants.dart';
 import 'package:proyecto/app/theme/theme_colors.dart';
 import 'package:proyecto/app/screens/screens.dart';
 import 'package:proyecto/app/services/firebase_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+final user = FirebaseAuth.instance.currentUser;
 
 class BuyApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
@@ -30,7 +36,24 @@ class BuyApp extends StatelessWidget {
         title: 'Comprar',
         theme: theme,
         darkTheme: darkTheme,
-        home: BuyScreen(onChanged: onChanged, idProd: idProd),
+        home: BuyScreenProv(onChanged: onChanged, idProd: idProd),
+      ),
+    );
+  }
+}
+
+class BuyScreenProv extends StatelessWidget {
+  final VoidCallback onChanged;
+  final String idProd;
+
+  const BuyScreenProv({super.key, required this.onChanged, required this.idProd});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ChangeNotifierProvider(
+          create: ( _ ) => FavoriteProvider(),
+          child:BuyScreen(onChanged: onChanged, idProd: idProd)
       ),
     );
   }
@@ -47,12 +70,48 @@ class BuyScreen extends StatefulWidget {
 }
 
 class _BuyScreen extends State<BuyScreen> {
+  bool? _result;
+  bool _liked = false;
+  Icon _favorito = const Icon(Icons.favorite_border, color: Colors.white, size: 30);
+
   int? _numCantidad = 0; //Cantidad de elementos en la base de datos
   int _cantidad = 1; //Productos
   int _total = 0; //Unidades disponibles
 
   List<bool> isSelected = []; // Lista de estados de selección
   List<Color> buttonColors = []; // Lista de colores de los botones
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Cargar el resultado al ingresar
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    // Obtener el resultado del Future<bool>
+    bool result = await isFavorite(widget.idProd, user!.uid);
+
+    // Actualizar el estado con el resultado
+    setState(() {
+      _result = result;
+      _liked = result;
+    });
+  }
+
+  void _cambiarEstado() {
+    setState(() {
+      if (_liked) {
+        _favorito = const Icon(Icons.favorite, color: Colors.red, size: 30);
+        _liked = false;
+      }
+      else {
+        _favorito = const Icon(Icons.favorite_border, color: Colors.white, size: 30);
+        _liked = true;
+      }
+      _liked ? addFavoriteProduct(widget.idProd, user!.uid) : deleteFavoriteProduct(widget.idProd, user!.uid);
+    });
+  }
 
   rellenar(int cant) {
     setState(() {
@@ -89,22 +148,17 @@ class _BuyScreen extends State<BuyScreen> {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) =>
                                       HomeApp(onChanged: widget.onChanged, pocision: 0)));
-                            },
+                              },
                             child: const Icon(
                               Icons.arrow_back_ios_new,
                               size: 30,
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-
-                              });
-                            },
-                            child: const Icon(
-                              CupertinoIcons.heart,
-                              size: 30,
-                            ),
+                          IconButton(
+                              onPressed: _cambiarEstado,
+                              icon: _result != null
+                                  ? _result! ?  const Icon(Icons.favorite, color: Colors.red, size: 30) : const Icon(Icons.favorite_border, color: Colors.white, size: 30)
+                                  : CircularProgressIndicator()
                           ),
                         ],
                       ),
@@ -337,6 +391,7 @@ class _BuyScreen extends State<BuyScreen> {
                 ),
               ),
             ),
+
         bottomNavigationBar: Container(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,

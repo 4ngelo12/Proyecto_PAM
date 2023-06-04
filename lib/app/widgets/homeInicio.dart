@@ -220,7 +220,9 @@ class _InicioScreen extends State<Inicio> {
                                       IconButton(
                                           onPressed: () {
                                             Navigator.push(context,
-                                                MaterialPageRoute(builder: (context) => BuyApp(onChanged: widget.onChanged, idProd: snapshot.data?[index]['idProd'])));
+                                                MaterialPageRoute(builder: (context) =>
+                                                    BuyApp(onChanged: widget.onChanged,
+                                                        idProd: snapshot.data?[index]['idProd'])));
                                           },
                                           icon: const Icon(
                                             CupertinoIcons.cart_fill_badge_plus,

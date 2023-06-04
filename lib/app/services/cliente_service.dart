@@ -1,3 +1,6 @@
+import 'dart:html';
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -61,6 +64,72 @@ Future<void> editData(String uId, String nombre, String apellido, String telefon
   final cliente = db.collection('clientes').doc(uId);
   await cliente.update(dataUser);
   await user?.updateEmail(correo);
+}
+
+Future<void> addFavoriteProduct(String pId, String uId) async{
+  List lstCli = [];
+
+  final docCli = await db.collection('clientes').doc(uId).
+  collection('favoritos').get();
+
+  for (var element in docCli.docs) {
+    lstCli.add(element.data());
+  }
+
+  if (lstCli.isNotEmpty) {
+    for (var element in lstCli) {
+      if (element['idProd'] != pId) {
+        await db.collection('clientes').doc(uId).
+        collection('favoritos').add({
+          'idProd': pId,
+        });
+        break;
+      } else {
+        break;
+      }
+    }
+  } else {
+    await db.collection('clientes').doc(uId).
+    collection('favoritos').add({
+      'idProd': pId,
+    });
+  }
+}
+
+Future<void> deleteFavoriteProduct(String pId, String uId) async {
+  List lstCli = [];
+
+  final docCli = await db.collection('clientes').doc(uId).
+  collection('favoritos').get();
+
+  for (var e in docCli.docs) {
+    final Map<String, dynamic> data = e.data();
+    final favoritos = {
+      'idProd': data['idProd'],
+      'fid': e.id
+    };
+    lstCli.add(favoritos);
+  }
+
+  for (var element in lstCli) {
+    if (element['idProd'] == pId) {
+      await db.collection('clientes').doc(uId).
+      collection('favoritos').doc(element['fid']).delete();
+    } else {
+      break;
+    }
+  }
+}
+
+Future<bool> isFavorite(String pId, String uId) async {
+    return await db.collection('clientes').doc(uId).collection('favoritos').
+    where('idProd', isEqualTo: pId).get().then((querySnapshot) {
+      if (querySnapshot.size > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    });
 }
 
 void recoveryPassword(String mail) async {
