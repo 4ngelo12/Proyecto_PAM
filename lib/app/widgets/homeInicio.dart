@@ -171,7 +171,7 @@ class _InicioScreen extends State<Inicio> {
                                   },
                                   child:  Padding(
                                     padding: const EdgeInsets.all(10) ,
-                                    child: Image.asset("${snapshot.data?[index]['imagen']}"),
+                                    child: Image.network("${snapshot.data?[index]['imagen']}"),
                                   ),
                                 ),
                               ),

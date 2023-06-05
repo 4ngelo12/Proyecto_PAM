@@ -138,7 +138,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                                 )
                                             ),
                                             validator: ( String? value ) {
-                                              String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?<!\s)$';
+                                              String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{1,5}(?<!\s)$';
                                               return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el nombre';
                                             },
                                           ),
@@ -167,7 +167,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                               ),
                                             ),
                                             validator: ( String? value ) {
-                                              String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?<!\s)$';
+                                              String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{1,5}(?<!\s)$';
                                               return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el apellido';
                                             },
                                           ),

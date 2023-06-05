@@ -22,7 +22,7 @@ class LoginApp extends StatelessWidget {
     return AdaptiveTheme(
       light: AppTheme.lightTheme,
       dark: AppTheme.darkTheme,
-      initial: savedThemeMode ?? AdaptiveThemeMode.dark,
+      initial: savedThemeMode ?? AdaptiveThemeMode.system,
       builder: (theme, darkTheme) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Login',
@@ -323,7 +323,6 @@ class _LoginScreen extends State<_LoginSreenPri> {
       )
     );
   }
-
 }
 
 

@@ -65,7 +65,7 @@ class _HomeScreen extends State<HomeScreen> {
           contenido = Inicio(onChanged: widget.onChanged);
           break;
         case 1:
-          contenido = Text("$_elementoSeleccionado Hola");
+          contenido = Compras(onChanged: widget.onChanged);
           break;
         case 2:
           contenido = Perfil(onChanged: widget.onChanged);

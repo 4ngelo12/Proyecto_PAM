@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:proyecto/app/providers/favorito_provider.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/screens/screens.dart';
@@ -35,24 +33,7 @@ class BuyApp extends StatelessWidget {
         title: 'Comprar',
         theme: theme,
         darkTheme: darkTheme,
-        home: BuyScreenProv(onChanged: onChanged, idProd: idProd),
-      ),
-    );
-  }
-}
-
-class BuyScreenProv extends StatelessWidget {
-  final VoidCallback onChanged;
-  final String idProd;
-
-  const BuyScreenProv({super.key, required this.onChanged, required this.idProd});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ChangeNotifierProvider(
-          create: ( _ ) => FavoriteProvider(),
-          child:BuyScreen(onChanged: onChanged, idProd: idProd)
+        home: BuyScreen(onChanged: onChanged, idProd: idProd),
       ),
     );
   }
@@ -132,7 +113,7 @@ class _BuyScreen extends State<BuyScreen> {
   @override
   Widget build(BuildContext context) {
     _favorito = _result != null
-        ? _liked! ?  const Icon(Icons.favorite, color: Colors.red, size: 30) : const Icon(Icons.favorite_border, color: Colors.white, size: 30)
+        ? _liked ?  const Icon(Icons.favorite, color: Colors.red, size: 30) : const Icon(Icons.favorite_border, color: Colors.white, size: 30)
         : const CircularProgressIndicator();
 
     return Scaffold(

@@ -95,9 +95,11 @@ class _PerfilScreen extends State<Perfil> {
                   ],
                 ),
                 onTap: () {
-                  Navigator.push(context,
+                  /*Navigator.push(context,
                       MaterialPageRoute(builder: (context) =>
-                          EditUserApp(onChanged: widget.onChanged)));
+                          EditUserApp(onChanged: widget.onChanged)));*/
+
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisProdApp(onChanged: widget.onChanged)));
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),

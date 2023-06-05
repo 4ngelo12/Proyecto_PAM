@@ -117,7 +117,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                         )
                                     ),
                                     validator: ( String? value ) {
-                                      String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?<!\s)$';
+                                      String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{1,5}(?<!\s)$';
                                       return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el nombre';
                                     },
                                   ),
@@ -146,7 +146,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                       ),
                                     ),
                                     validator: ( String? value ) {
-                                      String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?<!\s)$';
+                                      String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{1,5}(?<!\s)$';
                                       return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el apellido';
                                     },
                                   ),
@@ -178,7 +178,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                       String exp = r'^[0-9]{9}$';
                                       if (value!.length == 9)
                                       {
-                                        if (RegExp(exp).hasMatch(value  ?? '')) {
+                                        if (RegExp(exp).hasMatch(value)) {
                                           return null;
                                         } else {
                                           return 'No se admiten esos caracteres en el teléfono';
