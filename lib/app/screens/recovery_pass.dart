@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/screens/login_screen.dart';
-import 'package:proyecto/app/theme/theme_colors.dart';
-import 'package:proyecto/app/theme/theme_constants.dart';
-
+import 'package:proyecto/app/theme/themes.dart';
 import '../services/cliente_service.dart';
 
 class RecoveryApp extends StatelessWidget {
@@ -44,24 +42,23 @@ class RecoveryScreen extends StatefulWidget {
 
 class _RecoveryScreen extends State<RecoveryScreen> {
   TextEditingController emailController = TextEditingController();
+  final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
+  bool estado = true;
+  bool error = false;
+  String _mensaje = '';
+
+  void _validacion() {
+    setState(() {
+      if (estado) {
+        estado = false;
+      } else {
+        estado = true;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
-    bool _estado = true;
-    bool _error = false;
-    String _mensaje = '';
-
-    void _validacion() {
-      setState(() {
-        if (_estado) {
-          _estado = false;
-        } else {
-          _estado = true;
-        }
-      });
-    }
-
     return Scaffold(
       body: Center(
         child: Column(
@@ -90,7 +87,6 @@ class _RecoveryScreen extends State<RecoveryScreen> {
               margin: const EdgeInsets.all(40),
               child: Column(
                 children: [
-
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                     child: Text(
@@ -111,7 +107,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                   ),
                   Form(
                       key: keyForm,
-                      autovalidateMode: _estado ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
+                      autovalidateMode: estado ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
                       child: Column(
                         children: [
                           Padding(
@@ -150,6 +146,20 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                                 _validacion();
                                 if (keyForm.currentState!.validate()) {
                                   recoveryPassword(emailController.text);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Correo enviado correctamente"),
+                                        duration: Duration(seconds: 4),
+                                        showCloseIcon: true,
+                                      )
+                                  );
+                                  setState(() {
+                                    error = false;
+                                  });
+                                } else {
+                                  setState(() {
+                                    error = true;
+                                  });
                                 }
                               },
                               style: TextButton.styleFrom(
@@ -179,7 +189,6 @@ class _RecoveryScreen extends State<RecoveryScreen> {
       ),
     );
   }
-
 }
 
 

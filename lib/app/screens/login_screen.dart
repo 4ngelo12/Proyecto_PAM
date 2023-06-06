@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto/app/screens/screens.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:proyecto/app/theme/theme_constants.dart';
-import 'package:proyecto/app/theme/theme_colors.dart';
+import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/providers/form_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -244,7 +243,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       HomeApp(onChanged: widget
-                                                          .onChanged, pocision: 0)));
+                                                          .onChanged)));
                                         }
                                       } on FirebaseAuthException catch (e) {
                                         setState(() {

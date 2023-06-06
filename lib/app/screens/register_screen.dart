@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
-import 'package:proyecto/app/theme/theme_constants.dart';
-import 'package:proyecto/app/theme/theme_colors.dart';
+import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/screens/screens.dart';
 
 class RegisterApp extends StatelessWidget {

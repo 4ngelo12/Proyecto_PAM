@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:proyecto/app/theme/theme_colors.dart';
-import 'package:proyecto/app/theme/theme_constants.dart';
+import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/widgets/widgets.dart';
 
 class HomeApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
   final VoidCallback onChanged;
-  final int pocision;
 
   const HomeApp({
     super.key,
     this.savedThemeMode,
-    required this.pocision,
     required this.onChanged,
   });
 
@@ -27,7 +24,7 @@ class HomeApp extends StatelessWidget {
         title: 'Inicio',
         theme: theme,
         darkTheme: darkTheme,
-        home: HomeScreen(pocision: pocision, onChanged: onChanged),
+        home: HomeScreen(onChanged: onChanged),
       ),
     );
   }
@@ -35,9 +32,8 @@ class HomeApp extends StatelessWidget {
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback onChanged;
-  final int pocision;
 
-  const HomeScreen({super.key, required this.pocision, required this.onChanged});
+  const HomeScreen({super.key, required this.onChanged});
 
   @override
   _HomeScreen createState() => _HomeScreen();
@@ -69,6 +65,8 @@ class _HomeScreen extends State<HomeScreen> {
           break;
         case 2:
           contenido = Perfil(onChanged: widget.onChanged);
+          break;
+        default:
           break;
       }
     });

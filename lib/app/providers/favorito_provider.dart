@@ -14,7 +14,7 @@ class FavoriteProvider extends ChangeNotifier {
     futureResult.then((value) {
       setResult(value);
     }).catchError((error) {
-      print("Ocurrió un error al obtener el resultado: $error");
+      error;
     });
   }
 }

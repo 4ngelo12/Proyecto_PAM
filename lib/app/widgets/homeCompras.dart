@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:proyecto/app/screens/screens.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/services/firebase_service.dart';
-import 'package:proyecto/app/theme/theme_colors.dart';
+import 'package:proyecto/app/theme/themes.dart';
 
 class Compras extends StatefulWidget {
   final VoidCallback onChanged;

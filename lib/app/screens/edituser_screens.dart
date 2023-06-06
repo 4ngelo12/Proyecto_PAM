@@ -2,8 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
-import 'package:proyecto/app/theme/theme_constants.dart';
-import 'package:proyecto/app/theme/theme_colors.dart';
+import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/screens/screens.dart';
 
 class EditUserApp extends StatelessWidget {
@@ -87,7 +86,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                   onPressed: () {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) =>
-                                            HomeApp(onChanged: widget.onChanged, pocision: 2)));
+                                            HomeApp(onChanged: widget.onChanged)));
                                   },
                                   icon: const Icon(Icons.arrow_back_ios_new)
                               )

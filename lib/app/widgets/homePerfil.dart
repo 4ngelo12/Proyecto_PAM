@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:proyecto/app/theme/themes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/screens/screens.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
-import 'package:proyecto/app/theme/theme_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Perfil extends StatefulWidget {
@@ -160,13 +160,18 @@ class _PerfilScreen extends State<Perfil> {
                     )
                   ],
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ContactApp(onChanged: widget.onChanged)));
+                },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
               InkWell (
                 onTap: () async{
                   await FirebaseAuth.instance.signOut();
-                  Navigator.push(context,
+                  await Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) =>
                               LoginApp(onChanged: widget

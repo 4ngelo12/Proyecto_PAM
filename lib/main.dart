@@ -29,23 +29,18 @@ class _MyAppState extends State<MyApp> {
   final fbinstance = FirebaseAuth.instance;
 
   Widget _estadoSesion() {
-    fbinstance
-        .authStateChanges()
-        .listen((User? user) {
-      if (user == null) {
-        isMaterial = true;
-      } else {
-        isMaterial = false;
-      }
-    });
+    if (fbinstance.currentUser != null){
+      isMaterial = false;
+    } else {
+      isMaterial = true;
+    }
 
     return isMaterial
         ?  LoginApp(
         savedThemeMode: widget.savedThemeMode,
-        onChanged: () => setState(() => isMaterial = false))
+        onChanged: () => setState(() => isMaterial = true))
         : HomeApp(
         savedThemeMode: widget.savedThemeMode,
-        pocision: 0,
         onChanged: () => setState(() => isMaterial = false,
         )
     );
