@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/screens/screens.dart';
+import 'package:image/image.dart' as imga;
 import 'package:proyecto/app/services/firebase_service.dart';
 
 class RegisProdApp extends StatelessWidget {
@@ -137,6 +139,7 @@ class _RegisProdScreen extends State<RegisProdScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     child: ElevatedButton(
                       onPressed: () async {
+
                         final image = await getImage();
                         setState(() {
                           img = File(image!.path);
@@ -170,13 +173,6 @@ class _RegisProdScreen extends State<RegisProdScreen> {
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: ElevatedButton(
-                  onPressed: () {addProductos(nombreController.text,double.parse(precioController.text), descController.text);},
-                  child: Text("Registrar"),
-                ),
-              )
             ],
           ),
         ),

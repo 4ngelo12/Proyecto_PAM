@@ -66,18 +66,21 @@ class _RecoveryScreen extends State<RecoveryScreen> {
       body: Center(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) =>
-                              LoginApp(onChanged: widget.onChanged)));
-                    },
-                    icon: const Icon(Icons.arrow_back_ios_new)
-                )
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 60),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) =>
+                                LoginApp(onChanged: widget.onChanged)));
+                      },
+                      icon: const Icon(Icons.arrow_back_ios_new)
+                  )
+                ],
+              ),
             ),
             Container(
               decoration: BoxDecoration(

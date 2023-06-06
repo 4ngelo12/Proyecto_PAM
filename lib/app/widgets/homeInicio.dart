@@ -39,7 +39,9 @@ class _InicioScreen extends State<Inicio> {
                       borderRadius: const BorderRadius.all(Radius.circular(5)),
                       color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                     ),
-                    child: Image.asset(urlImage, fit: BoxFit.cover),
+                    child: Image.network(urlImage,
+                      height: 60,
+                      width: 90,),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 15, top: 20),
@@ -119,7 +121,7 @@ class _InicioScreen extends State<Inicio> {
                         autoPlay: true,
                         autoPlayInterval: const Duration(seconds: 4)
                     ),
-                    itemCount: snapshot.data?.length,
+                    itemCount: 4,
                     itemBuilder: (context, index, realIndex) {
                       final urlImage = "${snapshot.data?[index]['imagen']}";
 

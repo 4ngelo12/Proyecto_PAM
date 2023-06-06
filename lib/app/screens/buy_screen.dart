@@ -159,7 +159,7 @@ class _BuyScreen extends State<BuyScreen> {
                                   future: getProductoId(widget.idProd),
                                   builder: ((context, snapshot) {
                                     if (snapshot.hasData) {
-                                      return Image.asset(
+                                      return Image.network(
                                         "${snapshot.data?[0]['imagen']}",
                                         height: 350,
                                         width: 350,

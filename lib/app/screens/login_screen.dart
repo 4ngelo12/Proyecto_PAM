@@ -85,7 +85,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
 
     return Scaffold(
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 40, bottom: 20),
+        padding: const EdgeInsets.only(top: 75, bottom: 20),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -203,25 +203,22 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                 ),
                               ),
                             ): const Text(""),
-                            Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Container(
-                                alignment: AlignmentDirectional.centerEnd,
-                                width: MediaQuery.of(context).size.width / 1.5,
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) =>
-                                            RecoveryApp(onChanged: widget.onChanged)));
-                                  } ,
-                                  style: TextButton.styleFrom(
-                                    foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,
-                                  ),
-                                  child: const Text(
-                                    "Olvide mi contraseña",
-                                  ),
+                            Container(
+                              alignment: AlignmentDirectional.centerEnd,
+                              width: MediaQuery.of(context).size.width / 1.3,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) =>
+                                          RecoveryApp(onChanged: widget.onChanged)));
+                                } ,
+                                style: TextButton.styleFrom(
+                                  foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,
                                 ),
-                              )
+                                child: const Text(
+                                  "Olvide mi contraseña",
+                                ),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(30),
