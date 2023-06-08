@@ -2,16 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
-final auth = FirebaseAuth.instance;
-final user = auth.currentUser;
+final _auth = FirebaseAuth.instance;
+final _user = _auth.currentUser;
 
 Future<void> addCli(String nombre, String apellido, String telefono, String correo, String password) async {
-  await auth.createUserWithEmailAndPassword(
+  await _auth.createUserWithEmailAndPassword(
       email: correo,
       password: password
   );
 
-  String? idCli = auth.currentUser?.uid;
+  String? idCli = _auth.currentUser?.uid;
 
   Map<String, dynamic> dataUser = {
     'apellido': apellido,
@@ -25,7 +25,7 @@ Future<void> addCli(String nombre, String apellido, String telefono, String corr
     'idProd': '',
   });
 
-  auth.signOut();
+  _auth.signOut();
 }
 
 Future<List> getClientes() async{
@@ -60,7 +60,7 @@ Future<void> editData(String uId, String nombre, String apellido, String telefon
 
   final cliente = db.collection('clientes').doc(uId);
   await cliente.update(dataUser);
-  await user?.updateEmail(correo);
+  await _user?.updateEmail(correo);
 }
 
 Future<void> addFavoriteProduct(String pId, String uId) async{
@@ -125,7 +125,20 @@ Future<bool> isFavorite(String pId, String uId) async {
     });
 }
 
+Future<List> getFavortiosId(String uId) async{
+  List lstClientes = [];
+  final docCli = await db.collection('clientes').doc(uId).
+  collection('favoritos').get();
+
+  for (var e in docCli.docs) {
+    final Map<String, dynamic> data = e.data();
+    lstClientes.add(data['idProd']);
+  }
+
+  return lstClientes;
+}
+
 void recoveryPassword(String mail) async {
-  await auth
+  await _auth
       .sendPasswordResetEmail(email: mail);
 }

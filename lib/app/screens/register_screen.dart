@@ -47,6 +47,7 @@ class _RegisterScreen extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController pass2Controller = TextEditingController();
+  final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
 
   bool _estado = true;
   bool _exito = false;
@@ -63,8 +64,6 @@ class _RegisterScreen extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
-
     return Scaffold(
         body: SingleChildScrollView(
           padding: const EdgeInsets.only(top: 75),
@@ -101,7 +100,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     autocorrect: false,
                                     keyboardType: TextInputType.emailAddress,
                                     style: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                     ),
                                     decoration: InputDecoration(
                                         hintText: "Nombre",
@@ -111,7 +110,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                         filled: true,
                                         border: InputBorder.none,
                                         labelStyle: TextStyle(
-                                            color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                            color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                             fontWeight: FontWeight.bold
                                         )
                                     ),
@@ -130,7 +129,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     controller: lastNameController,
                                     autocorrect: false,
                                     style: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: 'Apellido',
@@ -140,7 +139,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                       filled: true,
                                       border: InputBorder.none,
                                       labelStyle: TextStyle(
-                                          color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                          color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
@@ -159,7 +158,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     controller: phoneController,
                                     autocorrect: false,
                                     style: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: '998746321',
@@ -169,7 +168,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                       filled: true,
                                       border: InputBorder.none,
                                       labelStyle: TextStyle(
-                                          color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                          color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
@@ -197,7 +196,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     controller: emailController,
                                     autocorrect: false,
                                     style: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                     ),
                                     decoration: InputDecoration(
                                         hintText: "username@correo.com",
@@ -207,7 +206,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                         filled: true,
                                         border: InputBorder.none,
                                         labelStyle: TextStyle(
-                                            color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                            color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                             fontWeight: FontWeight.bold
                                         )
                                     ),
@@ -227,7 +226,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     autocorrect: false,
                                     obscureText: true,
                                     style: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: '***********',
@@ -237,7 +236,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                       filled: true,
                                       border: InputBorder.none,
                                       labelStyle: TextStyle(
-                                          color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                          color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
@@ -258,7 +257,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     autocorrect: false,
                                     obscureText: true,
                                     style: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark   : Login.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark   : General.textInput,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: '***********',
@@ -268,7 +267,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                       filled: true,
                                       border: InputBorder.none,
                                       labelStyle: TextStyle(
-                                          color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                          color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),

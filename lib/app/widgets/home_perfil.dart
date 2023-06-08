@@ -7,22 +7,21 @@ import 'package:proyecto/app/screens/screens.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class Perfil extends StatefulWidget {
+class ProfileApp extends StatefulWidget {
   final VoidCallback onChanged;
 
-  const Perfil({super.key, required this.onChanged});
+  const ProfileApp({super.key, required this.onChanged});
 
   @override
-  _PerfilScreen createState() => _PerfilScreen();
+  _ProfilelScreen createState() => _ProfilelScreen();
 }
 
-class _PerfilScreen extends State<Perfil> {
-  final fbinstance = FirebaseAuth.instance;
+class _ProfilelScreen extends State<ProfileApp> {
+  final _auth = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
-
-    final String? idUser = auth.currentUser?.uid;
+    final String? idUser = _auth?.uid;
     return Column (
       children: [
         Container(color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
@@ -68,7 +67,7 @@ class _PerfilScreen extends State<Perfil> {
         ),
         const Padding(padding: EdgeInsets.symmetric(vertical: 35)),
         Container(
-          width: MediaQuery.of(context).size.height * 0.5,
+          width: MediaQuery.of(context).size.width * 0.9,
           padding: const EdgeInsets.all(30),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -95,11 +94,9 @@ class _PerfilScreen extends State<Perfil> {
                   ],
                 ),
                 onTap: () {
-                  /*Navigator.push(context,
+                  Navigator.push(context,
                       MaterialPageRoute(builder: (context) =>
-                          EditUserApp(onChanged: widget.onChanged)));*/
-
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisProdApp(onChanged: widget.onChanged)));
+                          EditUserApp(onChanged: widget.onChanged)));
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
@@ -120,7 +117,12 @@ class _PerfilScreen extends State<Perfil> {
                     )
                   ],
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              FavoriteApp(onChanged: widget.onChanged)));
+                },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
               InkWell(
@@ -171,7 +173,7 @@ class _PerfilScreen extends State<Perfil> {
               InkWell (
                 onTap: () async{
                   await FirebaseAuth.instance.signOut();
-                  await Navigator.push(context,
+                  Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) =>
                               LoginApp(onChanged: widget

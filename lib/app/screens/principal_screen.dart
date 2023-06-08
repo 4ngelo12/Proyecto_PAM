@@ -42,7 +42,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreen extends State<HomeScreen> {
   late Icon iconTheme;
   int _elementoSeleccionado = 0;
-  late Widget contenido = Inicio(onChanged: widget.onChanged);
+  late Widget contenido = ProductApp(onChanged: widget.onChanged);
 
   Icon _themeIcon(newValue) {
       if (newValue) {
@@ -58,13 +58,13 @@ class _HomeScreen extends State<HomeScreen> {
       _elementoSeleccionado = index;
       switch(_elementoSeleccionado) {
         case 0:
-          contenido = Inicio(onChanged: widget.onChanged);
+          contenido = ProductApp(onChanged: widget.onChanged);
           break;
         case 1:
-          contenido = Compras(onChanged: widget.onChanged);
+          contenido = BuyApp(onChanged: widget.onChanged);
           break;
         case 2:
-          contenido = Perfil(onChanged: widget.onChanged);
+          contenido = ProfileApp(onChanged: widget.onChanged);
           break;
         default:
           break;

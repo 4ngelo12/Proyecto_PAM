@@ -45,7 +45,6 @@ class _RecoveryScreen extends State<RecoveryScreen> {
   final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
   bool estado = true;
   bool error = false;
-  String _mensaje = '';
 
   void _validacion() {
     setState(() {
@@ -119,7 +118,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                               controller: emailController,
                               autocorrect: false,
                               style: TextStyle(
-                                color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                               ),
                               decoration: InputDecoration(
                                   hintText: "username@correo.com",
@@ -129,7 +128,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                                   filled: true,
                                   border: InputBorder.none,
                                   labelStyle: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                       fontWeight: FontWeight.bold
                                   )
                               ),
@@ -165,7 +164,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                               style: TextButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 15),
                                 backgroundColor: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
-                                foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                foregroundColor: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)
                                   )

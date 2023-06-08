@@ -6,16 +6,16 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/services/firebase_service.dart';
 import 'package:proyecto/app/theme/themes.dart';
 
-class Inicio extends StatefulWidget {
+class ProductApp extends StatefulWidget {
   final VoidCallback onChanged;
 
-  const Inicio({super.key, required this.onChanged});
+  const ProductApp({super.key, required this.onChanged});
 
   @override
-  _InicioScreen createState() => _InicioScreen();
+  _ProductScreen createState() => _ProductScreen();
 }
 
-class _InicioScreen extends State<Inicio> {
+class _ProductScreen extends State<ProductApp> {
   Widget buildImage(String urlImage, int index) {
     return FutureBuilder(
         future: getProductos(),
@@ -41,7 +41,7 @@ class _InicioScreen extends State<Inicio> {
                     ),
                     child: Image.network(urlImage,
                       height: 60,
-                      width: 90,),
+                      width: 90),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 15, top: 20),

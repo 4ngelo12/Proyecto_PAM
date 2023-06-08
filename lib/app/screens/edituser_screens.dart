@@ -46,7 +46,9 @@ class _EditUserScreen extends State<EditUserScreen> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  final user = FirebaseAuth.instance.currentUser;
+  final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
+
+  final _user = FirebaseAuth.instance.currentUser;
   bool _estado = true;
 
   void _validacion() {
@@ -61,21 +63,18 @@ class _EditUserScreen extends State<EditUserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
-
     return Scaffold(
         body: SingleChildScrollView(
           padding: const EdgeInsets.only(top: 40),
           child: Center(
               child: FutureBuilder(
-                  future: getClientesId(user!.uid),
+                  future: getClientesId(_user!.uid),
                   builder: ((context, snapshot) {
                     if (snapshot.hasData) {
                       nameController.text = snapshot.data?[0]['nombre'];
                       lastNameController.text = snapshot.data?[0]['apellido'];
                       phoneController.text = snapshot.data?[0]['telefono'];
                       emailController.text = snapshot.data?[0]['email'];
-
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -115,29 +114,32 @@ class _EditUserScreen extends State<EditUserScreen> {
                                     child: Column(
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.fromLTRB(25, 35, 25, 10),
+                                          padding: const EdgeInsets.only(
+                                              left: 25,
+                                              right: 25,
+                                              top: 30,
+                                              bottom: 10
+                                          ),
                                           child: TextFormField(
                                             controller: nameController,
-
                                             autocorrect: false,
-                                            keyboardType: TextInputType.emailAddress,
                                             style: TextStyle(
-                                              color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
+                                              color: AdaptiveTheme.of(context).mode.isLight ? General.textInput : General.textInputDark,
                                             ),
                                             decoration: InputDecoration(
-                                                hintText: "Nombre",
-                                                labelText: "Ingrese Su Nombre",
-                                                prefixIcon: const Icon(Icons.account_circle),
-                                                fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
-                                                filled: true,
-                                                border: InputBorder.none,
-                                                labelStyle: TextStyle(
-                                                    color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
-                                                    fontWeight: FontWeight.bold
-                                                )
+                                              hintText: 'Nombre',
+                                              labelText: 'Ingrese Su Nombre',
+                                              prefixIcon: const Icon(Icons.account_circle),
+                                              fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
+                                              filled: true,
+                                              border: InputBorder.none,
+                                              labelStyle: TextStyle(
+                                                  color: AdaptiveTheme.of(context).mode.isLight ? General.textInput : General.textInputDark,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                             validator: ( String? value ) {
-                                              String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{1,5}(?<!\s)$';
+                                              String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]';
                                               return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el nombre';
                                             },
                                           ),
@@ -151,7 +153,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                             controller: lastNameController,
                                             autocorrect: false,
                                             style: TextStyle(
-                                              color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
+                                              color: AdaptiveTheme.of(context).mode.isLight ? General.textInput : General.textInputDark,
                                             ),
                                             decoration: InputDecoration(
                                               hintText: 'Apellido',
@@ -161,12 +163,12 @@ class _EditUserScreen extends State<EditUserScreen> {
                                               filled: true,
                                               border: InputBorder.none,
                                               labelStyle: TextStyle(
-                                                  color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
+                                                  color: AdaptiveTheme.of(context).mode.isLight ? General.textInput : General.textInputDark,
                                                   fontWeight: FontWeight.bold
                                               ),
                                             ),
                                             validator: ( String? value ) {
-                                              String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{1,5}(?<!\s)$';
+                                              String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]';
                                               return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el apellido';
                                             },
                                           ),
@@ -180,7 +182,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                             controller: phoneController,
                                             autocorrect: false,
                                             style: TextStyle(
-                                              color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
+                                              color: AdaptiveTheme.of(context).mode.isLight ? General.textInput : General.textInputDark,
                                             ),
                                             decoration: InputDecoration(
                                               hintText: '998746321',
@@ -190,7 +192,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                               filled: true,
                                               border: InputBorder.none,
                                               labelStyle: TextStyle(
-                                                  color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
+                                                  color: AdaptiveTheme.of(context).mode.isLight ? General.textInput : General.textInputDark,
                                                   fontWeight: FontWeight.bold
                                               ),
                                             ),
@@ -198,7 +200,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                               String exp = r'^[0-9]{9}$';
                                               if (value!.length == 9)
                                               {
-                                                if (RegExp(exp).hasMatch(value  ?? '')) {
+                                                if (RegExp(exp).hasMatch(value)) {
                                                   return null;
                                                 } else {
                                                   return 'No se admiten esos caracteres en el teléfono';
@@ -218,7 +220,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                             controller: emailController,
                                             autocorrect: false,
                                             style: TextStyle(
-                                              color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
+                                              color: AdaptiveTheme.of(context).mode.isLight ? General.textInput : General.textInputDark,
                                             ),
                                             decoration: InputDecoration(
                                                 hintText: "username@correo.com",
@@ -228,7 +230,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                                 filled: true,
                                                 border: InputBorder.none,
                                                 labelStyle: TextStyle(
-                                                    color: AdaptiveTheme.of(context).mode.isLight ? Login.textInput : Login.textInputDark,
+                                                    color: AdaptiveTheme.of(context).mode.isLight ? General.textInput : General.textInputDark,
                                                     fontWeight: FontWeight.bold
                                                 )
                                             ),
@@ -245,8 +247,15 @@ class _EditUserScreen extends State<EditUserScreen> {
 
                                               _validacion();
                                               if (keyForm.currentState!.validate()) {
-                                                await editData(user!.uid, nameController.text, lastNameController.text, phoneController.text,
+                                                await editData(_user!.uid, nameController.text, lastNameController.text, phoneController.text,
                                                     emailController.text);
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                     const SnackBar(
+                                                      content: Text("Correo enviado correctamente"),
+                                                      duration: Duration(seconds: 4),
+                                                      showCloseIcon: true,
+                                                    )
+                                                );
                                               }
                                             },
                                             color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,

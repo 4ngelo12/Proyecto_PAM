@@ -8,8 +8,6 @@ import 'package:proyecto/app/screens/screens.dart';
 import 'package:proyecto/app/services/firebase_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-final user = FirebaseAuth.instance.currentUser;
-
 class BuyApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
   final VoidCallback onChanged;
@@ -50,6 +48,7 @@ class BuyScreen extends StatefulWidget {
 }
 
 class _BuyScreen extends State<BuyScreen> {
+  final _user = FirebaseAuth.instance.currentUser;
   bool? _result;
   bool _liked = false;
   late Widget _favorito;
@@ -70,7 +69,7 @@ class _BuyScreen extends State<BuyScreen> {
 
   Future<void> _loadData() async {
     // Obtener el resultado del Future<bool>
-    bool result = await isFavorite(widget.idProd, user!.uid);
+    bool result = await isFavorite(widget.idProd, _user!.uid);
 
     // Actualizar el estado con el resultado
     setState(() {
@@ -88,7 +87,7 @@ class _BuyScreen extends State<BuyScreen> {
         _liked = true;
       }
       _favorito = _liked ?  const Icon(Icons.favorite, color: Colors.red, size: 30) : const Icon(Icons.favorite_border, color: Colors.white, size: 30);
-      _liked ? addFavoriteProduct(widget.idProd, user!.uid) : deleteFavoriteProduct(widget.idProd, user!.uid);
+      _liked ? addFavoriteProduct(widget.idProd, _user!.uid) : deleteFavoriteProduct(widget.idProd, _user!.uid);
     });
   }
 
@@ -283,7 +282,7 @@ class _BuyScreen extends State<BuyScreen> {
                                                 child: Text(
                                                   "${snapshot.data![index]['talla']}",
                                                   style: TextStyle(
-                                                    color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                                    color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                                   ),
                                                   textAlign: TextAlign.center,
                                                 )
@@ -357,7 +356,7 @@ class _BuyScreen extends State<BuyScreen> {
                                         "Unidades disponibles: ${_total}",
                                         style: TextStyle(
                                           fontSize: 15,
-                                          color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                          color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                         ),
                                       )
                                   )

@@ -21,7 +21,7 @@ class LoginApp extends StatelessWidget {
     return AdaptiveTheme(
       light: AppTheme.lightTheme,
       dark: AppTheme.darkTheme,
-      initial: savedThemeMode ?? AdaptiveThemeMode.system,
+      initial: savedThemeMode ?? AdaptiveThemeMode.dark,
       builder: (theme, darkTheme) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Login',
@@ -122,7 +122,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                 autocorrect: false,
                                 keyboardType: TextInputType.emailAddress,
                                 style: TextStyle(
-                                  color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                  color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                 ),
 
                                 decoration: InputDecoration(
@@ -133,7 +133,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                     filled: true,
                                     border: InputBorder.none,
                                     labelStyle: TextStyle(
-                                        color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                        color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                         fontWeight: FontWeight.bold
                                     )
                                 ),
@@ -155,7 +155,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                 autocorrect: false,
                                 obscureText: true,
                                 style: TextStyle(
-                                  color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                  color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                 ),
                                 decoration: InputDecoration(
                                   hintText: '***********',
@@ -165,7 +165,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                   filled: true,
                                   border: InputBorder.none,
                                   labelStyle: TextStyle(
-                                      color: AdaptiveTheme.of(context).mode.isDark ? Login.textInputDark : Login.textInput,
+                                      color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                       fontWeight: FontWeight.bold
                                   ),
                                 ),
@@ -257,7 +257,6 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                             _mensaje = '';
                                             _error = false;
                                           }
-
                                         });
                                       }
                                   },

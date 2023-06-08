@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:proyecto/app/screens/principal_screen.dart';
+import 'package:proyecto/app/screens/screens.dart';
 import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -85,25 +85,25 @@ class _ContactScreen extends State<ContactScreen> {
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                 ),
-              child:Column(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                    child: Text(
-                      "¿Necestias Ayuda?",
-                      style: TextStyle(fontSize: 40),
-                      textAlign: TextAlign.center,
+                child:Column(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                      child: Text(
+                        "¿Necestias Ayuda?",
+                        style: TextStyle(fontSize: 35),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Text(
-                      "Puedes comunicarte con nosotros por estos medios",
-                      textAlign: TextAlign.center,
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text(
+                        "Puedes comunicarte con nosotros por estos medios",
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                ],
-              )
+                  ],
+                )
             ),
             Link(
               uri: Uri.parse('https://wa.me/993412022'),
@@ -116,7 +116,9 @@ class _ContactScreen extends State<ContactScreen> {
                     child: ElevatedButton(
                         onPressed: openLink,
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20)
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        backgroundColor: AdaptiveTheme.of(context).mode.isDark ? General.botonContactoDark : General.botonContacto,
+                        foregroundColor: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                       ),
                         child:  Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -124,7 +126,7 @@ class _ContactScreen extends State<ContactScreen> {
                              Text(
                                 "Comunicarse por Whatsapp",
                                style: TextStyle(
-                                 fontSize: 16
+                                 fontSize: 20
                                ),
                              ),
                             Icon(FontAwesomeIcons.whatsapp)
@@ -135,15 +137,31 @@ class _ContactScreen extends State<ContactScreen> {
                 );
                 },
             ),
-            ElevatedButton(
-              onPressed: () {
-                sendEmail();
-              },
-              style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20)
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 115),
+              child: ElevatedButton(
+                onPressed: () {
+                  sendEmail();
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  backgroundColor: AdaptiveTheme.of(context).mode.isDark ? General.botonContactoDark : General.botonContacto,
+                  foregroundColor:   AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    Text(
+                      "Enviar correo",
+                      style: TextStyle(
+                          fontSize: 20
+                      ),
+                    ),
+                    Icon(FontAwesomeIcons.envelope)
+                  ],
+                ),
               ),
-              child: const Text('Enviar correo'),
-            ),
+            )
           ],
         ),
       ),
