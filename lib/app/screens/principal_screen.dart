@@ -55,6 +55,7 @@ class _HomeScreen extends State<HomeScreen> {
 
   void _itemUsado(int index) {
     setState(() {
+      _selectedItem = index;
       switch(index) {
         case 0:
           contenido = ProductApp(onChanged: widget.onChanged);

@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:proyecto/app/services/services.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/screens/screens.dart';
+import 'package:proyecto/app/widgets/widgets.dart';
 
 class BuySApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
@@ -381,33 +382,9 @@ class _BuyScreen extends State<BuyScreen> {
                                     onPressed: () {
                                       if (size != null) {
                                         addShoppingCart(_user!.uid, name!, (price! * cant!), cant!, size!, img!);
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                            const SnackBar(
-                                              content: Text("Producto Agregado en el carrito"),
-                                              duration: Duration(seconds: 4),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.only(
-                                                      bottomLeft: Radius.circular(12),
-                                                      bottomRight: Radius.circular(12)
-                                                  )
-                                              ),
-                                              showCloseIcon: true,
-                                            )
-                                        );
+                                        mensaje(context, "Producto Agregado en el carrito");
                                       } else {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                            const SnackBar(
-                                              content: Text("Seleciona una talla para agregar al carrito"),
-                                              duration: Duration(seconds: 4),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.only(
-                                                      bottomLeft: Radius.circular(12),
-                                                      bottomRight: Radius.circular(12)
-                                                  )
-                                              ),
-                                              showCloseIcon: true,
-                                            )
-                                        );
+                                        mensaje(context, "Seleciona una talla para agregar al carrito");
                                       }
                                     },
                                     style: TextButton.styleFrom(

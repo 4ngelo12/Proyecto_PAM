@@ -4,6 +4,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/screens/screens.dart';
+import 'package:proyecto/app/widgets/scaffoldmessenger.dart';
 
 class EditUserApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
@@ -249,13 +250,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                               if (keyForm.currentState!.validate()) {
                                                 await editData(_user!.uid, nameController.text, lastNameController.text, phoneController.text,
                                                     emailController.text);
-                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                     const SnackBar(
-                                                      content: Text("Datos Modificados Correctamente"),
-                                                      duration: Duration(seconds: 4),
-                                                      showCloseIcon: true,
-                                                    )
-                                                );
+                                                mensaje(context, "Datos Modificados Correctamente");
                                               }
                                             },
                                             color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,

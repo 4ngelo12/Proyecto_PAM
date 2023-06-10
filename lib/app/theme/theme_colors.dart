@@ -37,3 +37,8 @@ class Home {
   static const Color container = Color(0xFFEFEFEF);
   static const Color containerDark = Color(0xFF434E5A);
 }
+
+class NoData {
+  static const Color noDataBackGDark = Color(0x33ffffff);
+  static const Color noDataBackG =  Color(0x33000000);
+}

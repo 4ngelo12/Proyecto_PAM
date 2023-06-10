@@ -3,6 +3,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/screens/login_screen.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/services/services.dart';
+import 'package:proyecto/app/widgets/scaffoldmessenger.dart';
 
 class RecoveryApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
@@ -145,13 +146,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                                 _validacion();
                                 if (keyForm.currentState!.validate()) {
                                   recoveryPassword(emailController.text);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text("Correo enviado correctamente"),
-                                        duration: Duration(seconds: 4),
-                                        showCloseIcon: true,
-                                      )
-                                  );
+                                  mensaje(context, "Correo enviado correctamente");
                                   setState(() {
                                     error = false;
                                   });
