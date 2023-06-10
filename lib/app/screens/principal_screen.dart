@@ -41,8 +41,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   late Icon iconTheme;
-  int _elementoSeleccionado = 0;
   late Widget contenido = ProductApp(onChanged: widget.onChanged);
+  int _selectedItem = 0;
 
   Icon _themeIcon(newValue) {
       if (newValue) {
@@ -55,8 +55,7 @@ class _HomeScreen extends State<HomeScreen> {
 
   void _itemUsado(int index) {
     setState(() {
-      _elementoSeleccionado = index;
-      switch(_elementoSeleccionado) {
+      switch(index) {
         case 0:
           contenido = ProductApp(onChanged: widget.onChanged);
           break;
@@ -74,7 +73,6 @@ class _HomeScreen extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -140,7 +138,7 @@ class _HomeScreen extends State<HomeScreen> {
             label: "Perfil",
           ),
         ],
-        currentIndex: _elementoSeleccionado,
+        currentIndex: _selectedItem,
         onTap: _itemUsado,
       ),
     );

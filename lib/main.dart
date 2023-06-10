@@ -36,13 +36,13 @@ class _MyAppState extends State<MyApp> {
     }
 
     return isMaterial
-        ?  LoginApp(
+        ?
+    LoginApp(
         savedThemeMode: widget.savedThemeMode,
-        onChanged: () => setState(() => isMaterial = true))
-        : HomeApp(
-        savedThemeMode: widget.savedThemeMode,
-        onChanged: () => setState(() => isMaterial = false,
-        )
+        onChanged: () => setState(() => isMaterial = true)) :
+    HomeApp(
+      savedThemeMode: widget.savedThemeMode,
+      onChanged: () => setState(() => isMaterial = false),
     );
   }
 

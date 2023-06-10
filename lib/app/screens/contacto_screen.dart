@@ -112,7 +112,7 @@ class _ContactScreen extends State<ContactScreen> {
                 return Padding(
                   padding: const EdgeInsets.all(20),
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 45),
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
                     child: ElevatedButton(
                         onPressed: openLink,
                       style: ElevatedButton.styleFrom(
@@ -138,7 +138,7 @@ class _ContactScreen extends State<ContactScreen> {
                 },
             ),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 115),
+              margin: const EdgeInsets.symmetric(horizontal: 95),
               child: ElevatedButton(
                 onPressed: () {
                   sendEmail();

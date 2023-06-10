@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:proyecto/app/services/cliente_service.dart';
-import 'package:proyecto/app/services/firebase_service.dart';
+import 'package:proyecto/app/services/services.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/screens/screens.dart';
 
@@ -113,7 +112,7 @@ class _FavoriteScreen extends State<FavoriteScreen> {
                                           onTap: () {
                                             Navigator.push(context,
                                                 MaterialPageRoute(builder: (context) =>
-                                                    BuyApp(onChanged: widget.onChanged, idProd: snapshot.data?[0]['idProd'])));
+                                                    BuySApp(onChanged: widget.onChanged, idProd: snapshot.data?[0]['idProd'])));
                                           },
                                         ),
                                         Column(

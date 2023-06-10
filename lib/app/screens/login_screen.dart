@@ -27,23 +27,10 @@ class LoginApp extends StatelessWidget {
         title: 'Login',
         theme: theme,
         darkTheme: darkTheme,
-        home: LoginScreen(onChanged: onChanged),
-      ),
-    );
-  }
-}
-
-class LoginScreen extends StatelessWidget {
-  final VoidCallback onChanged;
-
-  const LoginScreen({super.key, required this.onChanged});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ChangeNotifierProvider(
-          create: ( _ ) => FormProvider(),
-          child:_LoginSreenPri(onChanged: onChanged)
+        home: ChangeNotifierProvider(
+            create: ( _ ) => FormProvider(),
+            child:_LoginSreenPri(onChanged: onChanged)
+        )
       ),
     );
   }

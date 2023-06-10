@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:proyecto/app/screens/screens.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:proyecto/app/services/firebase_service.dart';
+import 'package:proyecto/app/services/producto_service.dart';
 import 'package:proyecto/app/theme/themes.dart';
 
 class ProductApp extends StatefulWidget {
@@ -80,7 +80,9 @@ class _ProductScreen extends State<ProductApp> {
                                 child: IconButton(
                                   onPressed: () {
                                     Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => BuyApp(onChanged: widget.onChanged, idProd: snapshot.data?[index]['idProd'])));
+                                        MaterialPageRoute(builder: (context) =>
+                                            BuySApp(onChanged: widget.onChanged,
+                                                idProd: snapshot.data?[index]['idProd'])));
                                   },
                                   icon: const Icon(
                                       Icons.shopping_cart,
@@ -169,7 +171,7 @@ class _ProductScreen extends State<ProductApp> {
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => BuyApp(onChanged: widget.onChanged, idProd: snapshot.data?[index]['idProd'])));
+                                        MaterialPageRoute(builder: (context) => BuySApp(onChanged: widget.onChanged, idProd: snapshot.data?[index]['idProd'])));
                                   },
                                   child:  Padding(
                                     padding: const EdgeInsets.all(10) ,
@@ -223,7 +225,7 @@ class _ProductScreen extends State<ProductApp> {
                                           onPressed: () {
                                             Navigator.push(context,
                                                 MaterialPageRoute(builder: (context) =>
-                                                    BuyApp(onChanged: widget.onChanged,
+                                                    BuySApp(onChanged: widget.onChanged,
                                                         idProd: snapshot.data?[index]['idProd'])));
                                           },
                                           icon: const Icon(

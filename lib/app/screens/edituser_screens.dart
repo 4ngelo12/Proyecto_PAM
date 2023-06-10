@@ -251,7 +251,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                                     emailController.text);
                                                 ScaffoldMessenger.of(context).showSnackBar(
                                                      const SnackBar(
-                                                      content: Text("Correo enviado correctamente"),
+                                                      content: Text("Datos Modificados Correctamente"),
                                                       duration: Duration(seconds: 4),
                                                       showCloseIcon: true,
                                                     )

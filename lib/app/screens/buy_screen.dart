@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:proyecto/app/services/cliente_service.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:proyecto/app/services/services.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/screens/screens.dart';
-import 'package:proyecto/app/services/firebase_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-class BuyApp extends StatelessWidget {
+class BuySApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
   final VoidCallback onChanged;
   final String idProd;
 
-  const BuyApp({
+  const BuySApp({
     super.key,
     this.savedThemeMode,
     required this.onChanged,
@@ -51,10 +50,16 @@ class _BuyScreen extends State<BuyScreen> {
   final _user = FirebaseAuth.instance.currentUser;
   bool? _result;
   bool _liked = false;
-  late Widget _favorito;
+  late Widget _favorite;
+
+  String? name;
+  double? price;
+  int? cant;
+  int? size;
+  String? img;
 
   int? _numCantidad = 0; //Cantidad de elementos en la base de datos
-  int _cantidad = 1; //Productos
+  int _cantidad = 0; //Productos
   int _total = 0; //Unidades disponibles
 
   List<bool> isSelected = []; // Lista de estados de selección
@@ -86,7 +91,7 @@ class _BuyScreen extends State<BuyScreen> {
       else {
         _liked = true;
       }
-      _favorito = _liked ?  const Icon(Icons.favorite, color: Colors.red, size: 30) : const Icon(Icons.favorite_border, color: Colors.white, size: 30);
+      _favorite = _liked ?  const Icon(Icons.favorite, color: Colors.red, size: 30) : const Icon(Icons.favorite_border, color: Colors.white, size: 30);
       _liked ? addFavoriteProduct(widget.idProd, _user!.uid) : deleteFavoriteProduct(widget.idProd, _user!.uid);
     });
   }
@@ -111,10 +116,9 @@ class _BuyScreen extends State<BuyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _favorito = _result != null
+    _favorite = _result != null
         ? _liked ?  const Icon(Icons.favorite, color: Colors.red, size: 30) : const Icon(Icons.favorite_border, color: Colors.white, size: 30)
         : const CircularProgressIndicator();
-
     return Scaffold(
       body: SafeArea(
               child: SingleChildScrollView(
@@ -138,7 +142,7 @@ class _BuyScreen extends State<BuyScreen> {
                           ),
                           IconButton(
                               onPressed: _cambiarEstado,
-                              icon: _favorito
+                              icon: _favorite
                           ),
                         ],
                       ),
@@ -176,11 +180,11 @@ class _BuyScreen extends State<BuyScreen> {
                         ),
                         const Padding(padding: EdgeInsets.only(bottom: 25)),
                         Container(
-                          height: MediaQuery.of(context).size.height *  0.6,
+                          height: MediaQuery.of(context).size.height *  0.68,
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(
                               vertical: 30,
-                              horizontal: 20
+                              horizontal: 15
                           ),
                           decoration: BoxDecoration(
                             color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
@@ -188,11 +192,15 @@ class _BuyScreen extends State<BuyScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              //Datos del productos
                               FutureBuilder(
                                   future: getProductoId(widget.idProd),
                                   builder: ((context, snapshot) {
                                     if (snapshot.hasData) {
-                                      //Datos del productos
+                                      name = snapshot.data?[0]['nombre'];
+                                      price = snapshot.data?[0]['precio'];
+                                      img = snapshot.data?[0]['imagen'];
+
                                       return Column(
                                           children: [
                                             Row(
@@ -250,6 +258,7 @@ class _BuyScreen extends State<BuyScreen> {
                                   future: getTallas(widget.idProd),
                                   builder: ((context, snapshot) {
                                     if (snapshot.hasData) {
+                                      cant = _cantidad;
                                       return GridView.builder(
                                           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                                               maxCrossAxisExtent: 55,
@@ -260,6 +269,7 @@ class _BuyScreen extends State<BuyScreen> {
                                           physics: const NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
                                           itemBuilder: (context, index) {
+
                                             return TextButton(
                                                 style: TextButton.styleFrom(
                                                     padding: const EdgeInsets.symmetric(
@@ -272,10 +282,12 @@ class _BuyScreen extends State<BuyScreen> {
                                                 onPressed:() {
                                                   setState(() {
                                                     _total = snapshot.data![index]['cantidad'];
+                                                    _cantidad = 1;
                                                     _numCantidad = snapshot.data?.length;
                                                     rellenar(_numCantidad!);
                                                     if (isSelected.isNotEmpty) {
                                                       selectButton(index);
+                                                      size = snapshot.data![index]['talla'];
                                                     }
                                                   });
                                                 },
@@ -344,7 +356,6 @@ class _BuyScreen extends State<BuyScreen> {
                                         ],
                                       ),
                                     ),
-                                    //Text("${_cantidad}")
                                   )
                                 ],
                               ),
@@ -353,7 +364,7 @@ class _BuyScreen extends State<BuyScreen> {
                                   Padding(
                                       padding: const EdgeInsets.only(top: 15),
                                       child: Text(
-                                        "Unidades disponibles: ${_total}",
+                                        "Unidades disponibles: $_total",
                                         style: TextStyle(
                                           fontSize: 15,
                                           color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
@@ -361,6 +372,72 @@ class _BuyScreen extends State<BuyScreen> {
                                       )
                                   )
                                 ],
+                              ),
+                              const Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+                              Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 60),
+                                  color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
+                                  child: TextButton(
+                                    onPressed: () {
+                                      if (size != null) {
+                                        addShoppingCart(_user!.uid, name!, (price! * cant!), cant!, size!, img!);
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(
+                                              content: Text("Producto Agregado en el carrito"),
+                                              duration: Duration(seconds: 4),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.only(
+                                                      bottomLeft: Radius.circular(12),
+                                                      bottomRight: Radius.circular(12)
+                                                  )
+                                              ),
+                                              showCloseIcon: true,
+                                            )
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(
+                                              content: Text("Seleciona una talla para agregar al carrito"),
+                                              duration: Duration(seconds: 4),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.only(
+                                                      bottomLeft: Radius.circular(12),
+                                                      bottomRight: Radius.circular(12)
+                                                  )
+                                              ),
+                                              showCloseIcon: true,
+                                            )
+                                        );
+                                      }
+                                    },
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
+                                      backgroundColor: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
+                                      padding: const EdgeInsets.symmetric(vertical: 10),
+                                    ),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child:  Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: const [
+                                          Text(
+                                            "Agregar al Carrito",
+                                            style: TextStyle(
+                                                fontSize: 18
+                                            ),
+                                          ),
+                                          Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                                          Icon(
+                                            CupertinoIcons.cart_badge_plus,
+                                            size: 22,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  )
                               )
                             ],
                           ),
@@ -371,37 +448,6 @@ class _BuyScreen extends State<BuyScreen> {
                 ),
               ),
             ),
-
-        bottomNavigationBar: Container(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
-                ),
-                child: Row(
-                  children: const [
-                    Text(
-                      "Agregar al Carrito",
-                      style: TextStyle(
-                          fontSize: 16
-                      ),
-                    ),
-                    Icon(
-                      CupertinoIcons.cart_badge_plus,
-                      size: 20,
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        )
     );
   }
 }

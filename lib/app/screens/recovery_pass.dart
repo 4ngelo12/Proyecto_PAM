@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/screens/login_screen.dart';
 import 'package:proyecto/app/theme/themes.dart';
-import '../services/cliente_service.dart';
+import 'package:proyecto/app/services/services.dart';
 
 class RecoveryApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;

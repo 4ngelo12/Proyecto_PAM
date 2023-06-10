@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-FirebaseFirestore db = FirebaseFirestore.instance;
+FirebaseFirestore _db = FirebaseFirestore.instance;
 
 Future<List> getProductos() async {
   List lstProducts = [];
-  CollectionReference collectionReferenceProductos = db.collection('productos');
+  CollectionReference collectionReferenceProductos = _db.collection('productos');
   QuerySnapshot queryProductos = await collectionReferenceProductos.get();
 
   for (var documento in queryProductos.docs) {
@@ -16,7 +16,7 @@ Future<List> getProductos() async {
 
 Future<List> getProductoId(String pId) async {
   List lstProducts = [];
-  final producto = await db.collection('productos').doc(pId).get();
+  final producto = await _db.collection('productos').doc(pId).get();
 
   lstProducts.add(producto.data());
 
@@ -26,7 +26,7 @@ Future<List> getProductoId(String pId) async {
 Future<List> getTallas(String pId) async{
   List lstTallas = [];
 
-  final tallas = await db.collection('productos').doc(pId).collection('talla').get();
+  final tallas = await _db.collection('productos').doc(pId).collection('talla').get();
 
   for (var documento in tallas.docs) {
     lstTallas.add(documento.data());
