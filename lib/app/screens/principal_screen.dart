@@ -130,6 +130,7 @@ class _HomeScreen extends State<HomeScreen> {
               color: Colors.white,
             ),
             label: "Mis Compras",
+
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -141,6 +142,7 @@ class _HomeScreen extends State<HomeScreen> {
         ],
         currentIndex: _selectedItem,
         onTap: _itemUsado,
+
       ),
     );
   }

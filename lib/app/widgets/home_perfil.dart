@@ -7,6 +7,8 @@ import 'package:proyecto/app/screens/screens.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../screens/registerprods_screen.dart';
+
 class ProfileApp extends StatefulWidget {
   final VoidCallback onChanged;
 
@@ -96,7 +98,10 @@ class _ProfilelScreen extends State<ProfileApp> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) =>
-                          EditUserApp(onChanged: widget.onChanged)));
+                          RegisProdApp(onChanged: widget.onChanged)));
+                  /*Navigator.push(context,
+                      MaterialPageRoute(builder: (context) =>
+                          EditUserApp(onChanged: widget.onChanged)));*/
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),

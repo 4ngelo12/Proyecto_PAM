@@ -381,7 +381,7 @@ class _BuyScreen extends State<BuyScreen> {
                                   child: TextButton(
                                     onPressed: () {
                                       if (size != null) {
-                                        addShoppingCart(_user!.uid, name!, (price! * cant!), cant!, size!, img!);
+                                        addShoppingCart(_user!.uid, widget.idProd, name!, (price! * cant!), cant!, size!, img!, _total);
                                         mensaje(context, "Producto Agregado en el carrito");
                                       } else {
                                         mensaje(context, "Seleciona una talla para agregar al carrito");

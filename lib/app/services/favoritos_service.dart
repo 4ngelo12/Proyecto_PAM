@@ -52,7 +52,6 @@ Future<void> deleteFavoriteProduct(String pId, String uId) async {
     }
   }
 }
-
 Future<bool> isFavorite(String pId, String uId) async {
   return await _db.collection('clientes').doc(uId).collection('favoritos').
   where('idProd', isEqualTo: pId).get().then((querySnapshot) {
