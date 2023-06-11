@@ -26,6 +26,7 @@ Future<void> addShoppingCart(String idU, String idProd, String name, double pric
     final carrito = {
       'fid': e.id
     };
+    print(carrito);
 
     lstTallaId.add(carrito.values);
   }
