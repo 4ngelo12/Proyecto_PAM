@@ -94,7 +94,7 @@ class _ProfilelScreen extends State<ProfileApp> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) =>
-                          EditUserApp()));
+                          const EditUserApp()));
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
@@ -119,7 +119,7 @@ class _ProfilelScreen extends State<ProfileApp> {
                   Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              FavoriteApp()));
+                              const FavoriteApp()));
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
@@ -164,7 +164,7 @@ class _ProfilelScreen extends State<ProfileApp> {
                   Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              ContactApp()));
+                              const ContactApp()));
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
@@ -174,7 +174,7 @@ class _ProfilelScreen extends State<ProfileApp> {
                   Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              LoginApp()));
+                              const LoginApp()));
                 },
                 child: Row(
                   children: const [

@@ -23,7 +23,7 @@ class RegisterApp extends StatelessWidget {
         title: 'Inicio',
         theme: theme,
         darkTheme: darkTheme,
-        home: RegisterScreen(),
+        home: const RegisterScreen(),
       ),
     );
   }
@@ -359,7 +359,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                         onPressed: () {
                                           Navigator.push(context,
                                               MaterialPageRoute(builder: (context) =>
-                                                  LoginApp()));
+                                                  const LoginApp()));
                                         },
                                         style: TextButton.styleFrom(
                                           foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,

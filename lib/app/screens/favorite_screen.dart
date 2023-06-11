@@ -27,7 +27,7 @@ class FavoriteApp extends StatelessWidget {
         title: 'Inicio',
         theme: theme,
         darkTheme: darkTheme,
-        home: FavoriteScreen(),
+        home: const FavoriteScreen(),
       ),
     );
   }
@@ -69,7 +69,7 @@ class _FavoriteScreenS extends State<FavoriteScreen> {
               Navigator.push(context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          HomeApp()));
+                          const HomeApp()));
             },
             icon: const Icon(Icons.arrow_back_ios_new)
         )

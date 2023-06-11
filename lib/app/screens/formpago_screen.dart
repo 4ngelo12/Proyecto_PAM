@@ -1,7 +1,11 @@
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:provider/provider.dart';
 import 'package:proyecto/app/screens/principal_screen.dart';
 import 'package:proyecto/app/theme/themes.dart';
+
+import '../providers/pago_provider.dart';
 
 class PagoApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
@@ -19,10 +23,13 @@ class PagoApp extends StatelessWidget {
       initial: savedThemeMode ?? AdaptiveThemeMode.dark,
       builder: (theme, darkTheme) => MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Login',
+          title: 'Pago',
           theme: theme,
           darkTheme: darkTheme,
-          home: PagoSreen()
+          home: ChangeNotifierProvider(
+              create: ( _ ) => PagoProvider(),
+              child: const PagoSreen()
+          )
       ),
     );
   }
@@ -41,10 +48,22 @@ class _PagoSreen extends State<PagoSreen> {
   TextEditingController controllerFecha = TextEditingController();
   TextEditingController controllerCVV = TextEditingController();
 
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool _estado = true;
+
+  void _validacion() {
+    setState(() {
+      if (_estado) {
+        _estado = false;
+      } else {
+        _estado = true;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    final PayForm = Provider.of<PagoProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -74,7 +93,7 @@ class _PagoSreen extends State<PagoSreen> {
               child: Image.asset("Assets/Images/logo.png"),
             ),
             Form(
-              key: formKey,
+              key: PayForm.formKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
@@ -99,6 +118,7 @@ class _PagoSreen extends State<PagoSreen> {
                               fontWeight: FontWeight.bold
                           )
                       ),
+                      onChanged: ( value ) => PagoProvider().titular = value,
                       validator: ( String? value ) {
                         String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]';
                         return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el nombre';
@@ -127,6 +147,7 @@ class _PagoSreen extends State<PagoSreen> {
                               fontWeight: FontWeight.bold
                           )
                       ),
+                      onChanged: ( value ) => PagoProvider().numTarjeta = value,
                       validator: ( String? value ) {
                         String exp = r'[0-9]{15,16}|(([0-9]{4}\s){3}[0-9]{3,4})';
                         return RegExp(exp).hasMatch(value  ?? '')? null : 'Número de Tarjeta Invalido';
@@ -158,6 +179,7 @@ class _PagoSreen extends State<PagoSreen> {
                                   fontWeight: FontWeight.bold
                               )
                           ),
+                          onChanged: ( value ) => PagoProvider().fecha = value,
                           validator: ( String? value ) {
                             String exp = r'^([0-1][0-2]|0[0-1]|1[0-1])(\/)([2-9][0-9][2-9][4-9])$';
                             return RegExp(exp).hasMatch(value  ?? '')? null : 'Fecha invalida';
@@ -168,7 +190,7 @@ class _PagoSreen extends State<PagoSreen> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         padding: const EdgeInsets.symmetric(horizontal: 30),
                         child: TextFormField(
-                          controller: controllerFecha,
+                          controller: controllerCVV,
                           autocorrect: false,
                           keyboardType: TextInputType.datetime,
                           maxLength: 3,
@@ -187,6 +209,7 @@ class _PagoSreen extends State<PagoSreen> {
                                   fontWeight: FontWeight.bold
                               )
                           ),
+                          onChanged: ( value ) => PagoProvider().cvv = value,
                           validator: ( String? value ) {
                             String exp = r'^[0-9]{3}';
                             return RegExp(exp).hasMatch(value  ?? '')? null : 'CVV Invalido';
@@ -197,14 +220,33 @@ class _PagoSreen extends State<PagoSreen> {
                   ),
                   const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: PayForm.isLoading ? null : () async{
+                      _validacion();
+                      FocusScope.of(context).unfocus();
+
+                      if (!PayForm.isValidForm()) return;
+                      PayForm.isLoading = true;
+
+                      await Future.delayed(
+                          const Duration(seconds: 4));
+                      PayForm.isLoading = false;
+                      ElegantNotification.success(
+                          background: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
+                          title: const Text(
+                              "Operación Completada"
+                          ),
+                          description: const Text("Tu pago se ha completado"),
+                          toastDuration:const Duration(seconds: 8)).show(context);
+                      },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 70),
+                      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 70),
                       backgroundColor: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                     ),
-                    child: const Text(
-                      "Realizar Pago",
-                      style: TextStyle(
+                    child: Text(
+                      PayForm.isLoading
+                          ? 'Verificando...'
+                          : 'Realizar Pago',
+                      style: const TextStyle(
                         fontSize: 20
                       ),
                     ),

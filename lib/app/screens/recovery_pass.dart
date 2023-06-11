@@ -24,7 +24,7 @@ class RecoveryApp extends StatelessWidget {
         title: 'Recuperar Contraseña',
         theme: theme,
         darkTheme: darkTheme,
-        home: RecoveryScreen(),
+        home: const RecoveryScreen(),
       ),
     );
   }
@@ -69,7 +69,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) =>
-                                LoginApp()));
+                                const LoginApp()));
                       },
                       icon: const Icon(Icons.arrow_back_ios_new)
                   )

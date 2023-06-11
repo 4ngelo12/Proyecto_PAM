@@ -22,7 +22,7 @@ class HomeApp extends StatelessWidget {
         title: 'Inicio',
         theme: theme,
         darkTheme: darkTheme,
-        home: HomeScreen(),
+        home: const HomeScreen(),
       ),
     );
   }
@@ -38,14 +38,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   late Icon iconTheme;
-  late Widget contenido = ProductApp();
+  late Widget contenido = const ProductApp();
   int _selectedItem = 0;
 
   Icon _themeIcon(newValue) {
       if (newValue) {
-        iconTheme = const Icon(Icons.dark_mode);
-      } else {
         iconTheme = const Icon(Icons.light_mode);
+      } else {
+        iconTheme = const Icon(Icons.dark_mode);
       }
     return iconTheme;
   }
@@ -55,13 +55,13 @@ class _HomeScreen extends State<HomeScreen> {
       _selectedItem = index;
       switch(index) {
         case 0:
-          contenido = ProductApp();
+          contenido = const ProductApp();
           break;
         case 1:
-          contenido = BuyApp();
+          contenido = const BuyApp();
           break;
         case 2:
-          contenido = ProfileApp();
+          contenido = const ProfileApp();
           break;
         default:
           break;
@@ -76,38 +76,30 @@ class _HomeScreen extends State<HomeScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      AdaptiveTheme.of(context).setTheme(
-                          light: AppTheme.lightTheme,
-                          dark: AppTheme.darkTheme
-                      );
-                      setState(() {
-                        if (AdaptiveTheme.of(context).mode.isLight) {
-                          AdaptiveTheme.of(context).setDark();
-                          iconTheme = const Icon(Icons.dark_mode);
-                        } else {
-                          AdaptiveTheme.of(context).setLight();
-                          iconTheme = const Icon(Icons.light_mode);
-                        }
-                      });
-                    },
-                    icon: _themeIcon(AdaptiveTheme.of(context).mode.isDark)),
-                const Padding(padding:EdgeInsets.all(10)),
-                Image.asset(
-                    "Assets/Images/logo.png",
-                    width: 130
-                ),
-              ],
-            ),
             IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.search)
-            )
+                onPressed: () {
+                  AdaptiveTheme.of(context).setTheme(
+                      light: AppTheme.lightTheme,
+                      dark: AppTheme.darkTheme
+                  );
+                  setState(() {
+                    if (AdaptiveTheme.of(context).mode.isLight) {
+                      AdaptiveTheme.of(context).setDark();
+                      iconTheme = const Icon(Icons.light_mode);
+                    } else {
+                      AdaptiveTheme.of(context).setLight();
+                      iconTheme = const Icon(Icons.dark_mode);
+                    }
+                  });
+                },
+                icon: _themeIcon(AdaptiveTheme.of(context).mode.isDark)),
+            const Padding(padding:EdgeInsets.all(10)),
+            Image.asset(
+                "Assets/Images/logo.png",
+                width: 130
+            ),
           ],
-        ),
+        )
       ),
       body: contenido,
       bottomNavigationBar: BottomNavigationBar(

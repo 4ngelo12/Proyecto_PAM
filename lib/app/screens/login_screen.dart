@@ -25,12 +25,12 @@ class LoginApp extends StatelessWidget {
         title: 'Login',
         theme: theme,
         routes: {
-          '/registrar' : (context) => RegisterApp()
+          '/registrar' : (context) => const RegisterApp()
         },
         darkTheme: darkTheme,
         home: ChangeNotifierProvider(
             create: ( _ ) => FormProvider(),
-            child: LoginSreen()
+            child: const LoginSreen()
         )
       ),
     );
@@ -195,7 +195,7 @@ class _LoginScreen extends State<LoginSreen> {
                                 onPressed: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) =>
-                                          RecoveryApp()));
+                                          const RecoveryApp()));
                                 } ,
                                 style: TextButton.styleFrom(
                                   foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,
@@ -228,7 +228,7 @@ class _LoginScreen extends State<LoginSreen> {
                                           Navigator.push(context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      HomeApp()));
+                                                      const HomeApp()));
                                         }
                                       } on FirebaseAuthException catch (e) {
                                         setState(() {
@@ -281,7 +281,7 @@ class _LoginScreen extends State<LoginSreen> {
                                     onPressed: () {
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) =>
-                                              RegisterApp()));
+                                              const RegisterApp()));
                                     },
                                     style: TextButton.styleFrom(
                                       foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,

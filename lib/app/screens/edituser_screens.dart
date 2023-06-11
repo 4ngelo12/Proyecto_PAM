@@ -25,7 +25,7 @@ class EditUserApp extends StatelessWidget {
         title: 'Editar Usuario',
         theme: theme,
         darkTheme: darkTheme,
-        home: EditUserScreen(),
+        home: const EditUserScreen(),
       ),
     );
   }
@@ -82,7 +82,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                   onPressed: () {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) =>
-                                            HomeApp()));
+                                            const HomeApp()));
                                   },
                                   icon: const Icon(Icons.arrow_back_ios_new)
                               )

@@ -281,7 +281,7 @@ class _ComprasScreen extends State<BuyApp> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15),
             child: Text(
-              "Sub total: $_Total",
+              "Total: $_Total",
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold
@@ -292,9 +292,11 @@ class _ComprasScreen extends State<BuyApp> {
             padding: const EdgeInsets.symmetric(vertical: 15),
             child: TextButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) =>
-                        PagoApp()));
+                if (_Total > 0) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) =>
+                          const PagoApp()));
+                }
               },
               style: TextButton.styleFrom(
                 foregroundColor: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,

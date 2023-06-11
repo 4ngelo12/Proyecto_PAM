@@ -14,6 +14,8 @@ class ProductApp extends StatefulWidget {
 }
 
 class _ProductScreen extends State<ProductApp> {
+  TextEditingController controllerSearch = TextEditingController();
+
   Widget buildImage(String urlImage, int index) {
     return FutureBuilder(
         future: getProductos(),
@@ -133,119 +135,164 @@ class _ProductScreen extends State<ProductApp> {
               })
           ),
           const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-          FutureBuilder(
-              future: getProductos(),
-              builder: ((context, snapshot) {
-                if (snapshot.hasData) {
-                  return GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisExtent: 350,
-                          crossAxisSpacing: 2
-                      ),
-                      itemCount: snapshot.data?.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          padding: const EdgeInsets.only(
-                              left: 25,
-                              right: 25,
-                              top: 10
-                          ),
-                          margin: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => BuySApp(idProd: snapshot.data?[index]['idProd'])));
-                                  },
-                                  child:  Padding(
-                                    padding: const EdgeInsets.all(10) ,
-                                    child: Image.network("${snapshot.data?[index]['imagen']}"),
-                                  ),
-                                ),
-                              ),
-                              const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8),
-                                child: Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    snapshot.data?[index]['nombre'],
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                child: const Text(
-                                  "New Nike Shoes for men",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'S/.${snapshot.data?[index]['precio']}',
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                          color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
-                                          borderRadius: BorderRadius.circular(10)
-                                      ),
-                                      child:
-                                      IconButton(
-                                          onPressed: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (context) =>
-                                                    BuySApp(idProd: snapshot.data?[index]['idProd'])));
-                                          },
-                                          icon: const Icon(
-                                            CupertinoIcons.cart_fill_badge_plus,
-                                            size: 25,
-                                          )
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      });
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              })
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: TextField(
+              controller: controllerSearch,
+              onChanged: (value) {
+               setState(() {});
+              },
+              keyboardType: TextInputType.text,
+              style: TextStyle(
+                color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
+              ),
+              decoration: InputDecoration(
+                hintText: 'Buscar',
+                prefixIcon: const Icon(Icons.search),
+                fillColor: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
+                filled: true,
+                border:OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                labelStyle: TextStyle(
+                    color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
           ),
+           Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            child: Prod(text: controllerSearch.text),
+          )
         ],
       ),
     );
   }
+}
+
+class Prod extends StatelessWidget {
+  final String text;
+
+  const Prod({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: getProductos(),
+        builder: ((context, snapshot) {
+          if (snapshot.hasData) {
+            List? lstProds = snapshot.data;
+            if (text.isNotEmpty) {
+              String lowerText = text.toLowerCase();
+              lstProds = lstProds?.where((element) => element['nombre'].toString().toLowerCase().contains(lowerText)).toList();
+            }
+
+            return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisExtent: 350,
+                    crossAxisSpacing: 2
+                ),
+                itemCount: lstProds?.length,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Container(
+                    padding: const EdgeInsets.only(
+                        left: 25,
+                        right: 25,
+                        top: 10
+                    ),
+                    margin: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => BuySApp(idProd: lstProds![index]['idProd'])));
+                            },
+                            child:  Padding(
+                              padding: const EdgeInsets.all(10) ,
+                              child: Image.network("${lstProds![index]['imagen']}"),
+                            ),
+                          ),
+                        ),
+                        const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              lstProds[index]['nombre'],
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: const Text(
+                            "New Nike Shoes for men",
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'S/.${lstProds[index]['precio']}',
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                child:
+                                IconButton(
+                                    onPressed: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) =>
+                                              BuySApp(idProd: lstProds![index]['idProd'])));
+                                    },
+                                    icon: const Icon(
+                                      CupertinoIcons.cart_fill_badge_plus,
+                                      size: 25,
+                                    )
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                });
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        })
+    );
+  }
+  
 }

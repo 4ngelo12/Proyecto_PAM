@@ -67,7 +67,7 @@ class _ContactScreen extends State<ContactScreen> {
             Navigator.push(context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        HomeApp()));
+                        const HomeApp()));
           },
           icon: const Icon(Icons.arrow_back_ios),
         ),
