@@ -1,42 +1,37 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:proyecto/app/services/services.dart';
 
 FirebaseFirestore _db = FirebaseFirestore.instance;
 
-Future<void> addShoppingCart(String idU, String idProd, String name, double price, int cant, int size, String img, int total) async {
-  /*await _db.collection('clientes').doc(idU).
+Future<void> addShoppingCart(String idU, String idProd, String idTalla, String name, double price, int cant, int size, String img, int total)
+async {
+  await _db.collection('clientes').doc(idU).
   collection('carrito_compras').add({}).then((DocumentReference doc) async{
     await _db.collection('clientes').doc(idU).
     collection('carrito_compras').doc(doc.id).set({
       'id': doc.id,
       'idProd': idProd,
+      'idTalla': idTalla,
       'nombre': name,
       'precio': price,
       'talla': size,
       'cantidad': cant,
       'img': img,
     });
-  });*/
-  final tallas = await _db.collection('productos').doc(idProd).collection('talla').get();
-  List lstTallaId = [];
+  });
 
-  for (var e in tallas.docs) {
-    final carrito = {
-      'fid': e.id
-    };
-    print(carrito);
+  int nuevoT = 0;
 
-    lstTallaId.add(carrito.values);
-  }
-
-
-  await getTallas(idProd).then((value){
+  await getTallas(idProd).then((value) async{
     for (var i in value) {
-      if (i['cantidad'] == total)  {
-        int nuevoT = total - cant;
-
+      if (i['idTalla'] == idTalla) {
+        nuevoT = total - cant;
+        await _db.collection('productos').doc(idProd).collection('talla').doc(i['idTalla']).update({
+          'cantidad': nuevoT,
+          'idTalla': i['idTalla'],
+          'talla': i['talla']
+        });
       }
     }
   });
@@ -54,7 +49,7 @@ Future<List> getShoppingCart(String idU) async{
   return lstShoppingCart;
 }
 
-Future<void> deleteElementShoppingCart(String idU, String idES) async{
+Future<void> deleteElementShoppingCart(String idU, String idES, String idProd, String idTalla, int cant) async{
   final List lstShoppingCart = [];
 
   final docCli = await _db.collection('clientes').doc(idU).
@@ -72,7 +67,24 @@ Future<void> deleteElementShoppingCart(String idU, String idES) async{
   for (var element in lstShoppingCart) {
       if (element['id'] == idES) {
         await _db.collection('clientes').doc(idU).
-      collection('carrito_compras').doc(element['fid']).delete();
+        collection('carrito_compras').doc(element['fid']).delete();
+
+        int nuevoT = 0;
+
+        await getTallas(idProd).then((value) async{
+          for (var i in value) {
+            if (i['idTalla'] == idTalla) {
+              int stock = i['cantidad'];
+              nuevoT = stock + cant;
+
+              await _db.collection('productos').doc(idProd).collection('talla').doc(i['idTalla']).update({
+                'cantidad': nuevoT,
+                'idTalla': i['idTalla'],
+                'talla': i['talla']
+              });
+            }
+          }
+        });
       }
   }
 }

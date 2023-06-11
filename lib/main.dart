@@ -37,13 +37,8 @@ class _MyAppState extends State<MyApp> {
 
     return isMaterial
         ?
-    LoginApp(
-        savedThemeMode: widget.savedThemeMode,
-        onChanged: () => setState(() => isMaterial = true)) :
-    HomeApp(
-      savedThemeMode: widget.savedThemeMode,
-      onChanged: () => setState(() => isMaterial = false),
-    );
+    LoginApp(savedThemeMode: widget.savedThemeMode) :
+    HomeApp(savedThemeMode: widget.savedThemeMode);
   }
 
   @override

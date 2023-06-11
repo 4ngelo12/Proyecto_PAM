@@ -8,12 +8,10 @@ import 'package:proyecto/app/widgets/scaffoldmessenger.dart';
 
 class EditUserApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
-  final VoidCallback onChanged;
 
   const EditUserApp({
     super.key,
     this.savedThemeMode,
-    required this.onChanged
   });
 
   @override
@@ -27,16 +25,14 @@ class EditUserApp extends StatelessWidget {
         title: 'Editar Usuario',
         theme: theme,
         darkTheme: darkTheme,
-        home: EditUserScreen(onChanged: onChanged),
+        home: EditUserScreen(),
       ),
     );
   }
 }
 
 class EditUserScreen extends StatefulWidget {
-  final VoidCallback onChanged;
-
-  const EditUserScreen({super.key, required this.onChanged});
+  const EditUserScreen({super.key});
 
   @override
   _EditUserScreen createState() => _EditUserScreen();
@@ -86,7 +82,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                   onPressed: () {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) =>
-                                            HomeApp(onChanged: widget.onChanged)));
+                                            HomeApp()));
                                   },
                                   icon: const Icon(Icons.arrow_back_ios_new)
                               )
@@ -124,6 +120,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                           child: TextFormField(
                                             controller: nameController,
                                             autocorrect: false,
+                                            keyboardType: TextInputType.text,
                                             style: TextStyle(
                                               color: AdaptiveTheme.of(context).mode.isLight ? General.textInput : General.textInputDark,
                                             ),
@@ -153,6 +150,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                           child: TextFormField(
                                             controller: lastNameController,
                                             autocorrect: false,
+                                            keyboardType: TextInputType.text,
                                             style: TextStyle(
                                               color: AdaptiveTheme.of(context).mode.isLight ? General.textInput : General.textInputDark,
                                             ),
@@ -182,6 +180,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                           child: TextFormField(
                                             controller: phoneController,
                                             autocorrect: false,
+                                            keyboardType: TextInputType.phone,
                                             style: TextStyle(
                                               color: AdaptiveTheme.of(context).mode.isLight ? General.textInput : General.textInputDark,
                                             ),
@@ -220,6 +219,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                           child: TextFormField(
                                             controller: emailController,
                                             autocorrect: false,
+                                            keyboardType: TextInputType.emailAddress,
                                             style: TextStyle(
                                               color: AdaptiveTheme.of(context).mode.isLight ? General.textInput : General.textInputDark,
                                             ),

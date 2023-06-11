@@ -10,12 +10,10 @@ import '../models/datastatus.dart';
 
 class FavoriteApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
-  final VoidCallback onChanged;
 
   const FavoriteApp({
     super.key,
     this.savedThemeMode,
-    required this.onChanged,
   });
 
   @override
@@ -29,16 +27,15 @@ class FavoriteApp extends StatelessWidget {
         title: 'Inicio',
         theme: theme,
         darkTheme: darkTheme,
-        home: FavoriteScreen(onChanged: onChanged),
+        home: FavoriteScreen(),
       ),
     );
   }
 }
 
 class FavoriteScreen extends StatefulWidget {
-  final VoidCallback onChanged;
 
-  const FavoriteScreen({super.key, required this.onChanged});
+  const FavoriteScreen({super.key});
 
   @override
   _FavoriteScreenS createState() => _FavoriteScreenS();
@@ -72,7 +69,7 @@ class _FavoriteScreenS extends State<FavoriteScreen> {
               Navigator.push(context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          HomeApp(onChanged: widget.onChanged)));
+                          HomeApp()));
             },
             icon: const Icon(Icons.arrow_back_ios_new)
         )
@@ -134,7 +131,7 @@ class _FavoriteScreenS extends State<FavoriteScreen> {
                                             onTap: () {
                                               Navigator.push(context,
                                                   MaterialPageRoute(builder: (context) =>
-                                                      BuySApp(onChanged: widget.onChanged, idProd: snapshot.data?[0]['idProd'])));
+                                                      BuySApp(idProd: snapshot.data?[0]['idProd'])));
                                             },
                                           ),
                                           Column(
@@ -255,7 +252,7 @@ class _FavoriteScreenS extends State<FavoriteScreen> {
                                             onTap: () {
                                               Navigator.push(context,
                                                   MaterialPageRoute(builder: (context) =>
-                                                      BuySApp(onChanged: widget.onChanged, idProd: snapshot.data?[0]['idProd'])));
+                                                      BuySApp(idProd: snapshot.data?[0]['idProd'])));
                                             },
                                           ),
                                           Column(

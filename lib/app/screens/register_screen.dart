@@ -6,12 +6,10 @@ import 'package:proyecto/app/screens/screens.dart';
 
 class RegisterApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
-  final VoidCallback onChanged;
 
   const RegisterApp({
     super.key,
     this.savedThemeMode,
-    required this.onChanged,
   });
 
   @override
@@ -25,16 +23,15 @@ class RegisterApp extends StatelessWidget {
         title: 'Inicio',
         theme: theme,
         darkTheme: darkTheme,
-        home: RegisterScreen(onChanged: onChanged),
+        home: RegisterScreen(),
       ),
     );
   }
 }
 
 class RegisterScreen extends StatefulWidget {
-  final VoidCallback onChanged;
 
-  const RegisterScreen({super.key, required this.onChanged});
+  const RegisterScreen({super.key});
 
   @override
   _RegisterScreen createState() => _RegisterScreen();
@@ -98,7 +95,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   child: TextFormField(
                                     controller: nameController,
                                     autocorrect: false,
-                                    keyboardType: TextInputType.emailAddress,
+                                    keyboardType: TextInputType.text,
                                     style: TextStyle(
                                       color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                     ),
@@ -115,7 +112,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                         )
                                     ),
                                     validator: ( String? value ) {
-                                      String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{1,5}(?<!\s)$';
+                                      String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]';
                                       return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el nombre';
                                     },
                                   ),
@@ -128,6 +125,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   child: TextFormField(
                                     controller: lastNameController,
                                     autocorrect: false,
+                                    keyboardType: TextInputType.text,
                                     style: TextStyle(
                                       color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                     ),
@@ -144,7 +142,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                       ),
                                     ),
                                     validator: ( String? value ) {
-                                      String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{1,5}(?<!\s)$';
+                                      String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]';
                                       return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el apellido';
                                     },
                                   ),
@@ -157,6 +155,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   child: TextFormField(
                                     controller: phoneController,
                                     autocorrect: false,
+                                    keyboardType: TextInputType.phone,
                                     style: TextStyle(
                                       color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                     ),
@@ -195,6 +194,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   child: TextFormField(
                                     controller: emailController,
                                     autocorrect: false,
+                                    keyboardType: TextInputType.emailAddress,
                                     style: TextStyle(
                                       color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                                     ),
@@ -223,6 +223,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   ),
                                   child: TextFormField(
                                     controller: passController,
+                                    keyboardType: TextInputType.visiblePassword,
                                     autocorrect: false,
                                     obscureText: true,
                                     style: TextStyle(
@@ -256,6 +257,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     controller: pass2Controller,
                                     autocorrect: false,
                                     obscureText: true,
+                                    keyboardType: TextInputType.visiblePassword,
                                     style: TextStyle(
                                       color: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark   : General.textInput,
                                     ),
@@ -357,7 +359,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                         onPressed: () {
                                           Navigator.push(context,
                                               MaterialPageRoute(builder: (context) =>
-                                                  LoginApp(onChanged: widget.onChanged)));
+                                                  LoginApp()));
                                         },
                                         style: TextButton.styleFrom(
                                           foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,

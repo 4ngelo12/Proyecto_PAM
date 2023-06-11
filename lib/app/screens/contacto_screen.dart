@@ -8,12 +8,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ContactApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
-  final VoidCallback onChanged;
 
   const ContactApp({
     super.key,
     this.savedThemeMode,
-    required this.onChanged,
   });
 
   @override
@@ -27,16 +25,15 @@ class ContactApp extends StatelessWidget {
         title: 'Contacto',
         theme: theme,
         darkTheme: darkTheme,
-        home: ContactScreen(onChanged: onChanged),
+        home: ContactScreen(),
       ),
     );
   }
 }
 
 class ContactScreen extends StatefulWidget {
-  final VoidCallback onChanged;
 
-  const ContactScreen({super.key, required this.onChanged});
+  const ContactScreen({super.key});
 
   @override
   _ContactScreen createState() => _ContactScreen();
@@ -70,7 +67,7 @@ class _ContactScreen extends State<ContactScreen> {
             Navigator.push(context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        HomeApp(onChanged: widget.onChanged)));
+                        HomeApp()));
           },
           icon: const Icon(Icons.arrow_back_ios),
         ),

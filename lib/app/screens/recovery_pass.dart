@@ -7,12 +7,10 @@ import 'package:proyecto/app/widgets/scaffoldmessenger.dart';
 
 class RecoveryApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
-  final VoidCallback onChanged;
 
   const RecoveryApp({
     super.key,
     this.savedThemeMode,
-    required this.onChanged,
   });
 
   @override
@@ -26,16 +24,15 @@ class RecoveryApp extends StatelessWidget {
         title: 'Recuperar Contraseña',
         theme: theme,
         darkTheme: darkTheme,
-        home: RecoveryScreen(onChanged: onChanged),
+        home: RecoveryScreen(),
       ),
     );
   }
 }
 
 class RecoveryScreen extends StatefulWidget {
-  final VoidCallback onChanged;
 
-  const RecoveryScreen({super.key, required this.onChanged});
+  const RecoveryScreen({super.key});
 
   @override
   _RecoveryScreen createState() => _RecoveryScreen();
@@ -72,7 +69,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) =>
-                                LoginApp(onChanged: widget.onChanged)));
+                                LoginApp()));
                       },
                       icon: const Icon(Icons.arrow_back_ios_new)
                   )
@@ -146,6 +143,7 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                                 _validacion();
                                 if (keyForm.currentState!.validate()) {
                                   recoveryPassword(emailController.text);
+                                  emailController.text = "";
                                   mensaje(context, "Correo enviado correctamente");
                                   setState(() {
                                     error = false;

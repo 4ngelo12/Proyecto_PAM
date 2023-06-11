@@ -7,9 +7,7 @@ import 'package:proyecto/app/services/producto_service.dart';
 import 'package:proyecto/app/theme/themes.dart';
 
 class ProductApp extends StatefulWidget {
-  final VoidCallback onChanged;
-
-  const ProductApp({super.key, required this.onChanged});
+  const ProductApp({super.key});
 
   @override
   _ProductScreen createState() => _ProductScreen();
@@ -81,8 +79,7 @@ class _ProductScreen extends State<ProductApp> {
                                   onPressed: () {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) =>
-                                            BuySApp(onChanged: widget.onChanged,
-                                                idProd: snapshot.data?[index]['idProd'])));
+                                            BuySApp(idProd: snapshot.data?[index]['idProd'])));
                                   },
                                   icon: const Icon(
                                       Icons.shopping_cart,
@@ -171,7 +168,7 @@ class _ProductScreen extends State<ProductApp> {
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => BuySApp(onChanged: widget.onChanged, idProd: snapshot.data?[index]['idProd'])));
+                                        MaterialPageRoute(builder: (context) => BuySApp(idProd: snapshot.data?[index]['idProd'])));
                                   },
                                   child:  Padding(
                                     padding: const EdgeInsets.all(10) ,
@@ -225,8 +222,7 @@ class _ProductScreen extends State<ProductApp> {
                                           onPressed: () {
                                             Navigator.push(context,
                                                 MaterialPageRoute(builder: (context) =>
-                                                    BuySApp(onChanged: widget.onChanged,
-                                                        idProd: snapshot.data?[index]['idProd'])));
+                                                    BuySApp(idProd: snapshot.data?[index]['idProd'])));
                                           },
                                           icon: const Icon(
                                             CupertinoIcons.cart_fill_badge_plus,

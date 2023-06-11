@@ -10,13 +10,11 @@ import 'package:proyecto/app/widgets/widgets.dart';
 
 class BuySApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
-  final VoidCallback onChanged;
   final String idProd;
 
   const BuySApp({
     super.key,
     this.savedThemeMode,
-    required this.onChanged,
     required this.idProd
   });
 
@@ -31,17 +29,16 @@ class BuySApp extends StatelessWidget {
         title: 'Comprar',
         theme: theme,
         darkTheme: darkTheme,
-        home: BuyScreen(onChanged: onChanged, idProd: idProd),
+        home: BuyScreen(idProd: idProd),
       ),
     );
   }
 }
 
 class BuyScreen extends StatefulWidget {
-  final VoidCallback onChanged;
   final String idProd;
 
-  const BuyScreen({super.key, required this.onChanged, required this.idProd});
+  const BuyScreen({super.key, required this.idProd});
 
   @override
   _BuyScreen createState() => _BuyScreen();
@@ -53,6 +50,7 @@ class _BuyScreen extends State<BuyScreen> {
   bool _liked = false;
   late Widget _favorite;
 
+  String? idTalla;
   String? name;
   double? price;
   int? cant;
@@ -134,7 +132,7 @@ class _BuyScreen extends State<BuyScreen> {
                             onTap: () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) =>
-                                      HomeApp(onChanged: widget.onChanged)));
+                                      HomeApp()));
                               },
                             child: const Icon(
                               Icons.arrow_back_ios_new,
@@ -270,7 +268,7 @@ class _BuyScreen extends State<BuyScreen> {
                                           physics: const NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
                                           itemBuilder: (context, index) {
-
+                                            idTalla = snapshot.data![index]['idTalla'];
                                             return TextButton(
                                                 style: TextButton.styleFrom(
                                                     padding: const EdgeInsets.symmetric(
@@ -381,7 +379,7 @@ class _BuyScreen extends State<BuyScreen> {
                                   child: TextButton(
                                     onPressed: () {
                                       if (size != null) {
-                                        addShoppingCart(_user!.uid, widget.idProd, name!, (price! * cant!), cant!, size!, img!, _total);
+                                        addShoppingCart(_user!.uid, widget.idProd, idTalla!, name!, (price! * cant!), cant!, size!, img!, _total);
                                         mensaje(context, "Producto Agregado en el carrito");
                                       } else {
                                         mensaje(context, "Seleciona una talla para agregar al carrito");

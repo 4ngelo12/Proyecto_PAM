@@ -8,12 +8,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
-  final VoidCallback onChanged;
 
   const LoginApp({
     super.key,
     this.savedThemeMode,
-    required this.onChanged,
   });
 
   @override
@@ -26,26 +24,27 @@ class LoginApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Login',
         theme: theme,
+        routes: {
+          '/registrar' : (context) => RegisterApp()
+        },
         darkTheme: darkTheme,
         home: ChangeNotifierProvider(
             create: ( _ ) => FormProvider(),
-            child:_LoginSreenPri(onChanged: onChanged)
+            child: LoginSreen()
         )
       ),
     );
   }
 }
 
-class _LoginSreenPri extends StatefulWidget {
-  final VoidCallback onChanged;
-
-  const _LoginSreenPri({required this.onChanged});
+class LoginSreen extends StatefulWidget {
+  const LoginSreen({super.key});
 
   @override
   _LoginScreen createState() => _LoginScreen();
 }
 
-class _LoginScreen extends State<_LoginSreenPri> {
+class _LoginScreen extends State<LoginSreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
@@ -196,7 +195,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                 onPressed: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) =>
-                                          RecoveryApp(onChanged: widget.onChanged)));
+                                          RecoveryApp()));
                                 } ,
                                 style: TextButton.styleFrom(
                                   foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,
@@ -229,8 +228,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                           Navigator.push(context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      HomeApp(onChanged: widget
-                                                          .onChanged)));
+                                                      HomeApp()));
                                         }
                                       } on FirebaseAuthException catch (e) {
                                         setState(() {
@@ -283,7 +281,7 @@ class _LoginScreen extends State<_LoginSreenPri> {
                                     onPressed: () {
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) =>
-                                              RegisterApp(onChanged: widget.onChanged)));
+                                              RegisterApp()));
                                     },
                                     style: TextButton.styleFrom(
                                       foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,

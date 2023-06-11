@@ -5,12 +5,10 @@ import 'package:proyecto/app/widgets/widgets.dart';
 
 class HomeApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
-  final VoidCallback onChanged;
 
   const HomeApp({
     super.key,
     this.savedThemeMode,
-    required this.onChanged,
   });
 
   @override
@@ -24,16 +22,15 @@ class HomeApp extends StatelessWidget {
         title: 'Inicio',
         theme: theme,
         darkTheme: darkTheme,
-        home: HomeScreen(onChanged: onChanged),
+        home: HomeScreen(),
       ),
     );
   }
 }
 
 class HomeScreen extends StatefulWidget {
-  final VoidCallback onChanged;
 
-  const HomeScreen({super.key, required this.onChanged});
+  const HomeScreen({super.key});
 
   @override
   _HomeScreen createState() => _HomeScreen();
@@ -41,7 +38,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   late Icon iconTheme;
-  late Widget contenido = ProductApp(onChanged: widget.onChanged);
+  late Widget contenido = ProductApp();
   int _selectedItem = 0;
 
   Icon _themeIcon(newValue) {
@@ -58,13 +55,13 @@ class _HomeScreen extends State<HomeScreen> {
       _selectedItem = index;
       switch(index) {
         case 0:
-          contenido = ProductApp(onChanged: widget.onChanged);
+          contenido = ProductApp();
           break;
         case 1:
-          contenido = BuyApp(onChanged: widget.onChanged);
+          contenido = BuyApp();
           break;
         case 2:
-          contenido = ProfileApp(onChanged: widget.onChanged);
+          contenido = ProfileApp();
           break;
         default:
           break;

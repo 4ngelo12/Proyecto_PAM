@@ -7,12 +7,8 @@ import 'package:proyecto/app/screens/screens.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../screens/registerprods_screen.dart';
-
 class ProfileApp extends StatefulWidget {
-  final VoidCallback onChanged;
-
-  const ProfileApp({super.key, required this.onChanged});
+  const ProfileApp({super.key});
 
   @override
   _ProfilelScreen createState() => _ProfilelScreen();
@@ -98,10 +94,7 @@ class _ProfilelScreen extends State<ProfileApp> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) =>
-                          RegisProdApp(onChanged: widget.onChanged)));
-                  /*Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>
-                          EditUserApp(onChanged: widget.onChanged)));*/
+                          EditUserApp()));
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
@@ -126,7 +119,7 @@ class _ProfilelScreen extends State<ProfileApp> {
                   Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              FavoriteApp(onChanged: widget.onChanged)));
+                              FavoriteApp()));
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
@@ -171,7 +164,7 @@ class _ProfilelScreen extends State<ProfileApp> {
                   Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              ContactApp(onChanged: widget.onChanged)));
+                              ContactApp()));
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
@@ -181,8 +174,7 @@ class _ProfilelScreen extends State<ProfileApp> {
                   Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              LoginApp(onChanged: widget
-                                  .onChanged)));
+                              LoginApp()));
                 },
                 child: Row(
                   children: const [

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:proyecto/app/screens/formpago_screen.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/widgets/widgets.dart';
 import '../models/datastatus.dart';
 import '../services/carritocompras_service.dart';
 
 class BuyApp extends StatefulWidget {
-  final VoidCallback onChanged;
-  const BuyApp({super.key, required this.onChanged});
+  const BuyApp({super.key});
 
   @override
   _ComprasScreen createState() => _ComprasScreen();
@@ -63,7 +63,7 @@ class _ComprasScreen extends State<BuyApp> {
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
             if (dataStatus == DataStatus.Loading) {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             } else if (dataStatus == DataStatus.Loaded) {
               return snapshot.data!.isNotEmpty ?
               CustomScrollView(
@@ -71,6 +71,7 @@ class _ComprasScreen extends State<BuyApp> {
                   SliverList(
                       delegate: SliverChildBuilderDelegate(
                               (context, index) {
+
                             return Container(
                               margin: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
@@ -142,7 +143,9 @@ class _ComprasScreen extends State<BuyApp> {
                                               ),
                                               IconButton(
                                                   onPressed: () async {
-                                                    await deleteElementShoppingCart(_user!.uid, snapshot.data![index]['id']);
+                                                    await deleteElementShoppingCart(_user!.uid, snapshot.data![index]['id'],
+                                                        snapshot.data![index]['idProd'], snapshot.data![index]['idTalla'],
+                                                        snapshot.data![index]['cantidad']);
                                                     _loadData();
                                                     _reloadData();
                                                   },
@@ -243,7 +246,9 @@ class _ComprasScreen extends State<BuyApp> {
                                               ),
                                               IconButton(
                                                   onPressed: () async {
-                                                    await deleteElementShoppingCart(_user!.uid, snapshot.data![index]['id']);
+                                                    await deleteElementShoppingCart(_user!.uid, snapshot.data![index]['id'],
+                                                        snapshot.data![index]['idProd'], snapshot.data![index]['idTalla'],
+                                                        snapshot.data![index]['cantidad']);
                                                     _loadData();
                                                     _reloadData();
                                                   },
@@ -287,6 +292,9 @@ class _ComprasScreen extends State<BuyApp> {
             padding: const EdgeInsets.symmetric(vertical: 15),
             child: TextButton(
               onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) =>
+                        PagoApp()));
               },
               style: TextButton.styleFrom(
                 foregroundColor: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
