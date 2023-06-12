@@ -1,18 +1,22 @@
 import 'package:elegant_notification/elegant_notification.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto/app/screens/principal_screen.dart';
 import 'package:proyecto/app/theme/themes.dart';
-
+import 'package:intl/intl.dart';
 import '../providers/pago_provider.dart';
+import '../services/ventas_service.dart';
 
 class PagoApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
+  final double total;
 
   const PagoApp({
     super.key,
     this.savedThemeMode,
+    required this.total,
   });
 
   @override
@@ -28,7 +32,7 @@ class PagoApp extends StatelessWidget {
           darkTheme: darkTheme,
           home: ChangeNotifierProvider(
               create: ( _ ) => PagoProvider(),
-              child: const PagoSreen()
+              child: PagoSreen(total: total)
           )
       ),
     );
@@ -36,7 +40,9 @@ class PagoApp extends StatelessWidget {
 }
 
 class PagoSreen extends StatefulWidget {
-  const PagoSreen({super.key});
+  final double total;
+
+  const PagoSreen({super.key, required this.total});
 
   @override
   _PagoSreen createState() => _PagoSreen();
@@ -62,6 +68,11 @@ class _PagoSreen extends State<PagoSreen> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    final _user = FirebaseAuth.instance.currentUser;
+
+    // Formatea la fecha usando el paquete intl
+    String formattedDate = DateFormat('yyyy-MM-dd').format(now);
 
     final PayForm = Provider.of<PagoProvider>(context);
     return Scaffold(
@@ -230,6 +241,7 @@ class _PagoSreen extends State<PagoSreen> {
                       await Future.delayed(
                           const Duration(seconds: 4));
                       PayForm.isLoading = false;
+                      crearVenta(_user!.uid, widget.total, formattedDate);
                       ElegantNotification.success(
                           background: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
                           title: const Text(

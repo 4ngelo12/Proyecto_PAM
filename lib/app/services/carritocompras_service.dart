@@ -89,6 +89,29 @@ Future<void> deleteElementShoppingCart(String idU, String idES, String idProd, S
   }
 }
 
+Future<void> deleteElementShoppingCartId(String idU, String idES) async{
+  final List lstShoppingCart = [];
+
+  final docCli = await _db.collection('clientes').doc(idU).
+  collection('carrito_compras').get();
+
+  for (var e in docCli.docs) {
+    final Map<String, dynamic> data = e.data();
+    final carrito = {
+      'id': data['id'],
+      'fid': e.id
+    };
+    lstShoppingCart.add(carrito);
+  }
+
+  for (var element in lstShoppingCart) {
+    if (element['id'] == idES) {
+      await _db.collection('clientes').doc(idU).
+      collection('carrito_compras').doc(element['fid']).delete();
+    }
+  }
+}
+
 Future<double> total(String idU) async {
   double total = 0;
 

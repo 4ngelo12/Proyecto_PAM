@@ -175,7 +175,7 @@ class _ComprasScreen extends State<BuyApp> {
                   SliverList(
                       delegate: SliverChildBuilderDelegate(
                               (context, index) {
-                            return Container(
+                                return Container(
                               margin: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
                                   color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
@@ -295,7 +295,7 @@ class _ComprasScreen extends State<BuyApp> {
                 if (_Total > 0) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) =>
-                          const PagoApp()));
+                          PagoApp(total: _Total)));
                 }
               },
               style: TextButton.styleFrom(

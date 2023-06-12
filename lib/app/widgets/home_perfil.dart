@@ -140,7 +140,12 @@ class _ProfilelScreen extends State<ProfileApp> {
                     )
                   ],
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                          const MisComprasApp()));
+                },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
               InkWell(

@@ -29,7 +29,6 @@ class HomeApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatefulWidget {
-
   const HomeScreen({super.key});
 
   @override
