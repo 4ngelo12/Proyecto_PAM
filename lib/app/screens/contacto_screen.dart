@@ -2,34 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:proyecto/app/screens/screens.dart';
 import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-class ContactApp extends StatelessWidget {
-  final AdaptiveThemeMode? savedThemeMode;
-
-  const ContactApp({
-    super.key,
-    this.savedThemeMode,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveTheme(
-      light: AppTheme.lightTheme,
-      dark: AppTheme.darkTheme,
-      initial: savedThemeMode ?? AdaptiveThemeMode.system,
-      builder: (theme, darkTheme) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Contacto',
-        theme: theme,
-        darkTheme: darkTheme,
-        home: ContactScreen(),
-      ),
-    );
-  }
-}
 
 class ContactScreen extends StatefulWidget {
 
@@ -62,12 +36,10 @@ class _ContactScreen extends State<ContactScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: IconButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        const HomeApp()));
+            Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back_ios),
         ),

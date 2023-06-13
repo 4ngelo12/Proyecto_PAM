@@ -33,5 +33,4 @@ class Clean extends StatelessWidget {
         )
     );
   }
-
 }

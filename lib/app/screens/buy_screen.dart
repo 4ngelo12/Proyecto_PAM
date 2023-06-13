@@ -5,35 +5,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:proyecto/app/services/services.dart';
 import 'package:proyecto/app/theme/themes.dart';
-import 'package:proyecto/app/screens/screens.dart';
 import 'package:proyecto/app/widgets/widgets.dart';
-
-class BuySApp extends StatelessWidget {
-  final AdaptiveThemeMode? savedThemeMode;
-  final String idProd;
-
-  const BuySApp({
-    super.key,
-    this.savedThemeMode,
-    required this.idProd
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveTheme(
-      light: AppTheme.lightTheme,
-      dark: AppTheme.darkTheme,
-      initial: savedThemeMode ?? AdaptiveThemeMode.system,
-      builder: (theme, darkTheme) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Comprar',
-        theme: theme,
-        darkTheme: darkTheme,
-        home: BuyScreen(idProd: idProd),
-      ),
-    );
-  }
-}
 
 class BuyScreen extends StatefulWidget {
   final String idProd;
@@ -130,9 +102,7 @@ class _BuyScreen extends State<BuyScreen> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) =>
-                                      HomeApp()));
+                              Navigator.pop(context);
                               },
                             child: const Icon(
                               Icons.arrow_back_ios_new,
@@ -380,9 +350,9 @@ class _BuyScreen extends State<BuyScreen> {
                                     onPressed: () {
                                       if (size != null) {
                                         addShoppingCart(_user!.uid, widget.idProd, idTalla!, name!, (price! * cant!), cant!, size!, img!, _total);
-                                        mensaje(context, "Producto Agregado en el carrito");
+                                        successfulMessage(context, "Producto Agregado en el carrito");
                                       } else {
-                                        mensaje(context, "Seleciona una talla para agregar al carrito");
+                                        successfulMessage(context, "Seleciona una talla para agregar al carrito");
                                       }
                                     },
                                     style: TextButton.styleFrom(

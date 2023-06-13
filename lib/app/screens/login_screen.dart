@@ -2,54 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:proyecto/app/screens/screens.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/theme/themes.dart';
-import 'package:proyecto/app/providers/form_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../providers/app_provider.dart';
+import '../widgets/notificaciones.dart';
 
-class LoginApp extends StatelessWidget {
-  final AdaptiveThemeMode? savedThemeMode;
-
-  const LoginApp({
-    super.key,
-    this.savedThemeMode,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveTheme(
-      light: AppTheme.lightTheme,
-      dark: AppTheme.darkTheme,
-      initial: savedThemeMode ?? AdaptiveThemeMode.dark,
-      builder: (theme, darkTheme) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Login',
-        theme: theme,
-        routes: {
-          '/registrar' : (context) => const RegisterApp()
-        },
-        darkTheme: darkTheme,
-        home: ChangeNotifierProvider(
-            create: ( _ ) => FormProvider(),
-            child: const LoginSreen()
-        )
-      ),
-    );
-  }
-}
-
-class LoginSreen extends StatefulWidget {
-  const LoginSreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
   _LoginScreen createState() => _LoginScreen();
 }
 
-class _LoginScreen extends State<LoginSreen> {
+class _LoginScreen extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
   bool _estado = true;
-  bool _error = false;
   String _mensaje = '';
 
   void _validacion() {
@@ -62,11 +31,10 @@ class _LoginScreen extends State<LoginSreen> {
     });
   }
 
-  //final controller = LoginController();
   @override
   Widget build(BuildContext context) {
 
-    final loginForm = Provider.of<FormProvider>(context);
+    final loginForm = Provider.of<AppProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -123,7 +91,7 @@ class _LoginScreen extends State<LoginSreen> {
                                         fontWeight: FontWeight.bold
                                     )
                                 ),
-                                onChanged: ( value ) => FormProvider().email = value,
+                                onChanged: ( value ) => AppProvider().email = value,
                                 validator: ( value ) {
                                   String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
                                   RegExp regExp  = RegExp(pattern);
@@ -155,7 +123,7 @@ class _LoginScreen extends State<LoginSreen> {
                                       fontWeight: FontWeight.bold
                                   ),
                                 ),
-                                onChanged: ( value ) => FormProvider().password = value,
+                                onChanged: ( value ) => AppProvider().password = value,
                                 validator: ( value ) {
                                   return ( value != null && value.length >= 10 )
                                       ? null
@@ -163,39 +131,12 @@ class _LoginScreen extends State<LoginSreen> {
                                 },
                               ),
                             ),
-
-                            _error ? Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 15,
-                                  horizontal: 25
-                              ),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10,
-                                    horizontal: 15
-                                ),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.red
-                                ),
-                                child: Text(
-                                  _mensaje,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.clip,
-                                ),
-                              ),
-                            ): const Text(""),
                             Container(
                               alignment: AlignmentDirectional.centerEnd,
-                              width: MediaQuery.of(context).size.width / 1.3,
+                              width: MediaQuery.of(context).size.width / 1.45,
                               child: TextButton(
                                 onPressed: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) =>
-                                          const RecoveryApp()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (_) => const RecoveryScreen()));
                                 } ,
                                 style: TextButton.styleFrom(
                                   foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,
@@ -208,18 +149,17 @@ class _LoginScreen extends State<LoginSreen> {
                             Padding(
                               padding: const EdgeInsets.all(30),
                               child: MaterialButton(
-                                  onPressed:loginForm.isLoading ? null : () async {
+                                onPressed:loginForm.isLoadingForm ? null : () async {
                                       _validacion();
                                       FocusScope.of(context).unfocus();
 
-                                      if (!loginForm.isValidForm()) return;
-                                      loginForm.isLoading = true;
+                                      if (!loginForm.isValidLoginForm()) return;
+                                      loginForm.isLoadingForm = true;
                                       await Future.delayed(
                                           const Duration(seconds: 2));
-                                      loginForm.isLoading = false;
+                                      loginForm.isLoadingForm = false;
 
                                       try {
-
                                         final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
                                             email: emailController.text,
                                             password: passController.text
@@ -228,36 +168,32 @@ class _LoginScreen extends State<LoginSreen> {
                                           Navigator.push(context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      const HomeApp()));
+                                                      const HomeScreen()));
                                         }
                                       } on FirebaseAuthException catch (e) {
                                         setState(() {
                                           if (e.code == 'user-not-found') {
                                             _mensaje = 'El correo ingresado no esta registrado';
-                                            _error = true;
                                           } else if (e.code == 'wrong-password') {
                                             _mensaje = 'La contraseña es incorrecta';
-                                            _error = true;
-                                          } else {
-                                            _mensaje = '';
-                                            _error = false;
                                           }
                                         });
+                                        errorMessage(context, _mensaje);
                                       }
                                   },
-                                  color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
-                                  disabledColor: AdaptiveTheme.of(context).mode.isDark ? Login.disableButtonDark : Login.disableButton,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 55,
-                                      vertical: 18
-                                  ),
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10)
-                                      )
-                                  ),
+                                color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
+                                disabledColor: AdaptiveTheme.of(context).mode.isDark ? Login.disableButtonDark : Login.disableButton,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 55,
+                                    vertical: 18
+                                ),
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(10)
+                                    )
+                                ),
                                 child: Text(
-                                  loginForm.isLoading
+                                  loginForm.isLoadingForm
                                       ? 'Verificando..'
                                       : 'Iniciar Sesión',
                                   style: const TextStyle(
@@ -281,7 +217,7 @@ class _LoginScreen extends State<LoginSreen> {
                                     onPressed: () {
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) =>
-                                              const RegisterApp()));
+                                              const RegisterScreen()));
                                     },
                                     style: TextButton.styleFrom(
                                       foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,

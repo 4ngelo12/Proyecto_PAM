@@ -3,31 +3,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/screens/screens.dart';
-
-class RegisterApp extends StatelessWidget {
-  final AdaptiveThemeMode? savedThemeMode;
-
-  const RegisterApp({
-    super.key,
-    this.savedThemeMode,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveTheme(
-      light: AppTheme.lightTheme,
-      dark: AppTheme.darkTheme,
-      initial: savedThemeMode ?? AdaptiveThemeMode.system,
-      builder: (theme, darkTheme) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Inicio',
-        theme: theme,
-        darkTheme: darkTheme,
-        home: const RegisterScreen(),
-      ),
-    );
-  }
-}
+import 'package:proyecto/app/widgets/notificaciones.dart';
 
 class RegisterScreen extends StatefulWidget {
 
@@ -47,7 +23,6 @@ class _RegisterScreen extends State<RegisterScreen> {
   final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
 
   bool _estado = true;
-  bool _exito = false;
 
   void _validacion() {
     setState(() {
@@ -286,19 +261,6 @@ class _RegisterScreen extends State<RegisterScreen> {
                                     },
                                   ),
                                 ),
-                                _exito ? Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
-                                  decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.circular(10)
-                                  ),
-                                  child: const Text(
-                                    "Registrado Correctamente",
-                                    style: TextStyle(
-                                        fontSize: 20
-                                    ),
-                                  ),
-                                ) : const Text(""),
                                 Padding(
                                   padding: const EdgeInsets.all(30),
                                   child: MaterialButton(
@@ -309,13 +271,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                             addCli(nameController.text, lastNameController.text, phoneController.text,
                                                 emailController.text, passController.text);
 
-                                            setState(() {
-                                              if (!_estado) {
-                                                _exito = false;
-                                              } else {
-                                                _exito = true;
-                                              }
-                                            });
+                                            successfulMessage(context, "Registrado Correctamente");
 
                                             nameController.text = "";
                                             lastNameController.text = "";
@@ -357,9 +313,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                           horizontal: 0),
                                       child: TextButton(
                                         onPressed: () {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(builder: (context) =>
-                                                  const LoginApp()));
+                                          Navigator.pop(context);
                                         },
                                         style: TextButton.styleFrom(
                                           foregroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.textButtonDark : Login.textButton,

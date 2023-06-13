@@ -94,7 +94,7 @@ class _ProfilelScreen extends State<ProfileApp> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) =>
-                          const EditUserApp()));
+                          const EditUserScreen()));
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
@@ -119,7 +119,7 @@ class _ProfilelScreen extends State<ProfileApp> {
                   Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              const FavoriteApp()));
+                              const FavoriteScreen()));
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
@@ -144,7 +144,7 @@ class _ProfilelScreen extends State<ProfileApp> {
                   Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) =>
-                          const MisComprasApp()));
+                          const MisComprasScreen()));
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
@@ -169,7 +169,7 @@ class _ProfilelScreen extends State<ProfileApp> {
                   Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              const ContactApp()));
+                              const ContactScreen()));
                 },
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
@@ -179,7 +179,7 @@ class _ProfilelScreen extends State<ProfileApp> {
                   Navigator.push(context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              const LoginApp()));
+                              const LoginScreen()));
                 },
                 child: Row(
                   children: const [

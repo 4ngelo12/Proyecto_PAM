@@ -1,35 +1,8 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:proyecto/app/screens/principal_screen.dart';
 import 'package:proyecto/app/services/ventas_service.dart';
 import '../theme/themes.dart';
-
-class MisComprasApp extends StatelessWidget {
-  final AdaptiveThemeMode? savedThemeMode;
-
-  const MisComprasApp({
-    super.key,
-    this.savedThemeMode,
-  });
-
-    @override
-    Widget build(BuildContext context) {
-      return AdaptiveTheme(
-        light: AppTheme.lightTheme,
-        dark: AppTheme.darkTheme,
-        initial: savedThemeMode ?? AdaptiveThemeMode.system,
-        builder: (theme, darkTheme) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Inicio',
-          theme: theme,
-          darkTheme: darkTheme,
-          home: const MisComprasScreen(),
-        ),
-      );
-    }
-}
-
 
 class MisComprasScreen extends StatefulWidget {
   const MisComprasScreen({super.key});
@@ -53,14 +26,13 @@ class _MisComprasScreen extends State<MisComprasScreen> {
           return CustomScrollView(
             slivers: [
               SliverAppBar(
+                automaticallyImplyLeading: false,
                 title: IconButton(
                   onPressed: ()  {
-                    Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => const HomeApp()));
+                    Navigator.pop(context);
                   },
                   icon: Icon(Icons.arrow_back_ios_new),
                 ),
-                backgroundColor: Colors.transparent,
               ),
               SliverList(
                   delegate: SliverChildBuilderDelegate(

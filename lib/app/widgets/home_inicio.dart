@@ -81,7 +81,7 @@ class _ProductScreen extends State<ProductApp> {
                                   onPressed: () {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) =>
-                                            BuySApp(idProd: snapshot.data?[index]['idProd'])));
+                                            BuyScreen(idProd: snapshot.data?[index]['idProd'])));
                                   },
                                   icon: const Icon(
                                       Icons.shopping_cart,
@@ -216,7 +216,7 @@ class Prod extends StatelessWidget {
                           child: InkWell(
                             onTap: () {
                               Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => BuySApp(idProd: lstProds![index]['idProd'])));
+                                  MaterialPageRoute(builder: (context) => BuyScreen(idProd: lstProds![index]['idProd'])));
                             },
                             child:  Padding(
                               padding: const EdgeInsets.all(10) ,
@@ -270,7 +270,7 @@ class Prod extends StatelessWidget {
                                     onPressed: () {
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) =>
-                                              BuySApp(idProd: lstProds![index]['idProd'])));
+                                              BuyScreen(idProd: lstProds![index]['idProd'])));
                                     },
                                     icon: const Icon(
                                       CupertinoIcons.cart_fill_badge_plus,

@@ -3,33 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:proyecto/app/theme/themes.dart';
-import 'package:proyecto/app/screens/screens.dart';
 import 'package:proyecto/app/widgets/notificaciones.dart';
-
-class EditUserApp extends StatelessWidget {
-  final AdaptiveThemeMode? savedThemeMode;
-
-  const EditUserApp({
-    super.key,
-    this.savedThemeMode,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveTheme(
-      light: AppTheme.lightTheme,
-      dark: AppTheme.darkTheme,
-      initial: savedThemeMode ?? AdaptiveThemeMode.system,
-      builder: (theme, darkTheme) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Editar Usuario',
-        theme: theme,
-        darkTheme: darkTheme,
-        home: const EditUserScreen(),
-      ),
-    );
-  }
-}
 
 class EditUserScreen extends StatefulWidget {
   const EditUserScreen({super.key});
@@ -80,9 +54,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                             children: [
                               IconButton(
                                   onPressed: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) =>
-                                            const HomeApp()));
+                                    Navigator.pop(context);
                                   },
                                   icon: const Icon(Icons.arrow_back_ios_new)
                               )
@@ -250,7 +222,7 @@ class _EditUserScreen extends State<EditUserScreen> {
                                               if (keyForm.currentState!.validate()) {
                                                 await editData(_user!.uid, nameController.text, lastNameController.text, phoneController.text,
                                                     emailController.text);
-                                                mensaje(context, "Datos Modificados Correctamente");
+                                                successfulMessage(context, "Datos Modificados Correctamente");
                                               }
                                             },
                                             color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,

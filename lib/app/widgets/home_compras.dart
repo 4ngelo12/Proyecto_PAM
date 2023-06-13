@@ -295,11 +295,10 @@ class _ComprasScreen extends State<BuyApp> {
                 if (_Total > 0) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) =>
-                          PagoApp(total: _Total)));
+                          PagoSreen(total: _Total)));
                 }
               },
               style: TextButton.styleFrom(
-                disabledBackgroundColor: Colors.red,
                 foregroundColor: AdaptiveTheme.of(context).mode.isDark ? General.textInputDark : General.textInput,
                 backgroundColor: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25)

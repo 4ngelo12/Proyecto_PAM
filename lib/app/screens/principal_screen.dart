@@ -3,31 +3,6 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/widgets/widgets.dart';
 
-class HomeApp extends StatelessWidget {
-  final AdaptiveThemeMode? savedThemeMode;
-
-  const HomeApp({
-    super.key,
-    this.savedThemeMode,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveTheme(
-      light: AppTheme.lightTheme,
-      dark: AppTheme.darkTheme,
-      initial: savedThemeMode ?? AdaptiveThemeMode.system,
-      builder: (theme, darkTheme) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Inicio',
-        theme: theme,
-        darkTheme: darkTheme,
-        home: const HomeScreen(),
-      ),
-    );
-  }
-}
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -72,33 +47,34 @@ class _HomeScreen extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-                onPressed: () {
-                  AdaptiveTheme.of(context).setTheme(
-                      light: AppTheme.lightTheme,
-                      dark: AppTheme.darkTheme
-                  );
-                  setState(() {
-                    if (AdaptiveTheme.of(context).mode.isLight) {
-                      AdaptiveTheme.of(context).setDark();
-                      iconTheme = const Icon(Icons.light_mode);
-                    } else {
-                      AdaptiveTheme.of(context).setLight();
-                      iconTheme = const Icon(Icons.dark_mode);
-                    }
-                  });
-                },
-                icon: _themeIcon(AdaptiveTheme.of(context).mode.isDark)),
-            const Padding(padding:EdgeInsets.all(10)),
-            Image.asset(
-                "Assets/Images/logo.png",
-                width: 130
-            ),
-          ],
-        )
+          automaticallyImplyLeading: false,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    AdaptiveTheme.of(context).setTheme(
+                        light: AppTheme.lightTheme,
+                        dark: AppTheme.darkTheme
+                    );
+                    setState(() {
+                      if (AdaptiveTheme.of(context).mode.isLight) {
+                        AdaptiveTheme.of(context).setDark();
+                        iconTheme = const Icon(Icons.light_mode);
+                      } else {
+                        AdaptiveTheme.of(context).setLight();
+                        iconTheme = const Icon(Icons.dark_mode);
+                      }
+                    });
+                    },
+                  icon: _themeIcon(AdaptiveTheme.of(context).mode.isDark)),
+              const Padding(padding:EdgeInsets.all(10)),
+              Image.asset(
+                  "Assets/Images/logo.png",
+                  width: 130
+              ),
+            ],
+          )
       ),
       body: contenido,
       bottomNavigationBar: BottomNavigationBar(

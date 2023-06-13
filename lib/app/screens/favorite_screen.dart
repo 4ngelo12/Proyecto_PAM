@@ -8,33 +8,7 @@ import 'package:proyecto/app/screens/screens.dart';
 import 'package:proyecto/app/widgets/widgets.dart';
 import '../models/datastatus.dart';
 
-class FavoriteApp extends StatelessWidget {
-  final AdaptiveThemeMode? savedThemeMode;
-
-  const FavoriteApp({
-    super.key,
-    this.savedThemeMode,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveTheme(
-      light: AppTheme.lightTheme,
-      dark: AppTheme.darkTheme,
-      initial: savedThemeMode ?? AdaptiveThemeMode.system,
-      builder: (theme, darkTheme) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Inicio',
-        theme: theme,
-        darkTheme: darkTheme,
-        home: const FavoriteScreen(),
-      ),
-    );
-  }
-}
-
 class FavoriteScreen extends StatefulWidget {
-
   const FavoriteScreen({super.key});
 
   @override
@@ -64,15 +38,13 @@ class _FavoriteScreenS extends State<FavoriteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const HomeApp()));
-            },
-            icon: const Icon(Icons.arrow_back_ios_new)
-        )
+          automaticallyImplyLeading: false,
+          title: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+                },
+              icon: const Icon(Icons.arrow_back_ios_new)
+          )
       ),
       body: FutureBuilder(
           future: getFavortiosId(_user!.uid),
@@ -131,7 +103,7 @@ class _FavoriteScreenS extends State<FavoriteScreen> {
                                             onTap: () {
                                               Navigator.push(context,
                                                   MaterialPageRoute(builder: (context) =>
-                                                      BuySApp(idProd: snapshot.data?[0]['idProd'])));
+                                                      BuyScreen(idProd: snapshot.data?[0]['idProd'])));
                                             },
                                           ),
                                           Column(
@@ -252,7 +224,7 @@ class _FavoriteScreenS extends State<FavoriteScreen> {
                                             onTap: () {
                                               Navigator.push(context,
                                                   MaterialPageRoute(builder: (context) =>
-                                                      BuySApp(idProd: snapshot.data?[0]['idProd'])));
+                                                      BuyScreen(idProd: snapshot.data?[0]['idProd'])));
                                             },
                                           ),
                                           Column(
