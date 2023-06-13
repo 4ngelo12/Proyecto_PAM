@@ -4,7 +4,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/screens/screens.dart';
-import 'package:proyecto/app/widgets/scaffoldmessenger.dart';
+import 'package:proyecto/app/widgets/notificaciones.dart';
 
 class EditUserApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;

@@ -105,7 +105,7 @@ class _PagoSreen extends State<PagoSreen> {
             ),
             Form(
               key: PayForm.formKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
+              autovalidateMode: _estado ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
                   Padding(

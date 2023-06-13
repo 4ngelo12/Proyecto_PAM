@@ -310,7 +310,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                                 emailController.text, passController.text);
 
                                             setState(() {
-                                              if (_exito) {
+                                              if (!_estado) {
                                                 _exito = false;
                                               } else {
                                                 _exito = true;

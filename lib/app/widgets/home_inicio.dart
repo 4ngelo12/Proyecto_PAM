@@ -185,7 +185,6 @@ class Prod extends StatelessWidget {
               String lowerText = text.toLowerCase();
               lstProds = lstProds?.where((element) => element['nombre'].toString().toLowerCase().contains(lowerText)).toList();
             }
-
             return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,

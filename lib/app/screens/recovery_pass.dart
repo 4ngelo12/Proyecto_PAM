@@ -3,7 +3,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/screens/login_screen.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/services/services.dart';
-import 'package:proyecto/app/widgets/scaffoldmessenger.dart';
+import 'package:proyecto/app/widgets/notificaciones.dart';
 
 class RecoveryApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
@@ -42,7 +42,6 @@ class _RecoveryScreen extends State<RecoveryScreen> {
   TextEditingController emailController = TextEditingController();
   final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
   bool estado = true;
-  bool error = false;
 
   void _validacion() {
     setState(() {
@@ -140,18 +139,12 @@ class _RecoveryScreen extends State<RecoveryScreen> {
                             padding: const EdgeInsets.all(10),
                             child: TextButton(
                               onPressed: () {
-                                _validacion();
                                 if (keyForm.currentState!.validate()) {
                                   recoveryPassword(emailController.text);
                                   emailController.text = "";
                                   mensaje(context, "Correo enviado correctamente");
-                                  setState(() {
-                                    error = false;
-                                  });
                                 } else {
-                                  setState(() {
-                                    error = true;
-                                  });
+                                  _validacion();
                                 }
                               },
                               style: TextButton.styleFrom(
