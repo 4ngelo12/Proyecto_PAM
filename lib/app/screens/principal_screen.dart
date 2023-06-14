@@ -7,10 +7,10 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreen createState() => _HomeScreen();
+  HomeScreenS createState() => HomeScreenS();
 }
 
-class _HomeScreen extends State<HomeScreen> {
+class HomeScreenS extends State<HomeScreen> {
   late Icon iconTheme;
   late Widget contenido = const ProductApp();
   int _selectedItem = 0;

@@ -13,13 +13,12 @@ class BuyApp extends StatefulWidget {
   const BuyApp({super.key});
 
   @override
-  _ComprasScreen createState() => _ComprasScreen();
+  ComprasScreenS createState() => ComprasScreenS();
 }
 
-class _ComprasScreen extends State<BuyApp> {
-  List<double> price = [];
+class ComprasScreenS extends State<BuyApp> {
   double? _total;
-  double _Total = 0;
+  double _totalPrice = 0;
   final _user = FirebaseAuth.instance.currentUser;
 
   @override
@@ -35,7 +34,7 @@ class _ComprasScreen extends State<BuyApp> {
 
     // Actualizar el estado con el resultado
     setState(() {
-      _Total = _total!;
+      _totalPrice = _total!;
     });
   }
 
@@ -281,7 +280,7 @@ class _ComprasScreen extends State<BuyApp> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15),
             child: Text(
-              "Total: $_Total",
+              "Total: $_totalPrice",
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold
@@ -292,10 +291,10 @@ class _ComprasScreen extends State<BuyApp> {
             padding: const EdgeInsets.symmetric(vertical: 15),
             child: TextButton(
               onPressed: () {
-                if (_Total > 0) {
+                if (_totalPrice > 0) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) =>
-                          PagoSreen(total: _Total)));
+                          PagoSreen(total: _totalPrice)));
                 }
               },
               style: TextButton.styleFrom(

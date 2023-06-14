@@ -10,10 +10,10 @@ class ProductApp extends StatefulWidget {
   const ProductApp({super.key});
 
   @override
-  _ProductScreen createState() => _ProductScreen();
+  ProductScreen createState() => ProductScreen();
 }
 
-class _ProductScreen extends State<ProductApp> {
+class ProductScreen extends State<ProductApp> {
   TextEditingController controllerSearch = TextEditingController();
 
   Widget buildImage(String urlImage, int index) {
@@ -41,16 +41,20 @@ class _ProductScreen extends State<ProductApp> {
                     ),
                     child: Image.network(urlImage,
                       height: 60,
-                      width: 90),
+                      width: 80),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 15, top: 20),
                     child: Column(
                       children: [
-                        Text(
-                          snapshot.data?[index]['nombre'],
-                          style: const TextStyle(
-                              fontSize: 20
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 3,
+                          child: Text(
+                            snapshot.data?[index]['nombre'],
+                            style: const TextStyle(
+                                fontSize: 20
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         const Padding(padding: EdgeInsets.only(
@@ -220,7 +224,7 @@ class Prod extends StatelessWidget {
                             },
                             child:  Padding(
                               padding: const EdgeInsets.all(10) ,
-                              child: Image.network("${lstProds![index]['imagen']}"),
+                              child: Image.network("${lstProds![index]['imagen']}", height: 80, width: 120),
                             ),
                           ),
                         ),
@@ -238,13 +242,15 @@ class Prod extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: const Text(
-                            "New Nike Shoes for men",
-                            style: TextStyle(
-                              fontSize: 15,
+                        SizedBox(
+                          child: Text(
+                            lstProds[index]['descripcion'],
+                            style: const TextStyle(
+                              fontSize: 14,
                             ),
+                            textAlign: TextAlign.start,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         Padding(

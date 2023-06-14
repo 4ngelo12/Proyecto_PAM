@@ -11,10 +11,10 @@ class ProfileApp extends StatefulWidget {
   const ProfileApp({super.key});
 
   @override
-  _ProfilelScreen createState() => _ProfilelScreen();
+  ProfScreen createState() => ProfScreen();
 }
 
-class _ProfilelScreen extends State<ProfileApp> {
+class ProfScreen extends State<ProfileApp> {
   final _auth = FirebaseAuth.instance.currentUser;
 
   @override

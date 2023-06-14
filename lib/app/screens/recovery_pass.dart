@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:proyecto/app/screens/login_screen.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:proyecto/app/services/services.dart';
 import 'package:proyecto/app/widgets/notificaciones.dart';
@@ -10,10 +9,10 @@ class RecoveryScreen extends StatefulWidget {
   const RecoveryScreen({super.key});
 
   @override
-  _RecoveryScreen createState() => _RecoveryScreen();
+  RecoveryPassScreen createState() => RecoveryPassScreen();
 }
 
-class _RecoveryScreen extends State<RecoveryScreen> {
+class RecoveryPassScreen extends State<RecoveryScreen> {
   TextEditingController emailController = TextEditingController();
   final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
   bool estado = true;

@@ -166,8 +166,9 @@ class _BuyScreen extends State<BuyScreen> {
                                   future: getProductoId(widget.idProd),
                                   builder: ((context, snapshot) {
                                     if (snapshot.hasData) {
+                                      String valor = "${snapshot.data?[0]['precio']}";
                                       name = snapshot.data?[0]['nombre'];
-                                      price = snapshot.data?[0]['precio'];
+                                      price = double.parse(valor.toString());
                                       img = snapshot.data?[0]['imagen'];
 
                                       return Column(
@@ -349,7 +350,7 @@ class _BuyScreen extends State<BuyScreen> {
                                   child: TextButton(
                                     onPressed: () {
                                       if (size != null) {
-                                        addShoppingCart(_user!.uid, widget.idProd, idTalla!, name!, (price! * cant!), cant!, size!, img!, _total);
+                                        addShoppingCart(_user!.uid, widget.idProd, idTalla!, name!, (double.parse(price!.toString()) * cant!), cant!, size!, img!, _total);
                                         successfulMessage(context, "Producto Agregado en el carrito");
                                       } else {
                                         successfulMessage(context, "Seleciona una talla para agregar al carrito");

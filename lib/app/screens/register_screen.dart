@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:proyecto/app/theme/themes.dart';
-import 'package:proyecto/app/screens/screens.dart';
 import 'package:proyecto/app/widgets/notificaciones.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -10,10 +9,10 @@ class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  _RegisterScreen createState() => _RegisterScreen();
+  RegisterScreenS createState() => RegisterScreenS();
 }
 
-class _RegisterScreen extends State<RegisterScreen> {
+class RegisterScreenS extends State<RegisterScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
