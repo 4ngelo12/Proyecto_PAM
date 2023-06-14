@@ -160,7 +160,7 @@ class _PagoSreen extends State<PagoSreen> {
                           ),
                           onChanged: ( value ) => AppProvider().fecha = value,
                           validator: ( String? value ) {
-                            String exp = r'^([0-1][0-2]|0[0-1]|1[0-1])(\/)([2-9][0-9][2-9][4-9])$';
+                            String exp = r'^([0-1][0-2]|0[0-9]|1[0-1])(\/)([2-9][0-9][2-9][4-9])$';
                             return RegExp(exp).hasMatch(value  ?? '')? null : 'Fecha invalida';
                           },
                         ),
@@ -211,7 +211,7 @@ class _PagoSreen extends State<PagoSreen> {
                       PayForm.isLoadingPay = false;
                       crearVenta(user!.uid, widget.total, formattedDate);
                       successfulMessage(context, 'Pago procesado correctamente');
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                       },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 70),
