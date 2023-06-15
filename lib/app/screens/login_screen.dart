@@ -62,7 +62,7 @@ class _LoginScreen extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Form(
-                        key: loginForm.formKey,
+                        key: loginForm.formKeyLogin,
                         autovalidateMode: _estado ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
                         child: Column(
                           children: [

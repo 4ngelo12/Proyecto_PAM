@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppProvider extends ChangeNotifier{
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKeyLogin = GlobalKey<FormState>();
+  GlobalKey<FormState> formKeyPay = GlobalKey<FormState>();
 
   //Login variables
   String email='';
@@ -35,19 +36,19 @@ class AppProvider extends ChangeNotifier{
 
   //Login methods
   bool isValidLoginForm(){
-    (formKey.currentState?.validate());
+    (formKeyLogin.currentState?.validate());
 
     ('$email - $password');
 
-    return formKey.currentState?.validate() ?? false;
+    return formKeyLogin.currentState?.validate() ?? false;
   }
 
   //Pay Methods
-  bool isValidPayForm(){
-    (formKey.currentState?.validate());
+  bool isValidFormPay(){
+    (formKeyPay.currentState?.validate());
 
     ('$titular - $numTarjeta - $fecha - $cvv');
 
-    return formKey.currentState?.validate() ?? false;
+    return formKeyPay.currentState?.validate() ?? false;
   }
 }

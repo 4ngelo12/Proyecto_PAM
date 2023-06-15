@@ -72,7 +72,7 @@ class _PagoSreen extends State<PagoSreen> {
               child: Image.asset("Assets/Images/logo.png"),
             ),
             Form(
-              key: PayForm.formKey,
+              key: PayForm.formKeyPay,
               autovalidateMode: _estado ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
@@ -203,7 +203,7 @@ class _PagoSreen extends State<PagoSreen> {
                       _validacion();
                       FocusScope.of(context).unfocus();
 
-                      if (!PayForm.isValidPayForm()) return;
+                      if (!PayForm.isValidFormPay()) return;
                       PayForm.isLoadingPay = true;
 
                       await Future.delayed(
