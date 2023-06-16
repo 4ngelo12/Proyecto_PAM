@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto/app/providers/login_provider.dart';
 import 'package:proyecto/app/screens/screens.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'app/providers/app_provider.dart';
+import 'app/providers/pay_provider.dart';
 import 'app/theme/theme_constants.dart';
 import 'firebase_options.dart';
 
@@ -45,8 +46,11 @@ class MyApp extends StatelessWidget {
       light: AppTheme.lightTheme,
       dark: AppTheme.darkTheme,
       initial: savedThemeMode ?? AdaptiveThemeMode.dark,
-      builder: (theme, darkTheme) => ChangeNotifierProvider(
-        create: (context) => AppProvider(),
+      builder: (theme, darkTheme) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: ( _ ) => LoginProvider()),
+          ChangeNotifierProvider(create: ( _ ) => PayProvider()),
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Login',

@@ -4,7 +4,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../providers/app_provider.dart';
+import '../providers/login_provider.dart';
 import '../widgets/notificaciones.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreen extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
+  GlobalKey<FormState> formKeyLogin = GlobalKey<FormState>();
 
   bool _estado = true;
   String _mensaje = '';
@@ -34,7 +35,7 @@ class _LoginScreen extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final loginForm = Provider.of<AppProvider>(context);
+    final loginForm = Provider.of<LoginProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -91,7 +92,7 @@ class _LoginScreen extends State<LoginScreen> {
                                         fontWeight: FontWeight.bold
                                     )
                                 ),
-                                onChanged: ( value ) => AppProvider().email = value,
+                                onChanged: ( value ) => LoginProvider().email = value,
                                 validator: ( value ) {
                                   String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
                                   RegExp regExp  = RegExp(pattern);
@@ -123,7 +124,7 @@ class _LoginScreen extends State<LoginScreen> {
                                       fontWeight: FontWeight.bold
                                   ),
                                 ),
-                                onChanged: ( value ) => AppProvider().password = value,
+                                onChanged: ( value ) => LoginProvider().password = value,
                                 validator: ( value ) {
                                   return ( value != null && value.length >= 10 )
                                       ? null
@@ -148,7 +149,7 @@ class _LoginScreen extends State<LoginScreen> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(30),
-                              child: MaterialButton(
+                              child: ElevatedButton(
                                 onPressed:loginForm.isLoadingForm ? null : () async {
                                       _validacion();
                                       FocusScope.of(context).unfocus();
@@ -181,16 +182,18 @@ class _LoginScreen extends State<LoginScreen> {
                                         errorMessage(context, _mensaje);
                                       }
                                   },
-                                color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
-                                disabledColor: AdaptiveTheme.of(context).mode.isDark ? Login.disableButtonDark : Login.disableButton,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 55,
-                                    vertical: 18
-                                ),
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10)
-                                    )
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
+                                  disabledBackgroundColor: AdaptiveTheme.of(context).mode.isDark ? Login.disableButtonDark : Login.disableButton,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 55,
+                                      vertical: 18
+                                  ),
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)
+                                      )
+                                  ),
                                 ),
                                 child: Text(
                                   loginForm.isLoadingForm

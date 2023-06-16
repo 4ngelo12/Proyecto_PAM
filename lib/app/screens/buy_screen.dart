@@ -149,7 +149,7 @@ class _BuyScreen extends State<BuyScreen> {
                         ),
                         const Padding(padding: EdgeInsets.only(bottom: 25)),
                         Container(
-                          height: MediaQuery.of(context).size.height *  0.68,
+                          height: MediaQuery.of(context).size.height *  0.7,
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(
                               vertical: 30,
@@ -176,17 +176,22 @@ class _BuyScreen extends State<BuyScreen> {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Text(
-                                                  "${snapshot.data?[0]['nombre']}",
-                                                  style: const TextStyle(
-                                                    fontSize: 28,
-                                                    fontWeight: FontWeight.bold,
+                                                SizedBox(
+                                                  width: 290,
+                                                  child: Text(
+                                                    "${snapshot.data![0]['nombre']}",
+                                                    style: const TextStyle(
+                                                        fontSize: 24,
+                                                        fontWeight: FontWeight.bold
+                                                    ),
+                                                    overflow: TextOverflow.ellipsis,
                                                   ),
+
                                                 ),
                                                 Text(
                                                   "S/${snapshot.data?[0]['precio']}",
                                                   style: const TextStyle(
-                                                    fontSize: 25,
+                                                    fontSize: 20,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
@@ -209,8 +214,8 @@ class _BuyScreen extends State<BuyScreen> {
                                     }
                                   })
                               ),
-                              Row(
-                                children: const [
+                              const Row(
+                                children: [
                                    Padding(
                                      padding: EdgeInsets.symmetric(vertical: 10),
                                      child: Text(

@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:provider/provider.dart';
-import 'package:proyecto/app/providers/app_provider.dart';
 import 'package:proyecto/app/screens/principal_screen.dart';
 import 'package:proyecto/app/theme/themes.dart';
 import 'package:intl/intl.dart';
 import 'package:proyecto/app/widgets/notificaciones.dart';
+import '../providers/pay_provider.dart';
 import '../services/ventas_service.dart';
 
 class PagoSreen extends StatefulWidget {
@@ -36,6 +36,12 @@ class _PagoSreen extends State<PagoSreen> {
     });
   }
 
+  void onButtonTapped(BuildContext context) {
+    successfulMessage(context, 'Pago procesado correctamente');
+    successfulMessage(context, 'Pago procesado correctamente');
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
@@ -44,7 +50,7 @@ class _PagoSreen extends State<PagoSreen> {
     // Formatea la fecha usando el paquete intl
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
 
-    AppProvider PayForm = Provider.of<AppProvider>(context);
+    final PayForm = Provider.of<PayProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -97,7 +103,7 @@ class _PagoSreen extends State<PagoSreen> {
                               fontWeight: FontWeight.bold
                           )
                       ),
-                      onChanged: ( value ) => AppProvider().titular = value,
+                      onChanged: ( value ) => PayProvider().titular = value,
                       validator: ( String? value ) {
                         String exp = r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]';
                         return RegExp(exp).hasMatch(value  ?? '')? null : 'No se admiten esos caracteres en el nombre';
@@ -126,7 +132,7 @@ class _PagoSreen extends State<PagoSreen> {
                               fontWeight: FontWeight.bold
                           )
                       ),
-                      onChanged: ( value ) => AppProvider().numTarjeta = value,
+                      onChanged: ( value ) => PayProvider().numTarjeta = value,
                       validator: ( String? value ) {
                         String exp = r'[0-9]{15,16}|(([0-9]{4}\s){3}[0-9]{3,4})';
                         return RegExp(exp).hasMatch(value  ?? '')? null : 'Número de Tarjeta Invalido';
@@ -158,7 +164,7 @@ class _PagoSreen extends State<PagoSreen> {
                                   fontWeight: FontWeight.bold
                               )
                           ),
-                          onChanged: ( value ) => AppProvider().fecha = value,
+                          onChanged: ( value ) => PayProvider().fecha = value,
                           validator: ( String? value ) {
                             String exp = r'^([0-1][0-2]|0[0-9]|1[0-1])(\/)([2-9][0-9][2-9][4-9])$';
                             return RegExp(exp).hasMatch(value  ?? '')? null : 'Fecha invalida';
@@ -188,7 +194,7 @@ class _PagoSreen extends State<PagoSreen> {
                                   fontWeight: FontWeight.bold
                               )
                           ),
-                          onChanged: ( value ) => AppProvider().cvv = value,
+                          onChanged: ( value ) => PayProvider().cvv = value,
                           validator: ( String? value ) {
                             String exp = r'^[0-9]{3}';
                             return RegExp(exp).hasMatch(value  ?? '')? null : 'CVV Invalido';
@@ -210,8 +216,7 @@ class _PagoSreen extends State<PagoSreen> {
                           const Duration(seconds: 4));
                       PayForm.isLoadingPay = false;
                       crearVenta(user!.uid, widget.total, formattedDate);
-                      successfulMessage(context, 'Pago procesado correctamente');
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                      onButtonTapped;
                       },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 70),

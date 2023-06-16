@@ -208,12 +208,17 @@ class ComprasScreenS extends State<BuyApp> {
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    "${snapshot.data![index]['nombre']}",
-                                                    style: const TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight: FontWeight.bold
+                                                  SizedBox(
+                                                    width: 150,
+                                                    child: Text(
+                                                      "${snapshot.data![index]['nombre']}",
+                                                      style: const TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight: FontWeight.bold
+                                                      ),
+                                                      overflow: TextOverflow.ellipsis,
                                                     ),
+
                                                   ),
                                                   Text(
                                                     "${snapshot.data![index]['precio']}",
@@ -307,9 +312,9 @@ class ComprasScreenS extends State<BuyApp> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Text(
                       "Realizar el Pago",
                       style: TextStyle(

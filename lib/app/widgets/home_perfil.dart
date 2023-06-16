@@ -20,6 +20,7 @@ class ProfScreen extends State<ProfileApp> {
   @override
   Widget build(BuildContext context) {
     final String? idUser = _auth?.uid;
+
     return Column (
       children: [
         Container(color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
@@ -75,8 +76,8 @@ class ProfScreen extends State<ProfileApp> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               InkWell(
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Padding(padding: EdgeInsets.only(left: 65)),
                     Icon(
                       FontAwesomeIcons.penToSquare,
@@ -99,8 +100,8 @@ class ProfScreen extends State<ProfileApp> {
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
               InkWell(
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Padding(padding: EdgeInsets.only(left: 65)),
                     Icon(
                       Icons.favorite,
@@ -124,8 +125,8 @@ class ProfScreen extends State<ProfileApp> {
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
               InkWell(
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Padding(padding: EdgeInsets.only(left: 65)),
                     Icon(
                       Icons.list_alt,
@@ -149,8 +150,8 @@ class ProfScreen extends State<ProfileApp> {
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
               InkWell(
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Padding(padding: EdgeInsets.only(left: 65)),
                     Icon(
                       Icons.contact_support_outlined,
@@ -181,8 +182,8 @@ class ProfScreen extends State<ProfileApp> {
                           builder: (context) =>
                               const LoginScreen()));
                 },
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Padding(padding: EdgeInsets.only(left: 65)),
                     Icon(
                       FontAwesomeIcons.arrowRightFromBracket,
