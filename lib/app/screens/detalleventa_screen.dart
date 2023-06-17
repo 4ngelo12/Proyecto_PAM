@@ -1,8 +1,10 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:proyecto/app/services/ventas_service.dart';
 import '../theme/themes.dart';
+import '../widgets/seccion_vacio.dart';
 
 class MisComprasScreen extends StatefulWidget {
   const MisComprasScreen({super.key});
@@ -17,27 +19,28 @@ class _MisComprasScreen extends State<MisComprasScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: IconButton(
+          onPressed: ()  {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_ios_new),
+        ),
+      ),
       body: FutureBuilder(
         future: getDetVenta(_user!.uid),
         builder: ((context, snapshot) {
           if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
-          return CustomScrollView(
+          return snapshot.data!.isNotEmpty ?  CustomScrollView(
             slivers: [
-              SliverAppBar(
-                automaticallyImplyLeading: false,
-                title: IconButton(
-                  onPressed: ()  {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back_ios_new),
-                ),
-              ),
               SliverList(
                   delegate: SliverChildBuilderDelegate(
                           (context, index) {
-
                         return Container(
                           margin: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
@@ -72,11 +75,15 @@ class _MisComprasScreen extends State<MisComprasScreen> {
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
-                                                "${snapshot.data![index]['nombre']}",
-                                                style: const TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold
+                                              SizedBox(
+                                                width: 150,
+                                                child: Text(
+                                                  "${snapshot.data![index]['nombre']}",
+                                                  style: const TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.bold
+                                                  ),
+                                                  overflow: TextOverflow.clip,
                                                 ),
                                               ),
                                               Text(
@@ -120,9 +127,10 @@ class _MisComprasScreen extends State<MisComprasScreen> {
                   )
               )
             ],
-          );
+          ) : const Clean(text: "No haz realizado ninguna compra", icon: Icons.remove_shopping_cart);
         }),
       ),
+
     );
   }
 

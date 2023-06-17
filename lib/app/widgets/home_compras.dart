@@ -40,16 +40,16 @@ class ComprasScreenS extends State<BuyApp> {
 
   void _reloadData() {
     setState(() {
-      dataStatus = DataStatus.Loading;
+      dataStatus = DataStatus.loading;
     });
 
     getShoppingCart(_user!.uid).then((data) {
       setState(() {
-        dataStatus = DataStatus.Loaded;
+        dataStatus = DataStatus.loaded;
       });
     }).catchError((error) {
       setState(() {
-        dataStatus = DataStatus.Error;
+        dataStatus = DataStatus.error;
       });
     });
   }
@@ -61,9 +61,9 @@ class ComprasScreenS extends State<BuyApp> {
         future: getShoppingCart(_user!.uid),
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
-            if (dataStatus == DataStatus.Loading) {
+            if (dataStatus == DataStatus.loading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (dataStatus == DataStatus.Loaded) {
+            } else if (dataStatus == DataStatus.loaded) {
               return snapshot.data!.isNotEmpty ?
               CustomScrollView(
                 slivers: [
@@ -105,12 +105,17 @@ class ComprasScreenS extends State<BuyApp> {
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    "${snapshot.data![index]['nombre']}",
-                                                    style: const TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight: FontWeight.bold
+                                                  SizedBox(
+                                                    width: 150,
+                                                    child: Text(
+                                                      "${snapshot.data![index]['nombre']}",
+                                                      style: const TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight: FontWeight.bold
+                                                      ),
+                                                      overflow: TextOverflow.ellipsis,
                                                     ),
+
                                                   ),
                                                   Text(
                                                     "S/${snapshot.data![index]['precio']}",
@@ -165,7 +170,7 @@ class ComprasScreenS extends State<BuyApp> {
                 ],
               ) :
               const Clean(text: "No tienes productos en el carrito", icon: FontAwesomeIcons.boxOpen);
-            } else if (dataStatus == DataStatus.Error) {
+            } else if (dataStatus == DataStatus.error) {
               return const Text('Error al cargar los datos');
             } else {
               return snapshot.data!.isNotEmpty ?
@@ -218,7 +223,6 @@ class ComprasScreenS extends State<BuyApp> {
                                                       ),
                                                       overflow: TextOverflow.ellipsis,
                                                     ),
-
                                                   ),
                                                   Text(
                                                     "${snapshot.data![index]['precio']}",
@@ -312,9 +316,9 @@ class ComprasScreenS extends State<BuyApp> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: const Row(
+                child:  Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Text(
                       "Realizar el Pago",
                       style: TextStyle(

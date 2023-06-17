@@ -184,7 +184,7 @@ class _BuyScreen extends State<BuyScreen> {
                                                         fontSize: 24,
                                                         fontWeight: FontWeight.bold
                                                     ),
-                                                    overflow: TextOverflow.ellipsis,
+                                                    overflow: TextOverflow.clip,
                                                   ),
 
                                                 ),
@@ -214,8 +214,8 @@ class _BuyScreen extends State<BuyScreen> {
                                     }
                                   })
                               ),
-                              const Row(
-                                children: [
+                               Row(
+                                children: const [
                                    Padding(
                                      padding: EdgeInsets.symmetric(vertical: 10),
                                      child: Text(
@@ -244,7 +244,6 @@ class _BuyScreen extends State<BuyScreen> {
                                           physics: const NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
                                           itemBuilder: (context, index) {
-                                            idTalla = snapshot.data![index]['idTalla'];
                                             return TextButton(
                                                 style: TextButton.styleFrom(
                                                     padding: const EdgeInsets.symmetric(
@@ -256,6 +255,7 @@ class _BuyScreen extends State<BuyScreen> {
                                                 ),
                                                 onPressed:() {
                                                   setState(() {
+                                                    idTalla = snapshot.data![index]['idTalla'];
                                                     _total = snapshot.data![index]['cantidad'];
                                                     _cantidad = 1;
                                                     _numCantidad = snapshot.data?.length;

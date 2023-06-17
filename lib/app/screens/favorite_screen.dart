@@ -20,16 +20,16 @@ class _FavoriteScreenS extends State<FavoriteScreen> {
 
   void _reloadData() {
     setState(() {
-      dataStatus = DataStatus.Loading;
+      dataStatus = DataStatus.loading;
     });
 
     getShoppingCart(_user!.uid).then((data) {
       setState(() {
-        dataStatus = DataStatus.Loaded;
+        dataStatus = DataStatus.loaded;
       });
     }).catchError((error) {
       setState(() {
-        dataStatus = DataStatus.Error;
+        dataStatus = DataStatus.error;
       });
     });
   }
@@ -49,9 +49,9 @@ class _FavoriteScreenS extends State<FavoriteScreen> {
       body: FutureBuilder(
           future: getFavortiosId(_user!.uid),
           builder: ((context, snapshot) {
-            if (dataStatus == DataStatus.Loading) {
+            if (dataStatus == DataStatus.loading) {
               return const CircularProgressIndicator();
-            } else if (dataStatus == DataStatus.Loaded) {
+            } else if (dataStatus == DataStatus.loaded) {
               if (snapshot.hasData) {
                 return snapshot.data!.isNotEmpty ?
                 CustomScrollView(
@@ -170,7 +170,7 @@ class _FavoriteScreenS extends State<FavoriteScreen> {
                   child: CircularProgressIndicator(),
                 );
               }
-            } else if (dataStatus == DataStatus.Error) {
+            } else if (dataStatus == DataStatus.error) {
               return const Text('Error al cargar los datos');
             } else {
               if (snapshot.hasData) {

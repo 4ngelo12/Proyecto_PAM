@@ -17,16 +17,6 @@ class RecoveryPassScreen extends State<RecoveryScreen> {
   final GlobalKey<FormState> keyForm = GlobalKey<FormState>();
   bool estado = true;
 
-  void _validacion() {
-    setState(() {
-      if (estado) {
-        estado = false;
-      } else {
-        estado = true;
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,9 +104,16 @@ class RecoveryPassScreen extends State<RecoveryScreen> {
                                 if (keyForm.currentState!.validate()) {
                                   recoveryPassword(emailController.text);
                                   emailController.text = "";
+
+                                  setState(() {
+                                    estado = true;
+                                  });
+
                                   successfulMessage(context, "Correo enviado correctamente");
                                 } else {
-                                  _validacion();
+                                  setState(() {
+                                    estado = false;
+                                  });
                                 }
                               },
                               style: TextButton.styleFrom(

@@ -1,8 +1,8 @@
 enum DataStatus {
-  Initial,
-  Loading,
-  Loaded,
-  Error,
+  initial,
+  loading,
+  loaded,
+  error,
 }
 
-DataStatus dataStatus = DataStatus.Initial;
+DataStatus dataStatus = DataStatus.initial;

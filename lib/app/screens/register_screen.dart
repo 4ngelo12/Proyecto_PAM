@@ -23,16 +23,6 @@ class RegisterScreenS extends State<RegisterScreen> {
 
   bool _estado = true;
 
-  void _validacion() {
-    setState(() {
-      if (_estado) {
-        _estado = false;
-      } else {
-        _estado = true;
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -264,13 +254,21 @@ class RegisterScreenS extends State<RegisterScreen> {
                                   padding: const EdgeInsets.all(30),
                                   child: MaterialButton(
                                       onPressed: () async{
-                                        _validacion();
                                         if (keyForm.currentState!.validate()) {
-                                          if (passController.value == pass2Controller.value) {
-                                            addCli(nameController.text, lastNameController.text, phoneController.text,
-                                                emailController.text, passController.text);
+                                          if (passController.value ==
+                                              pass2Controller.value) {
+                                            addCli(nameController.text,
+                                                lastNameController.text,
+                                                phoneController.text,
+                                                emailController.text,
+                                                passController.text);
 
-                                            successfulMessage(context, "Registrado Correctamente");
+                                            setState(() {
+                                              _estado = true;
+                                            });
+
+                                            successfulMessage(context,
+                                                "Registrado Correctamente");
 
                                             nameController.text = "";
                                             lastNameController.text = "";
@@ -279,6 +277,10 @@ class RegisterScreenS extends State<RegisterScreen> {
                                             passController.text = "";
                                             pass2Controller.text = "";
                                           }
+                                        } else {
+                                          setState(() {
+                                            _estado = true;
+                                          });
                                         }
                                       },
                                       color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,

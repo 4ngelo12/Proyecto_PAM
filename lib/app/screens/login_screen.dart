@@ -134,7 +134,7 @@ class _LoginScreen extends State<LoginScreen> {
                             ),
                             Container(
                               alignment: AlignmentDirectional.centerEnd,
-                              width: MediaQuery.of(context).size.width / 1.45,
+                              width: MediaQuery.of(context).size.width / 1.3,
                               child: TextButton(
                                 onPressed: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (_) => const RecoveryScreen()));

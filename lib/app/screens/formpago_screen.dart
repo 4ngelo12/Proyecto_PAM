@@ -36,12 +36,6 @@ class _PagoSreen extends State<PagoSreen> {
     });
   }
 
-  void onButtonTapped(BuildContext context) {
-    successfulMessage(context, 'Pago procesado correctamente');
-    successfulMessage(context, 'Pago procesado correctamente');
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-  }
-
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
@@ -50,7 +44,7 @@ class _PagoSreen extends State<PagoSreen> {
     // Formatea la fecha usando el paquete intl
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
 
-    final PayForm = Provider.of<PayProvider>(context);
+    final payForm = Provider.of<PayProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -78,7 +72,7 @@ class _PagoSreen extends State<PagoSreen> {
               child: Image.asset("Assets/Images/logo.png"),
             ),
             Form(
-              key: PayForm.formKeyPay,
+              key: payForm.formKeyPay,
               autovalidateMode: _estado ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
@@ -205,25 +199,26 @@ class _PagoSreen extends State<PagoSreen> {
                   ),
                   const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
                   ElevatedButton(
-                    onPressed: PayForm.isLoadingPay ? null : () async{
+                    onPressed: payForm.isLoadingPay ? null : () async{
                       _validacion();
                       FocusScope.of(context).unfocus();
 
-                      if (!PayForm.isValidFormPay()) return;
-                      PayForm.isLoadingPay = true;
+                      if (!payForm.isValidFormPay()) return;
+                      payForm.isLoadingPay = true;
 
                       await Future.delayed(
                           const Duration(seconds: 4));
-                      PayForm.isLoadingPay = false;
+                      payForm.isLoadingPay = false;
                       crearVenta(user!.uid, widget.total, formattedDate);
-                      onButtonTapped;
+                      successfulMessage(context, 'Pago procesado correctamente');
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                       },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 70),
                       backgroundColor: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                     ),
                     child: Text(
-                      PayForm.isLoadingPay
+                      payForm.isLoadingPay
                           ? 'Verificando...'
                           : 'Realizar Pago',
                       style: const TextStyle(

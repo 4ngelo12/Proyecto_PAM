@@ -6,6 +6,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:proyecto/app/screens/screens.dart';
 import 'package:proyecto/app/services/cliente_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:proyecto/main.dart';
 
 class ProfileApp extends StatefulWidget {
   const ProfileApp({super.key});
@@ -76,8 +77,8 @@ class ProfScreen extends State<ProfileApp> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               InkWell(
-                child: const Row(
-                  children: [
+                child:  Row(
+                  children: const [
                     Padding(padding: EdgeInsets.only(left: 65)),
                     Icon(
                       FontAwesomeIcons.penToSquare,
@@ -100,8 +101,8 @@ class ProfScreen extends State<ProfileApp> {
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
               InkWell(
-                child: const Row(
-                  children: [
+                child: Row(
+                  children: const [
                     Padding(padding: EdgeInsets.only(left: 65)),
                     Icon(
                       Icons.favorite,
@@ -125,8 +126,8 @@ class ProfScreen extends State<ProfileApp> {
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
               InkWell(
-                child: const Row(
-                  children: [
+                child:  Row(
+                  children: const [
                     Padding(padding: EdgeInsets.only(left: 65)),
                     Icon(
                       Icons.list_alt,
@@ -150,8 +151,8 @@ class ProfScreen extends State<ProfileApp> {
               ),
               const Padding(padding: EdgeInsets.only(bottom: 15)),
               InkWell(
-                child: const Row(
-                  children: [
+                child:  Row(
+                  children: const [
                     Padding(padding: EdgeInsets.only(left: 65)),
                     Icon(
                       Icons.contact_support_outlined,
@@ -177,13 +178,13 @@ class ProfScreen extends State<ProfileApp> {
               InkWell (
                 onTap: () async{
                   await FirebaseAuth.instance.signOut();
-                  Navigator.push(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              const LoginScreen()));
+                              const MyApp()));
                 },
-                child: const Row(
-                  children: [
+                child:  Row(
+                  children: const [
                     Padding(padding: EdgeInsets.only(left: 65)),
                     Icon(
                       FontAwesomeIcons.arrowRightFromBracket,
