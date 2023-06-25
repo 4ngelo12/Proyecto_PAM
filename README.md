@@ -1,8 +1,7 @@
-# proyecto
-
-A new Flutter project.
+# **Aplicación de Tienda de Zapatos**
 
 ## Getting Started
 
-Usuario: admin@a.com
+Usuario: admin@aadmin.com
+
 Contraseña: 9874563210
