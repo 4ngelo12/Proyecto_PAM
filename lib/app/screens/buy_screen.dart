@@ -149,7 +149,7 @@ class _BuyScreen extends State<BuyScreen> {
                         ),
                         const Padding(padding: EdgeInsets.only(bottom: 25)),
                         Container(
-                          height: MediaQuery.of(context).size.height *  0.7,
+                          height: MediaQuery.of(context).size.height *  0.75,
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(
                               vertical: 30,

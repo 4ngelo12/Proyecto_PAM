@@ -192,7 +192,7 @@ class Prod extends StatelessWidget {
             return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    mainAxisExtent: 350,
+                    mainAxisExtent: 345,
                     crossAxisSpacing: 2
                 ),
                 itemCount: lstProds?.length,
@@ -249,7 +249,7 @@ class Prod extends StatelessWidget {
                               fontSize: 14,
                             ),
                             textAlign: TextAlign.start,
-                            maxLines: 3,
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
