@@ -200,7 +200,7 @@ class _FavoriteScreenS extends State<FavoriteScreen> {
                                   return Padding(
                                     padding: const EdgeInsets.all(15),
                                     child: Container(
-                                      height: 180,
+                                      height: 185,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: AdaptiveTheme.of(context).mode.isDark ? General.containerDark : General.container,
@@ -214,11 +214,12 @@ class _FavoriteScreenS extends State<FavoriteScreen> {
                                                 borderRadius: BorderRadius.circular(5),
                                                 color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                                               ),
-                                              width: 140,
+                                              width: 150,
+                                              height: 182,
                                               child: Image.network(
                                                 "${snapshot.data?[0]['imagen']}",
-                                                height: 100,
-                                                width: 100,
+                                                height: 120,
+                                                width: 80,
                                               ),
                                             ),
                                             onTap: () {
@@ -236,7 +237,8 @@ class _FavoriteScreenS extends State<FavoriteScreen> {
                                                   "${snapshot.data?[0]['nombre']}",
                                                   textAlign: TextAlign.start,
                                                   style: const TextStyle(
-                                                      fontSize: 25
+                                                      fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
                                               ),

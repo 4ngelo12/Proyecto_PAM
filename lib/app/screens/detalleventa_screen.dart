@@ -58,7 +58,7 @@ class _MisComprasScreen extends State<MisComprasScreen> {
                                     padding: const EdgeInsets.symmetric(horizontal: 10),
                                     child: Image.network(
                                       "${snapshot.data![index]['img']}",
-                                      height: 140,
+                                      height: 145,
                                       width: 150,
                                     ),
                                   )
@@ -66,7 +66,7 @@ class _MisComprasScreen extends State<MisComprasScreen> {
                               Expanded(
                                   flex: 2,
                                   child: SizedBox(
-                                    height: 140,
+                                    height: 145,
                                     child: Padding(
                                       padding: const EdgeInsets.all(12),
                                       child: Column(

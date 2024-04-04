@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:proyecto/app/models/cliente/client_model.dart';
 
 FirebaseFirestore _db = FirebaseFirestore.instance;
 final _auth = FirebaseAuth.instance;
@@ -12,15 +13,9 @@ Future<void> addCli(String nombre, String apellido, String telefono, String corr
   );
 
   String? idCli = _auth.currentUser?.uid;
+  ClienteModel cliente = ClienteModel(nombre: nombre, apellido: apellido, email: correo, telefono: telefono);
 
-  Map<String, dynamic> dataUser = {
-    'apellido': apellido,
-    'email': correo,
-    'nombre': nombre,
-    'telefono': telefono,
-  };
-
-  await _db.collection('clientes').doc(idCli).set(dataUser);
+  await _db.collection('clientes').doc(idCli).set(cliente.toJson());
 
   _auth.signOut();
 }
@@ -47,16 +42,9 @@ Future<List> getClientesId(String id) async {
 }
 
 Future<void> editData(String uId, String nombre, String apellido, String telefono, String correo) async{
-
-  Map<String, dynamic> dataUser = {
-    'nombre': nombre,
-    'apellido': apellido,
-    'telefono': telefono,
-    'email': correo,
-  };
-
+  ClienteModel dataUser = ClienteModel(nombre: nombre, apellido: apellido, email: correo, telefono: telefono);
   final cliente = _db.collection('clientes').doc(uId);
-  await cliente.update(dataUser);
+  await cliente.update(dataUser.toJson());
   await _user?.updateEmail(correo);
 }
 

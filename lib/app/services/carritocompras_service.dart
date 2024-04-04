@@ -1,24 +1,21 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:proyecto/app/models/compras/carrito_model.dart';
 import 'package:proyecto/app/services/services.dart';
 
 FirebaseFirestore _db = FirebaseFirestore.instance;
 
 Future<void> addShoppingCart(String idU, String idProd, String idTalla, String name, double price, int cant, int size, String img, int total)
 async {
+  ShoppingCartModel data = ShoppingCartModel(id: "",
+      idProd: idProd, idTalla: idTalla, nombre: name, precio: price, talla: size, cantidad: cant, img: img);
+
   await _db.collection('clientes').doc(idU).
   collection('carrito_compras').add({}).then((DocumentReference doc) async{
     await _db.collection('clientes').doc(idU).
-    collection('carrito_compras').doc(doc.id).set({
-      'id': doc.id,
-      'idProd': idProd,
-      'idTalla': idTalla,
-      'nombre': name,
-      'precio': price,
-      'talla': size,
-      'cantidad': cant,
-      'img': img,
-    });
+    collection('carrito_compras').doc(doc.id)
+        .set(ShoppingCartModel(id: doc.id, idProd: idProd, idTalla: idTalla, nombre: name, precio: price,
+        talla: size, cantidad: cant, img: img).toJson());
   });
 
   int nuevoT = 0;

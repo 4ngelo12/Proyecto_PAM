@@ -236,9 +236,11 @@ class Prod extends StatelessWidget {
                             child: Text(
                               lstProds[index]['nombre'],
                               style: const TextStyle(
-                                fontSize: 20,
+                                fontSize: 19,
                                 fontWeight: FontWeight.bold,
                               ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),

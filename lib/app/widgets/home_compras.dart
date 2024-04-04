@@ -85,7 +85,7 @@ class ComprasScreenS extends State<BuyApp> {
                                             color: AdaptiveTheme.of(context).mode.isDark ? General.generalBlueDark : General.generalBlue,
                                             borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))
                                         ),
-                                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                                        padding: const EdgeInsets.symmetric(horizontal: 15),
                                         child: Image.network(
                                           "${snapshot.data![index]['img']}",
                                           height: 140,
@@ -196,7 +196,7 @@ class ComprasScreenS extends State<BuyApp> {
                                         padding: const EdgeInsets.symmetric(horizontal: 10),
                                         child: Image.network(
                                           "${snapshot.data![index]['img']}",
-                                          height: 140,
+                                          height: 145,
                                           width: 150,
                                         ),
                                       )
@@ -204,7 +204,7 @@ class ComprasScreenS extends State<BuyApp> {
                                   Expanded(
                                       flex: 2,
                                       child: SizedBox(
-                                        height: 140,
+                                        height: 145,
                                         child: Padding(
                                           padding: const EdgeInsets.all(12),
                                           child: Column(

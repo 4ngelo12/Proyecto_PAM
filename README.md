@@ -2,6 +2,6 @@
 
 ## Getting Started
 
-Usuario: admin@aadmin.com
+Usuario: admin@admin.com
 
 Contraseña: 9874563210
